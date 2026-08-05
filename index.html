@@ -1944,14 +1944,13 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
   const firebaseConfig = {
-  apiKey: "AIzaSyDhGgPH3YSy8sV0Sdz_--8hJJhq2zoqgKY",
-  authDomain: "krishi-bondhu-app-7300b.firebaseapp.com",
-  projectId: "krishi-bondhu-app-7300b",
-  storageBucket: "krishi-bondhu-app-7300b.firebasestorage.app",
-  messagingSenderId: "586255616365",
-  appId: "1:586255616365:web:a09f072fe11687b5c4b264",
-  measurementId: "G-3V2PK4PCDB"
-};
+    apiKey: "AIzaSyDhGgPH3YSy8sV0Sdz_--8hJJhq2zoqgKY",
+    authDomain: "krishi-bondhu-app-7300b.firebaseapp.com",
+    projectId: "krishi-bondhu-app-7300b",
+    storageBucket: "krishi-bondhu-app-7300b.firebasestorage.app",
+    messagingSenderId: "586255616365",
+    appId: "1:586255616365:web:a09f072fe11687b5c4b264"
+  };
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
@@ -2150,108 +2149,19 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     return 'DAE-' + namePrefix + '-' + randomNum;
   }
 
-async function doRegister() {
-    const name = document.getElementById('regName').value.trim();
-    const rawPhone = document.getElementById('regPhone').value.trim();
-    const role = document.getElementById('regRole').value;
-    const referralCode = document.getElementById('regReferralCode').value.trim().toUpperCase();
-    const pin = getPin(['rpin1','rpin2','rpin3','rpin4','rpin5','rpin6']);
-    const pinConfirm = getPin(['rpin1c','rpin2c','rpin3c','rpin4c','rpin5c','rpin6c']);
-
-    let phone = rawPhone;
-    if (phone.startsWith('+88')) phone = phone.substring(3);
-    if (phone.length === 10 && !phone.startsWith('0')) phone = '0' + phone;
-
-    if (!name) { showError('নাম লিখুন!'); return; }
-    if (!phone || phone.length !== 11) { showError('সঠিক ১১ ডিজিটের ফোন নম্বর দিন!'); return; }
-    if (pin.length < 6) { showError('৬ সংখ্যার PIN দিন!'); return; }
-    if (pin !== pinConfirm) { showError('PIN দুটো মিলছে না!'); return; }
-
-    showLoading(true);
-
-    let referredByUserId = null;
-    let referredByUserName = null;
-
-    if (referralCode) {
-      try {
-        const referrerQuery = await db.collection('userPublic')
-          .where('myReferralCode', '==', referralCode)
-          .limit(1)
-          .get();
-
-        if (!referrerQuery.empty) {
-          referredByUserId = referrerQuery.docs[0].id;
-          referredByUserName = referrerQuery.docs[0].data().name;
-        } else {
-          showLoading(false);
-          showError('রেফারেল কোডটি সঠিক নয়! খালি রেখে আবার চেষ্টা করুন অথবা সঠিক কোড দিন।');
-          return;
-        }
-      } catch (err) {}
-    }
-
-    try {
-      const fakeEmail = phone + '@krishakbondhu.app';
-      const fakePassword = pin + "KB" + phone.slice(-4);
-
-      const cred = await auth.createUserWithEmailAndPassword(fakeEmail, fakePassword);
-
-      const userData = {
-        name, phone, role, createdAt: new Date().toISOString()
-      };
-
-      userData.myReferralCode = generateReferralCode(name);
-
-      if (role === 'officer') {
-        userData.officerReferralCode = generateOfficerCode(name);
-      }
-
-      if (referredByUserId) {
-        userData.referredByUserId = referredByUserId;
-        userData.referredByUserName = referredByUserName;
-      }
-
-      await db.collection('users').doc(cred.user.uid).set(userData);
-
-      const userPublicData = {
-        name, role,
-        myReferralCode: userData.myReferralCode,
-        avgRating: 0, reviewCount: 0
-      };
-      if (userData.officerReferralCode) userPublicData.officerReferralCode = userData.officerReferralCode;
-      await db.collection('userPublic').doc(cred.user.uid).set(userPublicData);
-
-      const successMsg = referredByUserId
-        ? `✅ নিবন্ধন সফল! আপনি ${referredByUserName} এর রেফারেলে যুক্ত হয়েছেন।`
-        : '✅ নিবন্ধন সফল! এখন লগইন করুন।';
-      showSuccess(successMsg);
-
-      clearPins(['rpin1','rpin2','rpin3','rpin4','rpin5','rpin6','rpin1c','rpin2c','rpin3c','rpin4c','rpin5c','rpin6c']);
-      document.getElementById('regReferralCode').value = '';
-      setTimeout(() => showTab('login'), 2000);
-    } catch(e) {
-      if (e.code === 'auth/email-already-in-use') showError('এই ফোন নম্বর আগে থেকেই নিবন্ধিত!');
-      else showError('সমস্যা হয়েছে: ' + e.message);
-    }
-    showLoading(false);
-  }
-
   async function doLogin() {
-    const rawPhone = document.getElementById('loginPhone').value.trim();
+    const phone = document.getElementById('loginPhone').value.trim();
     const pin = document.getElementById('loginPinFull').value.trim();
-    
-    let phone = rawPhone;
-    if (phone.startsWith('+88')) phone = phone.substring(3);
-    if (phone.length === 10 && !phone.startsWith('0')) phone = '0' + phone;
 
-    if (!phone || phone.length !== 11) { showError('সঠিক ফোন নম্বর দিন!'); return; }
-    if (pin.length < 4) { showError('PIN দিন!'); return; }
+    if (!phone || phone.length < 11) { showError('সঠিক ফোন নম্বর দিন!'); return; }
+    // পুরনো অ্যাকাউন্ট ৪ সংখ্যার PIN দিয়ে তৈরি, নতুন অ্যাকাউন্ট ৬ সংখ্যার —
+    // তাই লগইনে দুই দৈর্ঘ্যই গ্রহণ করা হচ্ছে, যাতে কারো লগইন আটকে না যায়।
+    if (pin.length < 4 || pin.length > 6) { showError('৪ থেকে ৬ সংখ্যার PIN দিন!'); return; }
 
     showLoading(true);
     try {
       const fakeEmail = phone + '@krishakbondhu.app';
-      const fakePassword = pin + "KB" + phone.slice(-4);
-      await auth.signInWithEmailAndPassword(fakeEmail, fakePassword);
+      await auth.signInWithEmailAndPassword(fakeEmail, pin + phone.slice(-4));
     } catch(e) {
       if (e.code === 'auth/user-not-found') showError('এই ফোন নম্বর নিবন্ধিত নেই!');
       else if (e.code === 'auth/wrong-password') showError('PIN ভুল হয়েছে!');
