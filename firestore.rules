@@ -1,0 +1,257 @@
+rules_version = '2';
+
+// ==========================================================
+// কৃষক বন্ধু — Firestore Security Rules
+// Project: krishi-bondhu-5ebfb
+// ==========================================================
+// এই ফাইলটা Firebase Console > Firestore Database > Rules ট্যাবে
+// পেস্ট করে "Publish" করতে হবে। অথবা CLI দিয়ে:
+//   firebase deploy --only firestore:rules
+// ==========================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- Helper functions ----
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // ⚠️ admin.html তে ADMIN_ALLOWED_EMAILS এ যে ইমেইল আছে, এখানেও সেই একই ইমেইল বসাও
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email == "krishibondhu26@gmail.com";
+    }
+
+    function isOwner(field) {
+      return isSignedIn() && request.auth.uid == resource.data[field];
+    }
+
+    function isOwnerOnCreate(field) {
+      return isSignedIn() && request.auth.uid == request.resource.data[field];
+    }
+
+    // ==========================================================
+    // USERS — প্রাইভেট প্রোফাইল ডেটা (ফোন নম্বর, এলাকা, activity ইত্যাদি)।
+    // আগে এখানে allow read: if isSignedIn() ছিল — অর্থাৎ যেকোনো লগইন করা
+    // ইউজার সরাসরি Firestore query করে অন্য যেকোনো ইউজারের ফোন নম্বর সহ
+    // পুরো প্রোফাইল পড়তে পারতেন। এখন শুধু owner, admin, আর যে কৃষি কর্মকর্তা
+    // এই ইউজারকে রেফার করেছেন (referredByOfficerId মিললে — অফিসার ড্যাশবোর্ডে
+    // নিজের আনা কৃষকদের দেখার জন্য এটা দরকার) — এরাই পড়তে পারবেন।
+    // অন্য ইউজারের কাছে দেখানোর প্রয়োজন হয় এমন পাবলিক তথ্য (নাম, rating,
+    // রেফারেল কোড) এখন আলাদা /userPublic/{userId} কালেকশনে থাকে।
+    // ==========================================================
+    match /users/{userId} {
+      allow read: if isSignedIn() && (
+        request.auth.uid == userId ||
+        isAdmin() ||
+        resource.data.referredByOfficerId == request.auth.uid
+      );
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if (isSignedIn() && request.auth.uid == userId) || isAdmin() ||
+        // রেফারেল কমিশন আপডেট হওয়ার সময় অন্য কারো ডেটা বদলাতে হয় —
+        // শুধু এই নির্দিষ্ট ফিল্ডটা ছাড়া অন্য কিছু বদলাতে দেওয়া হবে না
+        (isSignedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['totalReferralEarned']));
+      allow delete: if isAdmin();
+
+      // রিভিউ সাবকালেকশন — কেনাবেচার পর একে অপরকে রিভিউ দেওয়ার জন্য
+      // (এটা আগে ছিল না, রিভিউ সিস্টেম rules ছাড়া কাজ করছিল না)
+      match /reviews/{reviewId} {
+        allow read: if true; // যেকেউ (এমনকি লগইন ছাড়াও) রেটিং দেখতে পারবে
+        allow create: if isSignedIn(); // যেকেউ রিভিউ দিতে পারবে, নিজেকে বাদে (client-side check আছে)
+        allow update, delete: if isAdmin(); // ভুয়া/আপত্তিকর রিভিউ শুধু admin সরাতে পারবে
+      }
+    }
+
+    // ==========================================================
+    // USERPUBLIC — নাম, role, গড় rating, রেফারেল কোড — এগুলো gig/bid/
+    // ডিমান্ড কার্ডে বা রেফারেল কোড যাচাইয়ে অন্য ইউজারদের দেখাতে হয়,
+    // তাই এই কালেকশনটা সবাই পড়তে পারবে। ফোন নম্বর/এলাকা এখানে নেই।
+    // ==========================================================
+    match /userPublic/{userId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if (isSignedIn() && request.auth.uid == userId) || isAdmin() ||
+        // রিভিউ জমা পড়ার পর গড় rating আপডেট হওয়ার সময় অন্য কারো ডেটা বদলাতে হয়
+        (isSignedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['avgRating', 'reviewCount']));
+      allow delete: if isAdmin();
+    }
+
+
+    // ==========================================================
+    // COUPONS — কৃষক নিজের কুপন বানায়; রিটেলার শুধু status/usedBy আপডেট
+    // করতে পারবে (verify করার সময়), অন্য কিছু বদলাতে পারবে না
+    // ==========================================================
+    match /coupons/{couponId} {
+      allow read: if isSignedIn();
+      allow create: if isOwnerOnCreate('farmerId');
+      allow update: if isSignedIn() &&
+        resource.data.status == 'active' &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['status', 'usedByRetailerId', 'usedByRetailerName', 'usedAt']);
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // SALES TRANSACTIONS — রিটেলার নিজের বিক্রি লেখে, কেউ এডিট করতে পারবে না
+    // (commission-এর হিসাব এখানে থাকে, তাই ইমিউটেবল রাখা জরুরি)
+    // ==========================================================
+    match /salesTransactions/{txId} {
+      allow read: if isSignedIn(); // farmer নিজের বিক্রি দেখতে পারবে, retailer নিজেরটা
+      allow create: if isOwnerOnCreate('retailerId');
+      allow update, delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // OFFICER REFERRAL ACTIVITY — শুধু সিস্টেম লেখে (কেনাকাটার সময়),
+    // admin ছাড়া কেউ পয়েন্ট এডিট করতে পারবে না ("black box" রক্ষা)
+    // ==========================================================
+    match /officerReferralActivity/{activityId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // CROP GIGS / DEMANDS — মার্কেটপ্লেস পোস্ট, মালিক ছাড়া কেউ এডিট করতে পারবে না
+    // ==========================================================
+    match /cropGigs/{gigId} {
+      allow read: if isSignedIn();
+      allow create: if isOwnerOnCreate('farmerId');
+      allow update, delete: if isOwner('farmerId') || isAdmin();
+    }
+
+    match /cropDemands/{demandId} {
+      allow read: if isSignedIn();
+      allow create: if isOwnerOnCreate('buyerId');
+      allow update, delete: if isOwner('buyerId') || isAdmin();
+
+      // bids সাব-কালেকশন — যে কেউ bid দিতে পারবে, নিজেরটা এডিট করতে পারবে
+      match /bids/{bidId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn();
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    // ==========================================================
+    // DRIVERS — ড্রাইভার নিজের প্রোফাইল/অ্যাভেইলেবিলিটি নিয়ন্ত্রণ করবে
+    // ==========================================================
+    match /drivers/{driverId} {
+      allow read: if isSignedIn();
+      allow write: if (isSignedIn() && request.auth.uid == driverId) || isAdmin();
+    }
+
+    // ==========================================================
+    // MEDICINE ORDERS — কৃষক অর্ডার করে, admin/company দেখতে পারবে
+    // ==========================================================
+    match /medicineOrders/{orderId} {
+      allow read: if isSignedIn();
+      allow create: if isOwnerOnCreate('farmerId');
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // COMPANY PRODUCTS — কোম্পানি নিজের প্রোডাক্ট বানায়/এডিট করে,
+    // বাকিরা শুধু দেখতে পারবে
+    // ==========================================================
+    match /companyProducts/{productId} {
+      allow read: if isSignedIn();
+      allow create: if isOwnerOnCreate('companyId');
+      allow update, delete: if isOwner('companyId') || isAdmin();
+    }
+
+    match /companyOrders/{orderId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // SUPPORT TICKETS — ইউজার নিজের টিকিট বানাবে/দেখবে, admin সব দেখবে
+    // ==========================================================
+    match /supportTickets/{ticketId} {
+      allow read: if isOwner('userId') || isAdmin();
+      allow create: if isOwnerOnCreate('userId');
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // MARKET PRICES / WEATHER — admin panel থেকে লেখা হয়,
+    // সবাই (এমনকি লগইন ছাড়াও, PWA-তে price দেখানোর জন্য) পড়তে পারবে
+    // ==========================================================
+    match /marketPrices/{priceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /weatherCache/{districtId} {
+      allow read: if true;
+      allow write: if isSignedIn(); // app নিজে cache আপডেট করে
+    }
+
+    match /weatherAlerts/{districtId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ==========================================================
+    // MARKETING CHANNELS — শুধু admin panel ব্যবহার করে
+    // ==========================================================
+    match /marketingChannels/{channelId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ==========================================================
+    // সার্বজনীন রেফারেল সিস্টেম — এই দুইটা collection নতুন যোগ হয়েছে,
+    // আগের rules ফাইলে ছিল না (গ্যাপ ছিল, এখন ঠিক করা হলো)
+    // ==========================================================
+    match /settings/{settingId} {
+      allow read: if true; // রেফারেল রেট সবাই পড়তে পারবে (কমিশন হিসাব করার জন্য)
+      allow write: if isAdmin(); // শুধু admin panel থেকে রেট বদলানো যাবে
+    }
+
+    match /referralEarnings/{earningId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn(); // কেনাকাটার সময় সিস্টেম নিজে থেকে লেখে
+      allow update, delete: if isAdmin(); // শুধু admin payoutStatus বদলাতে পারবে
+    }
+
+    // ==========================================================
+    // ডায়াগনসিস লগ — কৃষি কর্মকর্তাদের প্রাদুর্ভাব মনিটরিং ড্যাশবোর্ডের জন্য
+    // ==========================================================
+    match /diagnosisLogs/{logId} {
+      allow read: if isSignedIn();
+      allow create: if isOwnerOnCreate('farmerId');
+      allow update, delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // কৃষি কর্মকর্তার পরামর্শ বার্তা — কৃষককে সরাসরি পাঠানো
+    // ==========================================================
+    match /officerMessages/{msgId} {
+      allow read: if isSignedIn() && (resource.data.farmerId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && resource.data.farmerId == request.auth.uid; // কৃষক নিজে "পড়া হয়েছে" মার্ক করবে
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================================
+    // ওষুধ ডাটাবেজ — Admin Panel থেকে ব্যবস্থাপনা, AI prompt-এ ব্যবহারের জন্য
+    // সবাই পড়তে পারবে (AI suggestion তৈরির জন্য), শুধু admin লিখতে/বদলাতে পারবে
+    // ==========================================================
+    match /medicineDatabase/{medId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ==========================================================
+    // ডিফল্ট: উপরে উল্লেখ না থাকা যেকোনো কিছুতে সরাসরি নিষেধ
+    // ==========================================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
