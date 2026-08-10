@@ -204,26 +204,104 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 .h-brand-name { font-size: 20px; font-weight: 700; }
 .h-brand-sub { font-size: 10px; opacity: 0.8; }
 .logout-btn { background: rgba(255,255,255,0.2); border: none; border-radius: 20px; color: white; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
-.greeting-card { background: rgba(255,255,255,0.12); border-radius: 14px; padding: 14px; }
+.greeting-card { background: rgba(255,255,255,0.12); border-radius: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .greeting-name { font-size: 18px; font-weight: 700; }
 .greeting-role { font-size: 12px; opacity: 0.8; margin-top: 3px; }
+.greeting-referral-btn { flex-shrink: 0; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 12px; padding: 6px 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; color: white; font-family: inherit; }
+.greeting-referral-btn:active { transform: scale(0.94); }
+.grb-icon { font-size: 18px; }
+.grb-label { font-size: 9px; font-weight: 700; }
 .main-content { padding: 20px 16px; }
 .section-title { font-size: 13px; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
 .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-.feature-card { background: white; border-radius: 16px; padding: 18px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); cursor: pointer; min-height: 120px; justify-content: space-between; }
-.fc-g { border-left: 4px solid #2E7D32; }
-.fc-a { border-left: 4px solid #FF8F00; }
-.fc-s { border-left: 4px solid #0288D1; }
-.fc-r { border-left: 4px solid #7C3AED; }
+.feature-card { background: white; border-radius: 18px; padding: 18px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); cursor: pointer; min-height: 120px; justify-content: space-between; transition: transform 0.12s ease; }
+.feature-card:active { transform: scale(0.96); }
+.fc-g { background: #F1F8E9; border-left: none; }
+.fc-a { background: #FFF8E1; border-left: none; }
+.fc-s { background: #E1F5FE; border-left: none; }
+.fc-r { background: #F3E8FD; border-left: none; }
 .fc-icon { font-size: 32px; }
 .fc-label { font-size: 14px; font-weight: 700; color: #212121; }
 .fc-sub { font-size: 11px; color: #6B7280; }
 .coming-soon { background: white; border-radius: 16px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06); color: #6B7280; font-size: 14px; }
 
+/* রেফারেল ব্যানার — মূল ফিচার গ্রিড থেকে আলাদা, ছোট প্রোমো স্ট্রিপ হিসেবে */
+.referral-banner { margin-top: 12px; background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border: 1.5px dashed #FF8F00; border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.12s ease; }
+.referral-banner:active { transform: scale(0.97); }
+.rb-icon { font-size: 26px; }
+.rb-text { flex: 1; }
+.rb-title { font-size: 13px; font-weight: 700; color: #E65100; }
+.rb-sub { font-size: 11px; color: #8D6E00; margin-top: 2px; }
+.rb-arrow { font-size: 22px; color: #E65100; font-weight: 700; }
+
+/* ===== v2 ডিজাইন: হোমপেজের বড় ৪-কার্ড গ্রিড ===== */
+.big4 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.big4 .big-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.big-card { border-radius: 16px; padding: 16px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; min-height: 112px; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.12s ease; }
+.big-card:active { transform: scale(0.96); }
+.big-card.g { background: #E8F5E9; }
+.big-card.a { background: #FFF8E1; }
+.big-card.s { background: #E1F5FE; }
+.big-card.r { background: #FFEBEE; }
+.big-emoji { font-size: 30px; line-height: 1; }
+.big-label { font-size: 14px; font-weight: 700; color: #212121; line-height: 1.3; }
+.big-sub { font-size: 10px; color: #616161; margin-top: 2px; }
+.big-arrow { position: absolute; bottom: 12px; right: 12px; font-size: 15px; opacity: 0.35; }
+
+/* আবহাওয়া মিনি-স্ট্রিপ + জরুরি সতর্কতা ব্যানার */
+.weather-sms-banner { background: linear-gradient(135deg, #B71C1C 0%, #C62828 100%); color: white; padding: 11px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.wsb-icon { font-size: 22px; flex-shrink: 0; }
+.wsb-text { flex: 1; }
+.wsb-title { font-size: 12px; font-weight: 700; }
+.wsb-desc { font-size: 10px; opacity: 0.9; margin-top: 1px; }
+.weather-strip { background: #0288D1; color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; cursor: pointer; }
+.wx-left { display: flex; align-items: center; gap: 8px; }
+.wx-icon { font-size: 20px; }
+.wx-temp { font-size: 16px; font-weight: 700; }
+.wx-desc { font-size: 10px; opacity: 0.85; }
+.wx-voice { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 11px; font-size: 10px; font-weight: 600; }
+
+/* লাইভ বাজারদর স্ট্রিপ */
+.market-strip { margin-bottom: 20px; }
+.strip-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.see-all { font-size: 11px; color: #2E7D32; font-weight: 700; cursor: pointer; }
+
+/* লাইভ বাজারদর — একাধিক চিপ ডান থেকে বামে অটো-স্ক্রল, চাপ দিলে থামবে */
+.price-row-wrap { overflow: hidden; cursor: pointer; }
+.price-row-track { display: flex; gap: 10px; width: max-content; animation: marqueeScroll 22s linear infinite; }
+.price-row-track.paused { animation-play-state: paused; }
+@keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.p-chip { flex-shrink: 0; background: white; border-radius: 14px; padding: 12px 16px; min-width: 96px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+.p-chip .p-icon { font-size: 26px; }
+.p-chip .p-name { font-size: 13px; font-weight: 700; margin-top: 6px; }
+.p-chip .p-price { font-size: 14px; font-weight: 700; color: #2E7D32; margin-top: 4px; }
+.p-chip .p-unit { font-size: 9px; color: #9E9E9E; margin-top: 1px; }
+.p-chip .p-trend { font-size: 9px; padding: 2px 8px; border-radius: 9px; font-weight: 700; margin-top: 5px; display: inline-block; }
+.p-chip .p-trend.up { background: #E8F5E9; color: #2E7D32; }
+.p-chip .p-trend.dn { background: #FFEBEE; color: #C62828; }
+.more-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.more-btn { background: white; border-radius: 12px; padding: 11px 4px; display: flex; flex-direction: column; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.12s ease; }
+.more-btn:active { transform: scale(0.94); }
+.more-icon { font-size: 21px; }
+.more-label { font-size: 9px; font-weight: 600; color: #616161; text-align: center; line-height: 1.3; }
+
+/* নিচের নেভিগেশন বার — শুধু কৃষক/আড়তদার রোলের জন্য দেখানো হয় */
+.bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 500; background: white; border-top: 1px solid #E0E0E0; display: none; padding: 7px 0 10px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); }
+.bottom-nav.show { display: flex; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; border: none; background: none; font-family: inherit; }
+.nav-icon { font-size: 19px; }
+.nav-label { font-size: 9px; color: #9E9E9E; font-weight: 600; }
+.nav-item.active .nav-label { color: #2E7D32; font-weight: 700; }
+.nav-dot { width: 4px; height: 4px; background: #2E7D32; border-radius: 50%; margin-top: 1px; visibility: hidden; }
+.nav-item.active .nav-dot { visibility: visible; }
+.nav-pad-for-bottom-nav { padding-bottom: 74px !important; }
+.truck-finder-page, .seed-page, .gig-detail-page, #referralPage { padding-bottom: 74px; }
+
 /* DETECT DISEASE PAGE */
 .detect-page { display: none; position: relative; z-index: 10; min-height: 100vh; background: #F0F4F0; }
 .detect-hdr { background: linear-gradient(160deg, #1B5E20 0%, #2E7D32 100%); padding: 16px; color: white; display: flex; align-items: center; gap: 12px; }
-.back-btn { width: 34px; height: 34px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: none; color: white; }
+.back-btn { width: 36px; height: 36px; background: rgba(255,255,255,0.18); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 17px; cursor: pointer; border: 1px solid rgba(255,255,255,0.25); color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: transform 0.12s ease, background 0.12s ease; flex-shrink: 0; }
+.back-btn:active { transform: scale(0.88); background: rgba(255,255,255,0.3); }
 .detect-title { font-size: 18px; font-weight: 700; }
 .detect-sub { font-size: 11px; opacity: 0.8; margin-top: 2px; }
 
@@ -239,7 +317,7 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 .dcb-label { font-size: 12px; font-weight: 700; color: #1F2937; text-align: center; }
 .dcb-sub { font-size: 10px; color: #6B7280; text-align: center; margin-top: 2px; }
 .detect-photo-hint { padding: 10px 16px 4px; font-size: 13px; color: #059669; font-weight: 600; }
-.detect-photo-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 6px 16px; }
+.detect-photo-slots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 6px 16px; }
 .detect-photo-slot { aspect-ratio: 1; border: 2.5px dashed #81C784; border-radius: 14px; background: #F1F8E9; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; }
 .detect-photo-slot.filled { border-style: solid; border-color: #059669; }
 .detect-photo-slot img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
@@ -250,6 +328,13 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 .result-severity-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
 .result-severity-badge.sev-healthy { background: #DCFCE7; color: #15803D; }
 .result-severity-badge.sev-warn { background: #FEF3C7; color: #B45309; }
+
+/* ছবি অস্পষ্ট/অপর্যাপ্ত হলে সরাসরি করণীয় দেখানো ব্যানার */
+.retake-photo-banner { background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: 14px; padding: 14px; margin: 10px 0; }
+.rpb-title { font-size: 14px; font-weight: 700; color: #92400E; margin-bottom: 6px; }
+.rpb-text { font-size: 12px; color: #78350F; margin-bottom: 8px; }
+.rpb-steps { margin: 0 0 12px 18px; padding: 0; font-size: 12px; color: #78350F; line-height: 1.8; }
+.rpb-btn { width: 100%; background: #F59E0B; color: white; border: none; border-radius: 10px; padding: 11px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; }
 .result-severity-badge.sev-danger { background: #FEE2E2; color: #B91C1C; }
 .cam-zone { margin: 16px; background: #F1F8E9; border: 2.5px dashed #81C784; border-radius: 20px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; overflow: hidden; }
 .cam-zone img { width: 100%; height: 220px; object-fit: cover; border-radius: 18px; }
@@ -288,6 +373,23 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 /* অর্ডার/কুপন সেকশন */
 .med-order-box { background: #F0FDF4; border: 1.5px solid #A5D6A7; border-radius: 14px; padding: 14px; margin-top: 4px; }
 .med-order-title { font-size: 13px; font-weight: 700; color: #1B5E20; margin-bottom: 10px; }
+
+/* AI-সাজেস্টকৃত ওষুধ কার্ড — ই-কমার্স স্টাইল, একাধিক হতে পারে */
+.suggested-med-wrap { margin-top: 4px; }
+.smc-label { font-size: 11px; font-weight: 700; color: #7C3AED; margin-bottom: 8px; }
+.suggested-med-item { background: white; border: 1.5px solid #E5E7EB; border-radius: 16px; padding: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 10px; }
+.smc-body { display: flex; gap: 12px; margin-bottom: 12px; }
+.smc-thumb { width: 60px; height: 60px; flex-shrink: 0; background: #F5F3FF; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; }
+.smc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.smc-info { flex: 1; min-width: 0; }
+.smc-name { font-size: 14px; font-weight: 700; color: #111827; line-height: 1.3; }
+.smc-company { font-size: 11px; color: #6B7280; margin-top: 2px; }
+.smc-tags { display: flex; gap: 6px; margin-top: 5px; }
+.smc-tag { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
+.smc-tag.organic { background: #E8F5E9; color: #2E7D32; }
+.smc-tag.chemical { background: #FFF3E0; color: #E65100; }
+.smc-price { font-size: 15px; font-weight: 700; color: #1B5E20; margin-top: 5px; }
+.smc-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .med-order-btns { display: flex; flex-direction: column; gap: 8px; }
 .order-now-btn { background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%); color: white; border: none; border-radius: 12px; padding: 13px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; box-shadow: 0 3px 10px rgba(46,125,50,0.3); }
 .coupon-btn { background: white; color: #E65100; border: 2px solid #FF8F00; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; }
@@ -387,6 +489,14 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 .seed-card-name { font-size: 13px; font-weight: 700; }
 .seed-card-per-bigha { font-size: 10px; color: #059669; margin-top: 4px; }
 .seed-card-price { font-size: 14px; font-weight: 700; color: #1B5E20; margin-top: 4px; }
+.seed-card-rating { font-size: 10px; color: #F9A825; font-weight: 600; margin-top: 2px; }
+.seed-review-btn { width: 100%; margin-top: 6px; padding: 7px; border-radius: 8px; border: 1.5px solid #F9A825; background: white; color: #F9A825; font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.seed-search-box { padding: 4px 16px 10px; }
+.seed-search-input { width: 100%; padding: 11px 14px; border-radius: 12px; border: 1.5px solid #E0E0E0; font-size: 13px; font-family: inherit; box-sizing: border-box; }
+.seed-cat-scroll { display: flex; gap: 8px; padding: 0 16px 12px; overflow-x: auto; scrollbar-width: none; }
+.seed-cat-scroll::-webkit-scrollbar { display: none; }
+.seed-cat-chip { flex-shrink: 0; padding: 8px 14px; border-radius: 20px; border: 1.5px solid #E0E0E0; background: white; font-size: 12px; font-weight: 600; color: #616161; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.seed-cat-chip.active { background: #2E7D32; border-color: #2E7D32; color: white; }
 .seed-order-btn { width: 100%; background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%); color: white; border: none; border-radius: 8px; padding: 9px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 8px; }
 
 /* জমির পরিমাণ জিজ্ঞেস করার মডাল */
@@ -939,20 +1049,76 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       <button class="logout-btn" onclick="doLogout()">লগআউট</button>
     </div>
     <div class="greeting-card">
-      <div class="greeting-name" id="userName">স্বাগতম!</div>
-      <div class="greeting-role" id="userRole">কৃষক</div>
+      <div>
+        <div class="greeting-name" id="userName">স্বাগতম!</div>
+        <div class="greeting-role" id="userRole">কৃষক</div>
+      </div>
+      <button class="greeting-referral-btn" id="greetingReferralBtn" onclick="showReferralPage()" style="display:none">
+        <div class="grb-icon">🎁</div>
+        <div class="grb-label">রেফারেল</div>
+      </button>
     </div>
   </div>
+
+  <!-- ঝড়/ভারী বৃষ্টির সতর্কতা থাকলেই শুধু দেখানো হবে -->
+  <div class="weather-sms-banner" id="homeStormBanner" style="display:none" onclick="showWeatherPage()">
+    <div class="wsb-icon">⚠️</div>
+    <div class="wsb-text">
+      <div class="wsb-title" id="homeStormTitle">জরুরি সতর্কতা!</div>
+      <div class="wsb-desc" id="homeStormDesc"></div>
+    </div>
+  </div>
+
+  <!-- বর্তমান আবহাওয়ার মিনি-স্ট্রিপ -->
+  <div class="weather-strip" id="homeWeatherStrip" style="display:none" onclick="showWeatherPage()">
+    <div class="wx-left">
+      <div class="wx-icon" id="homeWxIcon">⛅</div>
+      <div>
+        <div class="wx-temp" id="homeWxTemp">--°সে</div>
+        <div class="wx-desc" id="homeWxDesc">লোড হচ্ছে...</div>
+      </div>
+    </div>
+    <div class="wx-voice">বিস্তারিত ›</div>
+  </div>
+
   <div class="main-content">
     <div class="section-title" id="mainSectionTitle">কী করতে চান?</div>
-    <div class="feature-grid" id="dynamicFeatureGrid">
+
+    <!-- কৃষক/আড়তদার ছাড়া বাকি সব রোলের জন্য (retailer/company/driver/officer) -->
+    <div class="feature-grid" id="dynamicFeatureGrid" style="display:none">
       <!-- role অনুযায়ী JS দিয়ে ভরা হবে -->
-      <div class="feature-card fc-g" onclick="showDetectPage()"><div class="fc-icon">📸</div><div><div class="fc-label">ফসলের রোগ দেখুন</div><div class="fc-sub">ছবি তুলুন AI বলবে</div></div></div>
-      <div class="feature-card fc-a" onclick="showMarketPage()"><div class="fc-icon">💰</div><div><div class="fc-label">বাজারদর</div><div class="fc-sub">আজকের দাম দেখুন</div></div></div>
-      <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
-      <div class="feature-card fc-r" onclick="showSellPage()"><div class="fc-icon">🛒</div><div><div class="fc-label">ফসল বিক্রি</div><div class="fc-sub">পাইকার খুঁজুন</div></div></div>
     </div>
-    <div class="coming-soon">🚀 আরও ফিচার শীঘ্রই আসছে...</div>
+
+    <!-- কৃষক/আড়তদারের জন্য — Admin Panel থেকে লাইভ কন্ট্রোল করা যায় এমন কার্ড লেআউট (JS দিয়ে ভরা হয়) -->
+    <div class="big4" id="dynamicBig4" style="display:none">
+    </div>
+
+    <!-- লাইভ বাজারদর স্ট্রিপ (শুধু কৃষক/আড়তদার) — একাধিক ফসল ডান থেকে বামে অটো স্ক্রল হবে, চাপ দিলে থামবে, একটু পর আবার চালু হবে -->
+    <div class="market-strip" id="homeMarketStrip" style="display:none">
+      <div class="strip-header">
+        <div class="section-title" style="margin-bottom:0">আজকের বাজারদর (প্রতি কেজি)</div>
+        <div class="see-all" onclick="showMarketPage()">সব দেখুন →</div>
+      </div>
+      <div class="price-row-wrap" id="homePriceRowWrap" onclick="pauseMarketMarquee()">
+        <div class="price-row-track" id="homePriceRowTrack">
+          <div class="p-chip">লোড হচ্ছে...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" id="moreFeaturesTitle" style="display:none">আরও সুবিধা</div>
+    <div class="more-grid" id="moreFeaturesGrid" style="display:none">
+      <div class="more-btn" onclick="showComingSoonToast('মাটি পরীক্ষা')"><div class="more-icon">🧪</div><div class="more-label">মাটি পরীক্ষা</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('স্বাস্থ্যসেবা')"><div class="more-icon">🏥</div><div class="more-label">স্বাস্থ্যসেবা</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('কৃষি পরামর্শ')"><div class="more-icon">💬</div><div class="more-label">কৃষি পরামর্শ</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('ফসল ক্যালেন্ডার')"><div class="more-icon">📅</div><div class="more-label">ফসল ক্যালেন্ডার</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('ফসল পরিচালনা')"><div class="more-icon">🤖</div><div class="more-label">ফসল পরিচালনা</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('লাভ-ক্ষতি হিসাব')"><div class="more-icon">📊</div><div class="more-label">লাভ-ক্ষতি হিসাব</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('কৃষি ঋণ')"><div class="more-icon">🏦</div><div class="more-label">কৃষি ঋণ</div></div>
+      <div class="more-btn" onclick="showComingSoonToast('সরকারি সুবিধা')"><div class="more-icon">📋</div><div class="more-label">সরকারি সুবিধা</div></div>
+    </div>
+
+    <div class="coming-soon" id="homeComingSoon" style="display:none">🚀 আরও ফিচার শীঘ্রই আসছে...</div>
   </div>
 </div>
 
@@ -961,8 +1127,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   <div class="detect-hdr">
     <button class="back-btn" onclick="showHomePage()">←</button>
     <div>
-      <div class="detect-title">ফসলের রোগ দেখুন</div>
-      <div class="detect-sub">ছবি তুলুন, AI বিশ্লেষণ করবে</div>
+      <div class="detect-title" id="detectPageTitle">ফসলের রোগ দেখুন</div>
+      <div class="detect-sub" id="detectPageSub">ছবি তুলুন, AI বিশ্লেষণ করবে</div>
     </div>
   </div>
 
@@ -976,21 +1142,19 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       <div class="detect-cat-btn" data-cat="সবজি ও মসলা" onclick="selectDetectCategory('সবজি ও মসলা', this)">
         <div class="dcb-icon">🥕</div><div class="dcb-label">সবজি ও মসলা</div><div class="dcb-sub">আলু, মরিচ, পেঁয়াজ</div>
       </div>
-      <div class="detect-cat-btn" data-cat="বাগান/ছাদ কৃষি" onclick="selectDetectCategory('বাগান/ছাদ কৃষি', this)">
-        <div class="dcb-icon">🪴</div><div class="dcb-label">বাগান/ছাদ কৃষি</div><div class="dcb-sub">টবের গাছ, নার্সারি</div>
-      </div>
-      <div class="detect-cat-btn" data-cat="গবাদি পশু" onclick="selectDetectCategory('গবাদি পশু', this)">
-        <div class="dcb-icon">🐄</div><div class="dcb-label">গবাদি পশু</div><div class="dcb-sub">গরু, ছাগল</div>
-      </div>
-      <div class="detect-cat-btn" data-cat="হাঁস-মুরগি ও মাছ" onclick="selectDetectCategory('হাঁস-মুরগি ও মাছ', this)">
-        <div class="dcb-icon">🐔</div><div class="dcb-label">হাঁস-মুরগি ও মাছ</div><div class="dcb-sub">মুরগি, হাঁস, মাছ</div>
-      </div>
+    </div>
+  </div>
+
+  <!-- ছাদবাগান মোডে এই নোটটা দেখাবে ক্যাটাগরি ধাপের জায়গায় -->
+  <div id="gardenModeNote" style="display:none">
+    <div class="txn-disclaimer" style="background:#F1F8E9;border-color:#AED581;">
+      <div class="txn-disclaimer-icon">🪴</div>
+      <div class="txn-disclaimer-text">টবের/ছাদের গাছ, ফুল বা ফলের চারার জন্য বিশেষভাবে তৈরি — সরাসরি ছবি তুলুন</div>
     </div>
   </div>
 
   <!-- জমির পরিমাণ (ঐচ্ছিক) — দিলে AI কত পরিমাণ ওষুধ লাগবে তাও বলে দেবে -->
-  <div class="land-input-box">
-    <label class="gig-fl">🌾 আপনার জমির পরিমাণ (ঐচ্ছিক)</label>
+  <div class="land-input-box" id="detectLandInputBox">
     <div class="land-input-row">
       <input type="number" class="gig-input" id="detectLandSize" placeholder="যেমন: ২">
       <select class="land-unit-select" id="detectLandUnit">
@@ -1002,28 +1166,34 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     <div class="land-input-hint">দিলে AI বলে দেবে ঠিক কত পরিমাণ ওষুধ স্প্রে করতে হবে</div>
   </div>
 
-  <!-- ধাপ ২: ২-৩টা ছবি — যত বেশি ছবি, তত সঠিক ফলাফল -->
-  <div class="detect-photo-hint">📸 যত বেশি ছবি দেবেন, AI তত সঠিক উত্তর দিতে পারবে</div>
+  <!-- ধাপ ২: প্রথমে পুরো গাছ, তারপর আক্রান্ত স্থানের কমপক্ষে ৩টা কাছের ছবি — যত বেশি ছবি, তত সঠিক ফলাফল -->
+  <div class="detect-photo-hint">📸 প্রথমে পুরো গাছের ছবি, তারপর আক্রান্ত জায়গার কাছাকাছি থেকে কমপক্ষে ৩টা ছবি দিন — যত বেশি ও স্পষ্ট ছবি, AI তত সঠিক উত্তর দিতে পারবে</div>
   <div class="detect-photo-slots">
     <div class="detect-photo-slot" id="slot1" onclick="triggerSlotUpload(1)">
       <div class="dps-icon">📷</div>
-      <div class="dps-label">কাছের ছবি</div>
-      <div class="dps-required">আবশ্যক</div>
+      <div class="dps-label">পুরো গাছ</div>
+      <div class="dps-required optional">দিলে আরও ভালো</div>
     </div>
     <div class="detect-photo-slot" id="slot2" onclick="triggerSlotUpload(2)">
       <div class="dps-icon">📷</div>
-      <div class="dps-label">পুরো গাছ/প্রাণী</div>
-      <div class="dps-required optional">ঐচ্ছিক</div>
+      <div class="dps-label">আক্রান্ত স্থান — কাছের ছবি ১</div>
+      <div class="dps-required">আবশ্যক</div>
     </div>
     <div class="detect-photo-slot" id="slot3" onclick="triggerSlotUpload(3)">
       <div class="dps-icon">📷</div>
-      <div class="dps-label">আরেকটা কোণ</div>
-      <div class="dps-required optional">ঐচ্ছিক</div>
+      <div class="dps-label">আক্রান্ত স্থান — কাছের ছবি ২</div>
+      <div class="dps-required optional">দিলে আরও ভালো</div>
+    </div>
+    <div class="detect-photo-slot" id="slot4" onclick="triggerSlotUpload(4)">
+      <div class="dps-icon">📷</div>
+      <div class="dps-label">আক্রান্ত স্থান — কাছের ছবি ৩</div>
+      <div class="dps-required optional">দিলে আরও ভালো</div>
     </div>
   </div>
-  <input type="file" id="slotInput1" accept="image/*" capture="environment" style="display:none" onchange="handleSlotImage(1, this)">
-  <input type="file" id="slotInput2" accept="image/*" capture="environment" style="display:none" onchange="handleSlotImage(2, this)">
-  <input type="file" id="slotInput3" accept="image/*" capture="environment" style="display:none" onchange="handleSlotImage(3, this)">
+  <input type="file" id="slotInput1" accept="image/*" style="display:none" onchange="handleSlotImage(1, this)">
+  <input type="file" id="slotInput2" accept="image/*" style="display:none" onchange="handleSlotImage(2, this)">
+  <input type="file" id="slotInput3" accept="image/*" style="display:none" onchange="handleSlotImage(3, this)">
+  <input type="file" id="slotInput4" accept="image/*" style="display:none" onchange="handleSlotImage(4, this)">
 
   <div class="cam-actions">
     <button class="cam-btn" id="analyzeBtn" onclick="analyzeImage()" disabled>🔍 বিশ্লেষণ করুন</button>
@@ -1043,12 +1213,30 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       </div>
       <div class="result-body">
         <div class="result-desc" id="resultDesc">-</div>
+
+        <!-- ছবি অস্পষ্ট/অপর্যাপ্ত হলে সরাসরি নতুন ছবি তোলার নির্দেশনা — শুধু "কম নিশ্চিত" লেখা দেখানোর বদলে সরাসরি করণীয় বলে দেওয়া -->
+        <div class="retake-photo-banner" id="retakePhotoBanner" style="display:none">
+          <div class="rpb-title">📸 আরও ভালো ছবি লাগবে</div>
+          <div class="rpb-text">ছবি থেকে লক্ষণ ভালোভাবে বোঝা যায়নি। আবার তুলুন:</div>
+          <ol class="rpb-steps">
+            <li>প্রথমে পুরো গাছের একটা ছবি</li>
+            <li>তারপর আক্রান্ত জায়গার একদম কাছ থেকে কমপক্ষে ৩টা ছবি (দিনের আলোয়, ঝাপসা না হয় এভাবে)</li>
+          </ol>
+          <button class="rpb-btn" onclick="resetScan()">🔄 নতুন ছবি দিয়ে আবার চেষ্টা করুন</button>
+        </div>
+
         <button class="voice-btn-big" onclick="speakResult()">
           <span class="voice-btn-big-icon">🔊</span>
           <span class="voice-btn-big-text">অডিওতে শুনুন</span>
         </button>
 
-        <!-- অর্ডার / কুপন সেকশন -->
+        <!-- AI-সাজেস্টকৃত ওষুধ — একাধিক হতে পারে, ই-কমার্স স্টাইল কার্ড (নির্দিষ্ট প্রোডাক্ট মিললেই দেখাবে) -->
+        <div class="suggested-med-wrap" id="suggestedMedCard" style="display:none">
+          <div class="smc-label">🤖 AI-এর সাজেশন</div>
+          <div id="suggestedMedList"></div>
+        </div>
+
+        <!-- অর্ডার / কুপন সেকশন (কোনো নির্দিষ্ট প্রোডাক্ট না মিললে এই সাধারণ বক্সটা দেখাবে) -->
         <div class="med-order-box" id="medOrderBox">
           <div class="med-order-title">💊 ওষুধ প্রয়োজন হলে</div>
           <div class="med-order-btns">
@@ -1162,6 +1350,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         <option value="ট্রাক (ছোট)">ট্রাক (ছোট)</option>
         <option value="ট্রাক (বড়)">ট্রাক (বড়)</option>
         <option value="ভ্যান">ভ্যান</option>
+        <option value="ট্রাক্টর/চাষের গাড়ি">ট্রাক্টর/চাষের গাড়ি</option>
+        <option value="অ্যাম্বুলেন্স">অ্যাম্বুলেন্স</option>
       </select>
     </div>
     <div>
@@ -1320,14 +1510,27 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   <div class="seed-hdr">
     <button class="back-btn" onclick="showHomePage()">←</button>
     <div>
-      <div class="detect-title">বীজ ও উপকরণ</div>
-      <div class="detect-sub">আপনার জমির পরিমাণ অনুযায়ী বীজ কিনুন</div>
+      <div class="detect-title">বীজ কিনুন</div>
+      <div class="detect-sub">সব ধরনের বীজ, এক জায়গায়</div>
     </div>
   </div>
 
   <div class="txn-disclaimer">
     <div class="txn-disclaimer-icon">⚠️</div>
     <div class="txn-disclaimer-text">অর্ডার কোম্পানির কাছে সরাসরি যাবে। ডেলিভারি ও লেনদেন কোম্পানির সাথে সরাসরি হবে।</div>
+  </div>
+
+  <div class="seed-search-box">
+    <input type="text" class="seed-search-input" id="seedSearchInput" placeholder="🔍 বীজের নাম লিখে খুঁজুন..." oninput="filterSeeds()">
+  </div>
+
+  <div class="seed-cat-scroll" id="seedCatScroll">
+    <button class="seed-cat-chip active" data-cat="all" onclick="selectSeedCategory('all', this)">সব</button>
+    <button class="seed-cat-chip" data-cat="vegetable" onclick="selectSeedCategory('vegetable', this)">🥬 সবজি বীজ</button>
+    <button class="seed-cat-chip" data-cat="grain" onclick="selectSeedCategory('grain', this)">🌾 ধান/শস্য বীজ</button>
+    <button class="seed-cat-chip" data-cat="pulse-oilseed" onclick="selectSeedCategory('pulse-oilseed', this)">🫘 ডাল/তৈলবীজ</button>
+    <button class="seed-cat-chip" data-cat="spice" onclick="selectSeedCategory('spice', this)">🌶️ মসলা বীজ</button>
+    <button class="seed-cat-chip" data-cat="other" onclick="selectSeedCategory('other', this)">🌱 অন্যান্য</button>
   </div>
 
   <div class="seed-grid" id="seedGrid">
@@ -1555,6 +1758,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   <!-- BROWSE GIGS GRID -->
   <div id="gigBrowseSection" style="display:none;">
     <div class="gig-browse-wrap">
+      <div class="seed-search-box" style="padding:4px 0 10px;">
+        <input type="text" class="seed-search-input" id="gigSearchInput" placeholder="🔍 কী খুঁজছেন লিখুন... (যেমন: আলু, গরু)" oninput="filterGigsBySearch()">
+      </div>
       <div class="gig-category-filters" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;">
         <button class="gig-cat-chip active" data-cat="all" onclick="filterGigsByCategory('all', this)">সব</button>
         <button class="gig-cat-chip" data-cat="ফসল" onclick="filterGigsByCategory('ফসল', this)">🌾 ফসল</button>
@@ -1831,9 +2037,20 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         </select>
       </div>
 
-      <div>
+      <div id="medicineCategoryField">
         <label class="gig-fl">রোগ/সমস্যার ধরন (যাতে AI suggest করতে পারে)</label>
         <input type="text" class="cp-input" id="cpCategory" placeholder="যেমন: ছত্রাকনাশক, ব্লাইট রোগ">
+      </div>
+
+      <div id="seedCategoryField" style="display:none;">
+        <label class="gig-fl">বীজের ক্যাটাগরি (কৃষক ফিল্টার করতে ব্যবহার করবে)</label>
+        <select class="cp-input" id="cpSeedCategory">
+          <option value="vegetable">🥬 সবজি বীজ</option>
+          <option value="grain">🌾 ধান/শস্য বীজ</option>
+          <option value="pulse-oilseed">🫘 ডাল/তৈলবীজ</option>
+          <option value="spice">🌶️ মসলা বীজ</option>
+          <option value="other">🌱 অন্যান্য</option>
+        </select>
       </div>
 
       <div id="seedQuantityField" style="display:none;">
@@ -1969,6 +2186,17 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       .replace(/'/g, '&#39;');
   }
 
+  // বাংলাদেশি মোবাইল নম্বরের ফরম্যাট যাচাই — ১১ সংখ্যা, "01" দিয়ে শুরু, তৃতীয় সংখ্যা ৩-৯ এর মধ্যে
+  // (এটা শুধু ফরম্যাট যাচাই করে, নম্বরটা সত্যিই ওই ব্যক্তির কিনা তা প্রমাণ করে না — সেটার জন্য OTP লাগবে)
+  function isValidBDPhone(phone) {
+    return /^01[3-9]\d{8}$/.test(phone.trim());
+  }
+
+  // ভবিষ্যতে আসবে এমন ফিচারের বাটনে চাপ দিলে সাধারণ একটা বার্তা দেখানো (মিথ্যা প্রতিশ্রুতি না দিয়ে)
+  function showComingSoonToast(featureName) {
+    alert('🚀 "' + featureName + '" ফিচারটি শীঘ্রই আসছে!');
+  }
+
   // নিরাপত্তা: escapeHtml শুধু HTML টেক্সটের জন্য নিরাপদ। কিন্তু onclick="fn('${x}')"
   // এর ভেতরে বসানো মান ব্রাউজার প্রথমে HTML entity decode করে, তারপর সেটাকে JS কোড
   // হিসেবে চালায় — তাই একা escapeHtml দিয়ে quote ভেঙে বের হয়ে JS ইনজেক্ট করা ঠেকানো
@@ -2062,7 +2290,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     const pinConfirm = getPin(['rpin1c','rpin2c','rpin3c','rpin4c','rpin5c','rpin6c']);
 
     if (!name) { showError('নাম লিখুন!'); return; }
-    if (!phone || phone.length < 11) { showError('সঠিক ফোন নম্বর দিন!'); return; }
+    if (!isValidBDPhone(phone)) { showError('সঠিক বাংলাদেশি মোবাইল নম্বর দিন! (যেমন: 017XXXXXXXX)'); return; }
     if (pin.length < 6) { showError('৬ সংখ্যার PIN দিন!'); return; }
     if (pin !== pinConfirm) { showError('PIN দুটো মিলছে না!'); return; }
 
@@ -2227,49 +2455,67 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   function showHomePage() {
     hideAllPages();
     document.getElementById('homePage').style.display = 'block';
+    setActiveNavItem('home');
   }
 
   // ===== রোল অনুযায়ী হোমপেজের মেনু বদলানো =====
   function renderRoleBasedMenu(role) {
     const grid = document.getElementById('dynamicFeatureGrid');
     const title = document.getElementById('mainSectionTitle');
+    const big4 = document.getElementById('dynamicBig4');
+    const marketStrip = document.getElementById('homeMarketStrip');
+    const wxStrip = document.getElementById('homeWeatherStrip');
+    const comingSoon = document.getElementById('homeComingSoon');
+    const greetingReferralBtn = document.getElementById('greetingReferralBtn');
+    const moreFeaturesTitle = document.getElementById('moreFeaturesTitle');
+    const moreFeaturesGrid = document.getElementById('moreFeaturesGrid');
+    // আগে থেকে insert করা রেফারেল ব্যানার থাকলে সরিয়ে ফেলা (role পাল্টালে বা রি-রেন্ডারে ডুপ্লিকেট আটকাতে)
+    const oldBanner = document.querySelector('.referral-banner');
+    if (oldBanner) oldBanner.remove();
+
+    const isFarmerLayout = (role === 'farmer' || role === 'trader');
+    grid.style.display = isFarmerLayout ? 'none' : 'grid';
+    big4.style.display = isFarmerLayout ? 'grid' : 'none';
+    marketStrip.style.display = isFarmerLayout ? 'block' : 'none';
+    comingSoon.style.display = isFarmerLayout ? 'none' : 'block';
+    greetingReferralBtn.style.display = isFarmerLayout ? 'flex' : 'none';
+    moreFeaturesTitle.style.display = isFarmerLayout ? 'block' : 'none';
+    moreFeaturesGrid.style.display = isFarmerLayout ? 'grid' : 'none';
+    if (!isFarmerLayout) wxStrip.style.display = 'none';
 
     if (role === 'retailer') {
       title.textContent = 'কী করতে চান?';
+      hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-a" onclick="showVerifyPage()"><div class="fc-icon">🎫</div><div><div class="fc-label">কুপন ভেরিফাই</div><div class="fc-sub">সবসময় ফ্রি ✅</div></div></div>
         <div class="feature-card fc-r" onclick="showProductsPage()"><div class="fc-icon">💊</div><div><div class="fc-label">ওষুধ ও অফার</div><div class="fc-sub">কোম্পানির প্রোডাক্ট দেখুন</div></div></div>
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
-        <div class="feature-card fc-a" onclick="showReferralPage()"><div class="fc-icon">🎁</div><div><div class="fc-label">আমার রেফারেল কোড</div><div class="fc-sub">নতুন মানুষ আনুন, আয় করুন</div></div></div>
       `;
     } else if (role === 'company') {
       title.textContent = 'কী করতে চান?';
+      hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-r" onclick="showCompanyPage()"><div class="fc-icon">💊</div><div><div class="fc-label">প্রোডাক্ট ব্যবস্থাপনা</div><div class="fc-sub">ওষুধ যোগ ও অফার দিন</div></div></div>
-        <div class="feature-card fc-a" onclick="showReferralPage()"><div class="fc-icon">🎁</div><div><div class="fc-label">আমার রেফারেল কোড</div><div class="fc-sub">নতুন মানুষ আনুন, আয় করুন</div></div></div>
       `;
     } else if (role === 'farmer' || role === 'trader') {
-      // শুধু কৃষক ও আড়তদার/পাইকার বাজারদর দেখতে পারবে
+      // শুধু কৃষক ও আড়তদার/পাইকার — Admin Panel থেকে কন্ট্রোল করা কার্ড লেআউট + বাজারদর স্ট্রিপ
       title.textContent = 'কী করতে চান?';
       checkOfficerAdviceNotification();
-      grid.innerHTML = `
-        <div class="feature-card fc-g" onclick="showDetectPage()"><div class="fc-icon">📸</div><div><div class="fc-label">ফসলের রোগ দেখুন</div><div class="fc-sub">ছবি তুলুন AI বলবে</div></div></div>
-        <div class="feature-card fc-a" onclick="showMarketPage()"><div class="fc-icon">💰</div><div><div class="fc-label">বাজারদর</div><div class="fc-sub">আজকের দাম দেখুন</div></div></div>
-        <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
-        <div class="feature-card fc-r" onclick="showSellPage()"><div class="fc-icon">🛒</div><div><div class="fc-label">ফসল বিক্রি</div><div class="fc-sub">পাইকার খুঁজুন</div></div></div>
-        <div class="feature-card fc-a" onclick="showTruckFinderPage()"><div class="fc-icon">🚚</div><div><div class="fc-label">গাড়ি খুঁজুন</div><div class="fc-sub">কাছের ট্রাক/পিকআপ</div></div></div>
-        <div class="feature-card fc-g" onclick="showSeedPage()"><div class="fc-icon">🌱</div><div><div class="fc-label">বীজ ও উপকরণ</div><div class="fc-sub">জমি অনুযায়ী বীজ কিনুন</div></div></div>
-        <div class="feature-card fc-a" onclick="showReferralPage()"><div class="fc-icon">🎁</div><div><div class="fc-label">আমার রেফারেল কোড</div><div class="fc-sub">নতুন মানুষ আনুন, আয় করুন</div></div></div>
-      `;
+      showBottomNav();
+      setActiveNavItem('home');
+      loadHomeCardsConfig();
+      loadHomeMarketStrip();
+      loadHomeWeatherStrip();
     } else if (role === 'driver') {
       title.textContent = 'কী করতে চান?';
+      hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-r" onclick="showDriverPanel()"><div class="fc-icon">🚚</div><div><div class="fc-label">আমার গাড়ি</div><div class="fc-sub">Live/Available স্ট্যাটাস দিন</div></div></div>
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
-        <div class="feature-card fc-a" onclick="showReferralPage()"><div class="fc-icon">🎁</div><div><div class="fc-label">আমার রেফারেল কোড</div><div class="fc-sub">নতুন মানুষ আনুন, আয় করুন</div></div></div>
       `;
     } else if (role === 'officer') {
       title.textContent = 'কী করতে চান?';
+      hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-r" onclick="showOfficerPanel()"><div class="fc-icon">🏛️</div><div><div class="fc-label">আমার প্যানেল</div><div class="fc-sub">রেফারেল কোড ও Point</div></div></div>
         <div class="feature-card fc-a" onclick="showOutbreakPage()"><div class="fc-icon">📡</div><div><div class="fc-label">প্রাদুর্ভাব মনিটরিং</div><div class="fc-sub">লাইভ রোগ/পোকার তথ্য</div></div></div>
@@ -2278,29 +2524,59 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     } else {
       // অন্যান্য (ভবিষ্যতের নতুন role) — default মেনু
       title.textContent = 'কী করতে চান?';
+      hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
       `;
     }
   }
 
+  let isGardenMode = false;
+
   function showDetectPage() {
     hideAllPages();
     document.getElementById('detectPage').style.display = 'block';
+    isGardenMode = false;
+    resetDetectPageState();
+    setActiveNavItem('detect');
+  }
+
+  // ছাদবাগান/সৌখিন বাগানের জন্য আলাদা মোড — একই পেজ/UI reuse করা হচ্ছে, শুধু ক্যাটাগরি-ধাপ ও জমির-পরিমাণ লুকিয়ে
+  // সরাসরি ছবি তোলায় নিয়ে যাওয়া হয়, আর AI প্রম্পট আলাদা (specialized) ব্যবহার হয়
+  function showGardenDetectPage() {
+    hideAllPages();
+    document.getElementById('detectPage').style.display = 'block';
+    isGardenMode = true;
     resetDetectPageState();
   }
 
   function resetDetectPageState() {
-    [1, 2, 3].forEach(n => {
+    [1, 2, 3, 4].forEach(n => {
       slotImages[n] = null;
       const slot = document.getElementById('slot' + n);
       slot.classList.remove('filled');
-      const labels = ['', 'কাছের ছবি', 'পুরো গাছ/প্রাণী', 'আরেকটা কোণ'];
-      const reqText = n === 1 ? '<div class="dps-required">আবশ্যক</div>' : '<div class="dps-required optional">ঐচ্ছিক</div>';
+      const labels = ['', 'পুরো গাছ', 'আক্রান্ত স্থান — কাছের ছবি ১', 'আক্রান্ত স্থান — কাছের ছবি ২', 'আক্রান্ত স্থান — কাছের ছবি ৩'];
+      const reqText = n === 2 ? '<div class="dps-required">আবশ্যক</div>' : '<div class="dps-required optional">দিলে আরও ভালো</div>';
       slot.innerHTML = `<div class="dps-icon">📷</div><div class="dps-label">${labels[n]}</div>${reqText}`;
     });
     document.querySelectorAll('.detect-cat-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
-    selectedDetectCategory = 'মাঠ ফসল';
+
+    if (isGardenMode) {
+      selectedDetectCategory = 'বাগান/ছাদ কৃষি';
+      document.getElementById('detectPageTitle').textContent = 'ছাদবাগান/সৌখিন বাগান';
+      document.getElementById('detectPageSub').textContent = 'টবের গাছ, ফুল, ফলের চারা';
+      document.getElementById('detectCategoryStep').style.display = 'none';
+      document.getElementById('gardenModeNote').style.display = 'block';
+      document.getElementById('detectLandInputBox').style.display = 'none';
+    } else {
+      selectedDetectCategory = 'মাঠ ফসল';
+      document.getElementById('detectPageTitle').textContent = 'ফসলের রোগ দেখুন';
+      document.getElementById('detectPageSub').textContent = 'ছবি তুলুন, AI বিশ্লেষণ করবে';
+      document.getElementById('detectCategoryStep').style.display = 'block';
+      document.getElementById('gardenModeNote').style.display = 'none';
+      document.getElementById('detectLandInputBox').style.display = 'block';
+    }
+
     document.getElementById('resultSection').style.display = 'none';
     updateAnalyzeButtonState();
   }
@@ -2313,10 +2589,83 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   // "আপনার ফসল" section এ highlight করে দেখানো হয়, বাকি ফসল collapse করা থাকে
 
   const fallbackMarketData = [
-    { icon: '🥔', cropName: 'আলু', price: 1200, unit: 'প্রতি মণ', change: 5, up: true, district: 'রংপুর' },
-    { icon: '🌾', cropName: 'ধান (আমন)', price: 900, unit: 'প্রতি মণ', change: -2, up: false, district: 'রংপুর' },
-    { icon: '🧅', cropName: 'পেঁয়াজ', price: 2500, unit: 'প্রতি মণ', change: 12, up: true, district: 'রংপুর' },
-    { icon: '🌶️', cropName: 'কাঁচা মরিচ', price: 3800, unit: 'প্রতি মণ', change: 8, up: true, district: 'রংপুর' }
+    { icon: '🍈', cropName: 'লাউ', price: 30, unit: 'প্রতি কেজি', change: 3, up: false, district: 'রংপুর' },
+    { icon: '🎃', cropName: 'মিষ্টি কুমড়া', price: 35, unit: 'প্রতি কেজি', change: 1, up: false, district: 'রংপুর' },
+    { icon: '🎃', cropName: 'চাল কুমড়া', price: 30, unit: 'প্রতি কেজি', change: 9, up: false, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'করলা', price: 60, unit: 'প্রতি কেজি', change: 10, up: false, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'উচ্ছে', price: 55, unit: 'প্রতি কেজি', change: 9, up: false, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'ঝিঙা', price: 45, unit: 'প্রতি কেজি', change: 2, up: false, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'চিচিঙ্গা', price: 40, unit: 'প্রতি কেজি', change: 2, up: true, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'ধুন্দুল', price: 40, unit: 'প্রতি কেজি', change: 9, up: false, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'পটল', price: 45, unit: 'প্রতি কেজি', change: 14, up: true, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'কাঁকরোল', price: 70, unit: 'প্রতি কেজি', change: 4, up: true, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'শসা', price: 35, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🥒', cropName: 'ক্ষীরা', price: 30, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🍅', cropName: 'টমেটো', price: 50, unit: 'প্রতি কেজি', change: 1, up: true, district: 'রংপুর' },
+    { icon: '🍆', cropName: 'বেগুন', price: 45, unit: 'প্রতি কেজি', change: 1, up: true, district: 'রংপুর' },
+    { icon: '🌿', cropName: 'ঢেঁড়স', price: 40, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: '🌶️', cropName: 'কাঁচামরিচ', price: 90, unit: 'প্রতি কেজি', change: 3, up: false, district: 'রংপুর' },
+    { icon: '🫑', cropName: 'ক্যাপসিকাম', price: 120, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🥔', cropName: 'আলু', price: 25, unit: 'প্রতি কেজি', change: 14, up: false, district: 'রংপুর' },
+    { icon: '🍠', cropName: 'মিষ্টি আলু', price: 35, unit: 'প্রতি কেজি', change: 2, up: true, district: 'রংপুর' },
+    { icon: '🌱', cropName: 'মুলা', price: 25, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
+    { icon: '🥕', cropName: 'গাজর', price: 60, unit: 'প্রতি কেজি', change: 2, up: false, district: 'রংপুর' },
+    { icon: '🌱', cropName: 'শালগম', price: 30, unit: 'প্রতি কেজি', change: 2, up: true, district: 'রংপুর' },
+    { icon: '🌱', cropName: 'বিট', price: 50, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'লালশাক', price: 25, unit: 'প্রতি কেজি', change: 11, up: false, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'পালংশাক', price: 30, unit: 'প্রতি কেজি', change: 13, up: true, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'পুঁইশাক', price: 25, unit: 'প্রতি কেজি', change: 10, up: false, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'কলমিশাক', price: 20, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'ডাটাশাক', price: 25, unit: 'প্রতি কেজি', change: 13, up: false, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'সরিষাশাক', price: 25, unit: 'প্রতি কেজি', change: 13, up: false, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'লেটুস', price: 60, unit: 'প্রতি কেজি', change: 10, up: false, district: 'রংপুর' },
+    { icon: '🌿', cropName: 'ধনেপাতা', price: 100, unit: 'প্রতি কেজি', change: 8, up: false, district: 'রংপুর' },
+    { icon: '🥦', cropName: 'ফুলকপি', price: 35, unit: 'প্রতি কেজি', change: 12, up: true, district: 'রংপুর' },
+    { icon: '🥬', cropName: 'বাঁধাকপি', price: 30, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🥦', cropName: 'ব্রোকলি', price: 90, unit: 'প্রতি কেজি', change: 2, up: true, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'শিম', price: 55, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: '🫛', cropName: 'বরবটি', price: 50, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: '🟢', cropName: 'মটরশুঁটি', price: 80, unit: 'প্রতি কেজি', change: 7, up: true, district: 'রংপুর' },
+    { icon: '🍈', cropName: 'কাঁচা পেঁপে', price: 25, unit: 'প্রতি কেজি', change: 11, up: false, district: 'রংপুর' },
+    { icon: '🌿', cropName: 'সজিনা (ডাঁটা)', price: 70, unit: 'প্রতি কেজি', change: 9, up: false, district: 'রংপুর' },
+    { icon: '🥔', cropName: 'ওল', price: 45, unit: 'প্রতি কেজি', change: 15, up: true, district: 'রংপুর' },
+    { icon: '🥔', cropName: 'কচু', price: 40, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
+    { icon: '🥔', cropName: 'মুখীকচু', price: 45, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🌿', cropName: 'কচুর লতি', price: 35, unit: 'প্রতি কেজি', change: 13, up: true, district: 'রংপুর' },
+    { icon: '🍄', cropName: 'মাশরুম', price: 250, unit: 'প্রতি কেজি', change: 14, up: true, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'আউশ ধান', price: 32, unit: 'প্রতি কেজি', change: 5, up: false, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'আমন ধান', price: 30, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'বোরো ধান', price: 33, unit: 'প্রতি কেজি', change: 12, up: false, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'গম', price: 38, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
+    { icon: '🌽', cropName: 'ভুট্টা', price: 28, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'যব', price: 40, unit: 'প্রতি কেজি', change: 5, up: true, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'পাট', price: 45, unit: 'প্রতি কেজি', change: 15, up: true, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'কেনাফ', price: 40, unit: 'প্রতি কেজি', change: 1, up: true, district: 'রংপুর' },
+    { icon: '🌾', cropName: 'মেস্তা', price: 40, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'মসুর', price: 120, unit: 'প্রতি কেজি', change: 2, up: false, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'মুগ', price: 140, unit: 'প্রতি কেজি', change: 4, up: true, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'মাষকলাই', price: 130, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'খেসারি', price: 90, unit: 'প্রতি কেজি', change: 7, up: true, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'ছোলা', price: 110, unit: 'প্রতি কেজি', change: 14, up: false, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'অড়হর', price: 115, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: '🌼', cropName: 'সরিষা', price: 130, unit: 'প্রতি কেজি', change: 9, up: true, district: 'রংপুর' },
+    { icon: '🌱', cropName: 'তিল', price: 180, unit: 'প্রতি কেজি', change: 3, up: false, district: 'রংপুর' },
+    { icon: '🫘', cropName: 'সয়াবিন', price: 95, unit: 'প্রতি কেজি', change: 14, up: true, district: 'রংপুর' },
+    { icon: '🌻', cropName: 'সূর্যমুখী', price: 150, unit: 'প্রতি কেজি', change: 12, up: true, district: 'রংপুর' },
+    { icon: '🥜', cropName: 'চিনাবাদাম', price: 140, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
+    { icon: '🌱', cropName: 'তিসি', price: 160, unit: 'প্রতি কেজি', change: 7, up: true, district: 'রংপুর' },
+    { icon: '🧅', cropName: 'পেঁয়াজ', price: 70, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: '🧄', cropName: 'রসুন', price: 190, unit: 'প্রতি কেজি', change: 3, up: false, district: 'রংপুর' },
+    { icon: '🫚', cropName: 'আদা', price: 220, unit: 'প্রতি কেজি', change: 4, up: false, district: 'রংপুর' },
+    { icon: '🟡', cropName: 'হলুদ', price: 280, unit: 'প্রতি কেজি', change: 14, up: false, district: 'রংপুর' },
+    { icon: '🌶️', cropName: 'মরিচ (শুকনা)', price: 320, unit: 'প্রতি কেজি', change: 5, up: true, district: 'রংপুর' },
+    { icon: '🌿', cropName: 'ধনিয়া (দানা)', price: 210, unit: 'প্রতি কেজি', change: 3, up: false, district: 'রংপুর' },
+    { icon: '🌿', cropName: 'জিরা', price: 650, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
+    { icon: '⚫', cropName: 'কালোজিরা', price: 450, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
+    { icon: '🎋', cropName: 'আখ', price: 8, unit: 'প্রতি কেজি', change: 12, up: true, district: 'রংপুর' },
+    { icon: '🍵', cropName: 'চা (কাঁচা পাতা)', price: 25, unit: 'প্রতি কেজি', change: 10, up: true, district: 'রংপুর' },
+    { icon: '🍂', cropName: 'তামাক', price: 180, unit: 'প্রতি কেজি', change: 12, up: true, district: 'রংপুর' },
+    { icon: '☁️', cropName: 'তুলা', price: 95, unit: 'প্রতি কেজি', change: 15, up: false, district: 'রংপুর' }
   ];
 
   let currentMarketDistrict = 'রংপুর'; // GPS/প্রোফাইল থেকে automatic নির্ধারিত হবে, না পেলে এটাই থাকবে (fallback)
@@ -2372,10 +2721,106 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   async function showMarketPage() {
     hideAllPages();
     document.getElementById('marketPage').style.display = 'block';
+    setActiveNavItem('market');
     await detectUserDistrict();
     document.getElementById('districtValue').textContent = '📍 ' + currentMarketDistrict;
     loadMarketPricesFromFirebase();
   }
+
+  // হোমপেজের বাজারদর মার্কি — সব ফসলের চিপ ডান থেকে বামে অটো-স্ক্রল হতে থাকে, চাপ দিলে থামে, কিছুক্ষণ পর আবার নিজে থেকে চালু হয়
+  let marqueeResumeTimer = null;
+
+  // ===== হোমপেজের ৬টা প্রধান কার্ড — Admin Panel থেকে লাইভ কন্ট্রোল করা যায় (appConfig/homeCards ডকুমেন্ট থেকে) =====
+  // Firestore-এ ডকুমেন্ট না থাকলে বা কোনো সমস্যা হলে এই ডিফল্ট তালিকাটাই দেখাবে, তাই অ্যাপ কখনো খালি হোমপেজ দেখাবে না
+  const defaultHomeCards = [
+    { action: 'detect', icon: '📸', label: 'ফসলের রোগ অথবা পোকা দেখুন', sub: 'ছবি তুলুন, AI বলবে', color: 'g' },
+    { action: 'garden', icon: '🪴', label: 'ছাদবাগান/সৌখিন বাগান', sub: 'টবের গাছ, ফুল, ফলের চারা', color: 's' },
+    { action: 'seed', icon: '🌱', label: 'বীজ কিনুন', sub: 'সব ধরনের বীজ', color: 'g' },
+    { action: 'sell', icon: '🛒', label: 'ফসল বিক্রি করুন', sub: 'পাইকার খুঁজুন', color: 'r' },
+    { action: 'truck', icon: '🚚', label: 'গাড়ি ভাড়া করুন', sub: 'ট্রাক, চাষের গাড়ি, অ্যাম্বুলেন্স', color: 'a' },
+    { action: 'market', icon: '💰', label: 'বাজারদর দেখুন', sub: 'সব ফসলের দাম', color: 'a' }
+  ];
+  // প্রতিটা "action" নামের সাথে আসল ফাংশন যুক্ত করা — Firestore-এ শুধু নাম (স্ট্রিং) সেভ থাকে, ফাংশন না
+  const homeCardActionMap = {
+    detect: showDetectPage,
+    garden: showGardenDetectPage,
+    seed: showSeedPage,
+    sell: showSellPage,
+    truck: showTruckFinderPage,
+    market: showMarketPage,
+    weather: showWeatherPage,
+    referral: showReferralPage
+  };
+
+  async function loadHomeCardsConfig() {
+    let cards = defaultHomeCards;
+    try {
+      const doc = await db.collection('appConfig').doc('homeCards').get();
+      if (doc.exists && Array.isArray(doc.data().cards) && doc.data().cards.length) {
+        cards = doc.data().cards;
+      }
+    } catch (err) {
+      // সমস্যা হলে ডিফল্ট তালিকা দিয়েই চলবে
+    }
+    renderHomeCards(cards);
+  }
+
+  function renderHomeCards(cards) {
+    const big4 = document.getElementById('dynamicBig4');
+    big4.innerHTML = cards.map(c => `
+      <div class="big-card ${c.color || 'g'}" onclick="(homeCardActionMap['${c.action}'] || showHomePage)()">
+        <div class="big-emoji">${c.icon || '📦'}</div>
+        <div><div class="big-label">${escapeHtml(c.label || '')}</div><div class="big-sub">${escapeHtml(c.sub || '')}</div></div>
+        <div class="big-arrow">→</div>
+      </div>
+    `).join('');
+  }
+
+
+  async function loadHomeMarketStrip() {
+    const track = document.getElementById('homePriceRowTrack');
+    if (!track) return;
+    let data;
+    try {
+      await detectUserDistrict();
+      const snapshot = await db.collection('marketPrices').where('district', '==', currentMarketDistrict).get();
+      if (snapshot.empty) {
+        data = fallbackMarketData;
+      } else {
+        data = [];
+        snapshot.forEach(doc => data.push(doc.data()));
+      }
+    } catch (err) {
+      data = fallbackMarketData;
+    }
+    if (!data.length) data = fallbackMarketData;
+
+    const chipHtml = data.map(c => `
+      <div class="p-chip">
+        <div class="p-icon">${c.icon || '🌾'}</div>
+        <div class="p-name">${escapeHtml(c.cropName)}</div>
+        <div class="p-price">৳${c.price}</div>
+        <div class="p-unit">${escapeHtml(c.unit || 'প্রতি কেজি')}</div>
+        <div class="p-trend ${c.up ? 'up' : 'dn'}">${c.up ? '↑' : '↓'} ${Math.abs(c.change)}%</div>
+      </div>
+    `).join('');
+    // seamless loop-এর জন্য তালিকাটা দুইবার বসানো হচ্ছে (৫০% স্ক্রল হলেই ঠিক প্রথম কপির জায়গায় চলে আসবে)
+    track.innerHTML = chipHtml + chipHtml;
+    // ফসলের সংখ্যা অনুযায়ী স্ক্রল-স্পিড ঠিক করা (বেশি ফসল হলে একটু দ্রুত যাবে যাতে সবগুলো ঘুরে আসতে বেশি সময় না লাগে)
+    track.style.animationDuration = Math.max(15, data.length * 2.2) + 's';
+  }
+
+  // ফসলের উপর চাপ দিলে মার্কি থেমে যাবে, ৩.৫ সেকেন্ড পর আবার নিজে থেকে চলতে শুরু করবে
+  function pauseMarketMarquee() {
+    const track = document.getElementById('homePriceRowTrack');
+    if (!track) return;
+    track.classList.add('paused');
+    if (marqueeResumeTimer) clearTimeout(marqueeResumeTimer);
+    marqueeResumeTimer = setTimeout(() => {
+      track.classList.remove('paused');
+    }, 3500);
+  }
+
 
   async function loadMarketPricesFromFirebase() {
     const list = document.getElementById('cropPriceList');
@@ -2521,9 +2966,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     reader.readAsDataURL(file);
   }
 
-  // অন্তত ১টা (কাছের) ছবি না দিলে বিশ্লেষণ বাটন সক্রিয় হবে না
+  // আক্রান্ত স্থানের অন্তত ১টা কাছের ছবি (slot 2) না দিলে বিশ্লেষণ বাটন সক্রিয় হবে না — পুরো গাছের ছবি ঐচ্ছিক
   function updateAnalyzeButtonState() {
-    document.getElementById('analyzeBtn').disabled = !slotImages[1];
+    document.getElementById('analyzeBtn').disabled = !slotImages[2];
   }
 
   // ================================================================
@@ -2676,44 +3121,100 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     }
   }
   async function analyzeImage() {
-    const filledImages = [1, 2, 3].map(n => slotImages[n]).filter(Boolean);
+    const filledImages = [1, 2, 3, 4].map(n => slotImages[n]).filter(Boolean);
     if (filledImages.length === 0) return;
 
     document.getElementById('analyzeLoading').style.display = 'block';
     document.getElementById('resultSection').style.display = 'none';
     document.querySelector('.cam-actions').style.display = 'none';
 
-    const landSize = document.getElementById('detectLandSize').value.trim();
-    const landUnit = document.getElementById('detectLandUnit').value;
-    const landUnitText = landUnit === 'bigha' ? 'বিঘা' : landUnit === 'katha' ? 'কাঠা' : 'একর';
-    const landInfo = landSize ? `\n\nকৃষকের জমির পরিমাণ: ${landSize} ${landUnitText}। এই জমির পরিমাণ অনুযায়ী ঠিক কী পরিমাণ ওষুধ/স্প্রে লাগবে তা "পরিমাণ" অংশে স্পষ্টভাবে বলো (যেমন: "২ বিঘার জন্য ১ লিটার পানিতে ৪ গ্রাম ওষুধ মিশিয়ে মোট ৩ বার স্প্রে করুন")।` : '';
-
     const photoNote = filledImages.length > 1
-      ? `\n\nকৃষক ${filledImages.length}টা ভিন্ন ছবি দিয়েছে (কাছের ও দূরের/ভিন্ন কোণ থেকে) — সবগুলো একসাথে বিবেচনা করে সবচেয়ে নির্ভুল উত্তর দাও।`
+      ? `\n\nকৃষক ${filledImages.length}টা ছবি দিয়েছে — প্রথমটা পুরো গাছের (সামগ্রিক অবস্থা বোঝার জন্য), বাকিগুলো আক্রান্ত স্থানের কাছ থেকে তোলা (লক্ষণ স্পষ্ট দেখার জন্য)। সবগুলো একসাথে বিবেচনা করো — পুরো গাছের ছবি দিয়ে বুঝবে সমস্যা কতটা ছড়িয়েছে, কাছের ছবিগুলো দিয়ে সঠিক রোগ/পোকা শনাক্ত করবে।`
       : '';
 
     // অনুমোদিত ওষুধের তালিকা আনা (Admin Panel থেকে যোগ করা, "বন্ধ" করা ওষুধ বাদে)
     const medicineListText = await getApprovedMedicineListText(selectedDetectCategory);
 
-    const prompt = `তুমি একজন অভিজ্ঞ বাংলাদেশী কৃষি ও প্রাণিসম্পদ বিশেষজ্ঞ। কৃষক জানিয়েছে এই ছবি(গুলো) "${selectedDetectCategory}" বিভাগের — এই তথ্যটা মাথায় রেখেই বিশ্লেষণ করো (যেমন "বাগান/ছাদ কৃষি" হলে টবের গাছের সমস্যা বিবেচনা করো, "মাঠ ফসল" হলে বড় জমির ফসলের রোগ বিবেচনা করো)।${landInfo}${photoNote}
+    const outputFormat = `ছবি(গুলো) বিশ্লেষণ করে নিচের ফরম্যাটে বাংলায় উত্তর দাও (কোনো Markdown *, # ব্যবহার করবে না, নিজের চিন্তা-প্রক্রিয়া বা তুলনা দেখিও না, শুধু নিচের চূড়ান্ত ফরম্যাটেই সরাসরি উত্তর দাও):
 
-গুরুত্বপূর্ণ: বাংলাদেশে সাধারণত যে রোগ/পোকামাকড় দেখা যায় সেগুলোকেই প্রথমে বিবেচনা করো, বিরল/বিদেশি রোগের কথা না বললেই ভালো, যদি না ছবিতে স্পষ্ট প্রমাণ থাকে।
-${medicineListText}
-
-ছবি(গুলো) বিশ্লেষণ করে নিচের ফরম্যাটে বাংলায় উত্তর দাও (কোনো Markdown *, # ব্যবহার করবে না, শুধু সাধারণ লেখা):
-
-বিষয়: (এটি কী — যেমন: আলু গাছ, গরু, মুরগি, মাছ ইত্যাদি)
+বিষয়: (এটি কী গাছ/ফসল/জাত — যতটা নির্দিষ্টভাবে সম্ভব বলো)
 অবস্থা: (সুস্থ নাকি রোগাক্রান্ত/সমস্যাযুক্ত)
-রোগ/সমস্যার নাম: (যদি থাকে, নাহলে "কোনো সমস্যা নেই" লিখো)
-নিশ্চিতির মাত্রা: (উচ্চ/মাঝারি/কম — ছবি থেকে কতটা নিশ্চিতভাবে বলা যাচ্ছে)
+রোগ/সমস্যার নাম: (রোগ, পোকা, নাকি পোকা-বাহিত রোগ তা স্পষ্ট বোঝা যায় এমনভাবে লিখো — যেমন শুধু রোগ হলে রোগের নাম, শুধু পোকা হলে পোকার নাম, পোকা-বাহিত রোগ হলে "রোগের নাম (বাহক পোকার নাম)"। কিছু না থাকলে "কোনো সমস্যা নেই" লিখো)
+নিশ্চিতির মাত্রা: (উচ্চ/মাঝারি/কম — ছবি থেকে কতটা নিশ্চিতভাবে বলা যাচ্ছে, লক্ষণ অস্পষ্ট বা কম দৃশ্যমান হলে সৎভাবে "কম" বলো)
 বিস্তারিত: (২-৩ বাক্যে সহজ ভাষায় সমস্যাটি বর্ণনা করো, যেন একজন অশিক্ষিত কৃষকও বুঝতে পারে)
-প্রতিকার: (কী করতে হবে ধাপে ধাপে বলো — জৈব ও রাসায়নিক দুই ধরনের সমাধান দাও যদি প্রযোজ্য হয়। উপরের তালিকায় প্রাসঙ্গিক ওষুধ থাকলে সেটার সঠিক নাম উল্লেখ করো, তালিকায় না থাকলে ব্র্যান্ড নাম না বলে শুধু generic পরামর্শ দাও)
-প্রস্তাবিত পণ্য: (তালিকা থেকে ব্যবহৃত হলে ওষুধের নাম লিখো, নাহলে "প্রযোজ্য নয়" লিখো)
-কোম্পানি: (উপরের প্রস্তাবিত পণ্য তালিকা থেকে হলে সেই কোম্পানির নাম লিখো, নাহলে "প্রযোজ্য নয়" লিখো)
-পরিমাণ: (জমির পরিমাণ দেওয়া থাকলে ঠিক কত ওষুধ/পানি লাগবে বলো, না থাকলে "জমির পরিমাণ দিলে সঠিক মাত্রা বলা যাবে" লিখো)
+প্রতিকার: (কী করতে হবে ধাপে ধাপে বলো — জৈব ও রাসায়নিক দুই ধরনের সমাধান দাও যদি প্রযোজ্য হয়। উপরের তালিকায় প্রাসঙ্গিক ওষুধ থাকলে সেগুলোর সঠিক নাম উল্লেখ করো, তালিকায় না থাকলে ব্র্যান্ড নাম না বলে শুধু generic পরামর্শ দাও)
+প্রস্তাবিত পণ্য: (উপরের অনুমোদিত তালিকা থেকে প্রাসঙ্গিক যতগুলো ওষুধ পাওয়া যায় (সর্বোচ্চ ৩টা) কমা দিয়ে আলাদা করে লিখো, যেমন: "রিডোমিল গোল্ড ৬৮%, নেটিভো ৭৫% WG"। একটাও প্রাসঙ্গিক না থাকলে "প্রযোজ্য নয়" লিখো)
+কোম্পানি: (উপরের প্রতিটা প্রস্তাবিত পণ্যের কোম্পানির নাম একই ক্রমে কমা দিয়ে লিখো, যেমন: "সিনজেনটা বাংলাদেশ, বায়ার ক্রপসায়েন্স"। "প্রযোজ্য নয়" হলে এটাও "প্রযোজ্য নয়" লিখো)
+পরিমাণ: {{QUANTITY_INSTRUCTION}}
 সতর্কতা: (জরুরি হলে বলো, না হলে "বিশেষ জরুরি নয়" লিখো)
 
 মনে রাখবে এটি শুধুমাত্র একটি প্রাথমিক AI পরামর্শ, চূড়ান্ত সিদ্ধান্তের আগে কৃষি অফিসারের পরামর্শ নেওয়া উচিত। "নিশ্চিতির মাত্রা" কম হলে কৃষককে আরও একটা পরিষ্কার কাছের ছবি তুলতে বা কৃষি অফিসারের সাথে যোগাযোগ করতে বলো।`;
+
+    let prompt;
+
+    if (isGardenMode) {
+      // ===== ছাদবাগান/সৌখিন বাগান — আলাদা specialized প্রম্পট =====
+      prompt = `তুমি একজন অভিজ্ঞ উদ্ভিদ রোগ বিশেষজ্ঞ (Plant Pathologist), যিনি বাংলাদেশের শহুরে ছাদবাগান ও সৌখিন বাগানের গাছপালা (টবের গাছ, বারান্দার গাছ, নার্সারির চারা) নিয়ে বিশেষভাবে কাজ করেছেন। এটি কোনো বাণিজ্যিক মাঠ ফসল নয় — একজন শখের মালী তার বাসার ছাদে/বারান্দায় ফুল, ফল বা সবজির গাছ রাখেন।${photoNote}
+
+তোমার সবচেয়ে বড় দায়িত্ব: এই ব্যক্তি যেন ভুল তথ্যের কারণে টাকা নষ্ট বা তার প্রিয় গাছটার ক্ষতি না করে ফেলে। ভুল অনুমানের চেয়ে সৎভাবে "নিশ্চিত না" বলা অনেক ভালো।
+
+বিশ্লেষণ করার সময় বিশেষভাবে খেয়াল করো:
+০. প্রথমে ছবির মান যাচাই করো — স্পষ্ট ও কাছ থেকে তোলা কিনা। ঝাপসা/দূরের ছবি হলে অনুমান করে রোগের নাম বলবে না, "নিশ্চিতির মাত্রা" কম লিখে কেমন ছবি লাগবে তা বলো।
+১. গাছের ধরন শনাক্ত করো — এটি ফুল গাছ (যেমন গোলাপ, জবা, বেলি), ফলের চারা (যেমন লেবু, পেয়ারা, আম, ডালিম), নাকি টবের সবজি (টমেটো, মরিচ, লাউ, ধনেপাতা)।
+২. পাতার রং, দাগের ধরন/আকৃতি/রং, ঝিমিয়ে পড়া, পোকার উপস্থিতি — এই দৃশ্যমান লক্ষণগুলো মনোযোগ দিয়ে পরীক্ষা করো। একাধিক ছবি থাকলে সবচেয়ে স্পষ্ট লক্ষণওয়ালা ছবিটাকেই মূল ভিত্তি ধরো।
+৩. পুষ্টির অভাব ও রোগ/পোকা গুলিয়ে ফেলবে না — টবের গাছে পুরনো মাটি/সীমিত জায়গার কারণে পুষ্টির অভাব খুবই সাধারণ (সমান হলুদ পাতা = নাইট্রোজেনের অভাব, শিরাসহ হলুদ নতুন পাতা = আয়রন/জিঙ্কের অভাব)। এগুলোর জন্য কীটনাশক না, সার/মাটি বদলানোর পরামর্শ দাও।
+৩ক. পোকা ও রোগের সম্পর্ক আলাদা করে বোঝো — পাতায় আঠালো চকচকে ভাব বা কালচে ছত্রাকের আস্তরণ (sooty mold) দেখলে বুঝবে এটা মিলিবাগ/জাব পোকা/সাদা মাছির ফেলে যাওয়া মধুরসের উপর জন্মানো, শুধু ছত্রাকনাশক দিলে হবে না — আসল পোকাটা দমন করতে হবে। পাতা কোঁকড়ানো/হলুদ মোজাইক প্যাটার্ন প্রায়ই ভাইরাসজনিত, যা পোকার মাধ্যমে ছড়ায় (সরাসরি ওষুধ নেই) — এক্ষেত্রে "রোগ/সমস্যার নাম" এ বাহক পোকাটাও উল্লেখ করো, "প্রতিকার" এ পোকা দমনে গুরুত্ব দাও, ভাইরাস সারানোর মিথ্যা আশ্বাস দিও না।
+৪. টবে/কন্টেইনারে সীমিত মাটি ও নিষ্কাশনের কারণে যেসব সমস্যা বেশি হয় (গোড়া পচা/অতিরিক্ত পানি, মাটি শক্ত হয়ে যাওয়া) — এগুলো প্রথমে বিবেচনা করো।
+৫. ছাদে/বারান্দায় সরাসরি রোদ-তাপের কারণে যা হয় (পাতা পোড়া, পানিশূন্যতা) তাও মাথায় রাখো।
+৬. শহুরে পরিবেশে মিলিবাগ, জাব পোকা (aphid), লাল মাকড়সা (spider mite), সাদা মাছি (whitefly) বেশি দেখা যায় — প্রাকৃতিক শত্রু কম থাকায় দ্রুত ছড়ায়, এগুলো অগ্রাধিকার দিয়ে বিবেচনা করো।
+৭. সম্ভাব্য ২-৩টা কারণের মধ্যে ছবির লক্ষণের সাথে সবচেয়ে ভালো মেলে এমন একটাতে সিদ্ধান্তে আসো (এই তুলনা আউটপুটে দেখানোর দরকার নেই, শুধু চূড়ান্ত সিদ্ধান্তটা লিখো)। চূড়ান্ত উত্তরের আগে নিজেই যাচাই করো — এই রোগ/পোকা কি আসলে এই নির্দিষ্ট গাছের প্রজাতিতে হওয়া সম্ভব?
+৮. সমস্যা সামান্য হলে সাথে সাথে ওষুধ কেনার পরামর্শ দিও না — আগে সাধারণ পরিচর্যার (পানি/রোদ ঠিক করা) কথা বলো।
+
+গুরুত্বপূর্ণ — এটি বাসাবাড়ির কাছে/বারান্দায় থাকে (শিশু ও পোষা প্রাণী আশেপাশে থাকতে পারে):
+- "প্রতিকার" অংশে সবসময় প্রথমে জৈব/ঘরোয়া সমাধান দাও (নিম তেল, সাবান-পানি স্প্রে, ইত্যাদি)
+- রাসায়নিক সমাধান দিতে হলেও অল্প মাত্রায় — মণ/বিঘা হিসেবে না, বরং "প্রতি লিটার পানিতে X মিলি/গ্রাম" বা "প্রতি গাছে/টবে X পরিমাণ" হিসেবে বলো
+${medicineListText}
+
+${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(টবের/গাছের সংখ্যা অনুযায়ী প্রতি গাছে/লিটারে কত পরিমাণ লাগবে বলো, বিঘা/মণ হিসেবে বলবে না)')}`;
+    } else {
+      // ===== মাঠ ফসল ও সবজি — নির্ভুলতা সর্বোচ্চ গুরুত্বপূর্ণ, তাই কঠোরভাবে এই দুই ক্যাটাগরিতেই ফোকাস করা হচ্ছে =====
+      const landSize = document.getElementById('detectLandSize').value.trim();
+      const landUnit = document.getElementById('detectLandUnit').value;
+      const landUnitText = landUnit === 'bigha' ? 'বিঘা' : landUnit === 'katha' ? 'কাঠা' : 'একর';
+      const landInfo = landSize ? `\n\nকৃষকের জমির পরিমাণ: ${landSize} ${landUnitText}।` : '';
+
+      prompt = `তুমি একজন অভিজ্ঞ উদ্ভিদ রোগ বিশেষজ্ঞ (Plant Pathologist), যিনি বাংলাদেশ কৃষি সম্প্রসারণ অধিদপ্তরে (DAE) দীর্ঘদিন কাজ করেছেন এবং বাংলাদেশের মাঠ ফসল ও সবজি-মসলা ফসলের রোগ-পোকা নির্ণয়ে বিশেষজ্ঞ। কৃষক জানিয়েছে এই ছবি(গুলো) "${selectedDetectCategory}" বিভাগের।${landInfo}${photoNote}
+
+তোমার সবচেয়ে বড় দায়িত্ব: কৃষক যেন ভুল তথ্যের কারণে টাকা বা ফসলের ক্ষতির শিকার না হয়। ভুল হওয়ার চেয়ে সৎভাবে "নিশ্চিত না" বলা অনেক ভালো।
+
+বিশ্লেষণ করার সময় ধাপে ধাপে (নিজে নিজে, আউটপুটে না দেখিয়ে) এভাবে চিন্তা করো:
+
+০. প্রথমে ছবির মান যাচাই করো — ছবি(গুলো) কি যথেষ্ট স্পষ্ট, কাছ থেকে তোলা, এবং সমস্যার জায়গাটা ভালোভাবে দেখা যাচ্ছে? যদি ঝাপসা/অনেক দূর থেকে তোলা/অন্ধকার হয় এবং লক্ষণ ঠিকমতো বোঝা না যায়, তাহলে অনুমান করে কোনো রোগের নাম বলবে না — "নিশ্চিতির মাত্রা" তে "কম" লিখে "বিস্তারিত" অংশে স্পষ্টভাবে বলো ঠিক কেমন ছবি (যেমন: আক্রান্ত পাতার একদম কাছ থেকে, দিনের আলোয়) আবার তুলতে হবে।
+
+১. ফসলের নাম ও জাত (যদি বোঝা যায়) শনাক্ত করো।
+
+২. পাতা/কাণ্ড/ফল/শীষে দৃশ্যমান লক্ষণ খুঁটিয়ে দেখো — দাগের রং, আকৃতি, প্রান্ত (কিনারা), বিস্তার প্যাটার্ন, হলুদ/বাদামি/কালো হয়ে যাওয়া, ঝলসানো ভাব, ছিদ্র, পোকা বা ডিম দৃশ্যমান কিনা। একাধিক ছবি থাকলে যেটাতে সবচেয়ে স্পষ্ট লক্ষণ দেখা যাচ্ছে সেটাকেই সিদ্ধান্তের মূল ভিত্তি ধরো।
+
+৩. গুরুত্বপূর্ণ — পুষ্টির অভাব এবং রোগ/পোকা গুলিয়ে ফেলবে না: গাছের বয়স্ক (নিচের) পাতা সমানভাবে হলুদ হলে সাধারণত নাইট্রোজেনের অভাব; নতুন/উপরের পাতা শিরাসহ হলুদ হলে আয়রন/জিঙ্কের অভাব হতে পারে; পাতায় অনিয়মিত দাগ, ছিদ্র, বা পোকা/ডিম দৃশ্যমান হলে সেটা রোগ/পোকা। পুষ্টির অভাবকে ভুল করে রোগ বলে দামি কীটনাশক সাজেস্ট করা মানেই কৃষকের অহেতুক টাকা নষ্ট — তাই এই পার্থক্যটা সাবধানে করো, "রোগ/সমস্যার নাম" এ প্রয়োজনে "পুষ্টির অভাব (সার প্রয়োজন)" লিখো, তখন "প্রতিকার" এ কীটনাশক না বরং সঠিক সারের পরামর্শ দাও।
+
+৩ক. অত্যন্ত গুরুত্বপূর্ণ — পোকা ও রোগের সম্পর্ক তিনভাবে হতে পারে, প্রতিটা আলাদাভাবে বিবেচনা করো:
+   (ক) শুধু পোকার সরাসরি ক্ষতি — চিবানো/ছিদ্র করা দাগ, পাতা কাটা, শুঁয়াপোকা/লার্ভা দৃশ্যমান। এক্ষেত্রে "রোগ/সমস্যার নাম" এ পোকার নাম লিখবে (যেমন "মাজরা পোকা"), কীটনাশক লাগবে।
+   (খ) সরাসরি রোগ (ছত্রাক/ব্যাকটেরিয়া) — পোকা জড়িত না, দাগ/পচন নিজে থেকেই হয়। ছত্রাকনাশক/ব্যাকটেরিয়ানাশক লাগবে।
+   (গ) পোকা-বাহিত সমস্যা (এটা প্রায়ই ভুল ধরা হয়, সাবধান থাকো) — যদি পাতায় আঠালো চকচকে ভাব বা কালচে ছত্রাকের (sooty mold) আস্তরণ দেখো, এটা সাধারণত জাব পোকা/সাদা মাছি/মিলিবাগের ফেলে যাওয়া মধুরসের (honeydew) উপর জন্মায় — শুধু ছত্রাকনাশক দিলে কাজ হবে না, আসল কারণ পোকাটা মারতে হবে। তেমনি পাতা কোঁকড়ানো/হলুদ মোজাইক প্যাটার্নের ভাইরাসজনিত রোগ প্রায়ই সাদা মাছি/জাব পোকার মাধ্যমে ছড়ায় (এর সরাসরি কোনো ওষুধ নেই) — এক্ষেত্রে "রোগ/সমস্যার নাম" এ রোগের নামের সাথে বাহক পোকাটাও উল্লেখ করো (যেমন "পাতা কোঁকড়ানো ভাইরাস (সাদা মাছির মাধ্যমে ছড়ায়)"), আর "প্রতিকার" এ মূল লক্ষ্য রাখো বাহক পোকা নিয়ন্ত্রণে, ভাইরাস "সারানোর" মিথ্যা প্রতিশ্রুতি দিও না — শুধু বলো আক্রান্ত গাছ তুলে ফেলতে ও বাহক পোকা দমন করতে।
+
+৪. বাংলাদেশে এই ফসলে সবচেয়ে বেশি দেখা যায় এমন ২-৩টা রোগ/পোকার সাথে লক্ষণ মিলিয়ে দেখো (যেমন ধানে: ব্লাস্ট, বাদামি দাগ রোগ, মাজরা পোকা, বাদামি গাছফড়িং; আলুতে: নাবি ধ্বসা (late blight), আগাম ধ্বসা; টমেটোতে: পাতা কোঁকড়ানো ভাইরাস, নাবি ধ্বসা; পেঁয়াজে: purple blotch; মরিচে: এনথ্রাকনোজ/ডাইব্যাক; বেগুনে: ফল ও ডগা ছিদ্রকারী পোকা) — এটা শুধু তোমার নিজের রেফারেন্সের জন্য, তালিকাটা আউটপুটে দেখানোর দরকার নেই।
+
+৫. যেটা লক্ষণের সাথে সবচেয়ে ভালো মেলে সেই একটা রোগ/পোকাতেই চূড়ান্ত সিদ্ধান্তে আসো। লক্ষণ অস্পষ্ট বা একাধিক সম্ভাবনার মধ্যে দ্বিধা থাকলে সততার সাথে "নিশ্চিতির মাত্রা" কম/মাঝারি বলো, অতিরিক্ত আত্মবিশ্বাসী অনুমান করবে না। বিরল/বিদেশি রোগের কথা বলবে না, যদি না ছবিতে স্পষ্ট প্রমাণ থাকে।
+
+৬. চূড়ান্ত উত্তর লেখার আগে নিজেই একবার যাচাই করো: যে রোগ/পোকার নাম বলছ, সেটা কি সত্যিই এই নির্দিষ্ট ফসলে হওয়া সম্ভব? (ভুল ফসল-রোগ মিল কখনো দিও না, যেমন ধানের রোগ ভুল করে অন্য ফসলে বলা)।
+
+৭. সমস্যাটা যদি খুবই সামান্য/প্রাথমিক পর্যায়ে হয় (যেমন দু-একটা পাতায় সামান্য দাগ), তাহলে সাথে সাথে রাসায়নিক ওষুধ কেনার পরামর্শ দিও না — প্রথমে পর্যবেক্ষণ/ঘরোয়া ব্যবস্থার কথা বলো, শুধু বেশি ছড়িয়ে পড়লে ওষুধ লাগবে এটা বলো। কৃষকের অপ্রয়োজনীয় খরচ যেন না হয় সেটা মাথায় রাখো।
+
+৮. যদি ছবি/লক্ষণ থেকে বিষয়টা জটিল বা অস্বাভাবিক মনে হয় (নতুন ধরনের প্রাদুর্ভাব, দ্রুত ছড়াচ্ছে, বা তুমি নিশ্চিত না), সরাসরি বলো "নিশ্চিতির মাত্রা কম" এবং "সতর্কতা" অংশে স্পষ্টভাবে স্থানীয় কৃষি অফিসারের সাথে যোগাযোগ করতে বলো — অনুমান করে ভুল দিকনির্দেশনা দেওয়ার চেয়ে এটা ভালো।
+${medicineListText}
+
+${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিমাণ দেওয়া থাকলে ঠিক কত ওষুধ/পানি লাগবে বলো, যেমন: "২ বিঘার জন্য ১ লিটার পানিতে ৪ গ্রাম ওষুধ মিশিয়ে মোট ৩ বার স্প্রে করুন", জমির পরিমাণ না দেওয়া থাকলে "জমির পরিমাণ দিলে সঠিক মাত্রা বলা যাবে" লিখো)')}`;
+    }
 
     try {
       const response = await fetch('/api/gemini', {
@@ -2742,7 +3243,8 @@ ${medicineListText}
     }
   }
 
-  let lastRecommendedProduct = null; // কুপন তৈরির সময় attribution ট্যাগ করার জন্য
+  let lastRecommendedProduct = null; // কুপন তৈরির সময় attribution ট্যাগ করার জন্য (প্রথম প্রোডাক্ট)
+  let lastRecommendedProductList = []; // AI-সাজেস্টকৃত সবগুলো ওষুধ (একাধিক হতে পারে)
 
   function parseAndShowResult(text) {
     let diseaseName = 'বিশ্লেষণ ফলাফল';
@@ -2761,14 +3263,61 @@ ${medicineListText}
 
     const productName = productMatch ? productMatch[1].trim() : '';
     const companyName = companyMatch ? companyMatch[1].trim() : '';
-    lastRecommendedProduct = (productName && productName !== 'প্রযোজ্য নয়')
-      ? { name: productName, company: companyName }
+    // একাধিক ওষুধ কমা দিয়ে আসতে পারে — সবগুলো আলাদা করে array বানানো হচ্ছে
+    const productNames = (productName && productName !== 'প্রযোজ্য নয়') ? productName.split(',').map(s => s.trim()).filter(Boolean) : [];
+    const companyNames = (companyName && companyName !== 'প্রযোজ্য নয়') ? companyName.split(',').map(s => s.trim()).filter(Boolean) : [];
+    lastRecommendedProduct = productNames.length
+      ? { name: productNames[0], company: companyNames[0] || '' }
       : null;
+    lastRecommendedProductList = productNames.map((name, i) => ({ name, company: companyNames[i] || '' }));
+
+    renderSuggestedMedicineCard();
 
     showResult(diseaseName, cropType, text, isHealthy, confidence);
 
     if (cropType) trackCropActivity(cropType);
     if (!isHealthy) logDiagnosisForOutbreakTracking(diseaseName, cropType, selectedDetectCategory, confidence);
+  }
+
+  // AI যদি admin-এর অনুমোদিত তালিকা থেকে একাধিক ওষুধ সাজেস্ট করে, প্রতিটার পূর্ণ তথ্য
+  // (ছবি/দাম/জৈব কিনা) মিলিয়ে ই-কমার্স কার্ড হিসেবে দেখানো হয়। একটাও না মিললে সাধারণ অর্ডার-বক্স দেখাবে।
+  function renderSuggestedMedicineCard() {
+    const wrap = document.getElementById('suggestedMedCard');
+    const list = document.getElementById('suggestedMedList');
+    const genericBox = document.getElementById('medOrderBox');
+
+    const matchedItems = (lastRecommendedProductList.length && cachedMedicineList)
+      ? lastRecommendedProductList
+          .map(p => cachedMedicineList.find(m => m.name === p.name))
+          .filter(Boolean)
+      : [];
+
+    if (!matchedItems.length) {
+      wrap.style.display = 'none';
+      genericBox.style.display = 'block';
+      return;
+    }
+
+    list.innerHTML = matchedItems.map((m, i) => `
+      <div class="suggested-med-item">
+        <div class="smc-body">
+          <div class="smc-thumb">${m.photo ? `<img src="${escapeHtml(m.photo)}">` : '💊'}</div>
+          <div class="smc-info">
+            <div class="smc-name">${escapeHtml(m.name)}</div>
+            <div class="smc-company">🏭 ${escapeHtml(m.company)}</div>
+            <div class="smc-tags">${m.isOrganic ? '<span class="smc-tag organic">🌿 জৈব</span>' : '<span class="smc-tag chemical">⚗️ রাসায়নিক</span>'}</div>
+            <div class="smc-price">${m.price ? `৳${m.price}${m.unit ? ' / ' + escapeHtml(m.unit) : ''}` : ''}</div>
+          </div>
+        </div>
+        <div class="smc-btns">
+          <button class="order-now-btn" onclick="orderNow(${i})">🛒 অর্ডার করুন</button>
+          <button class="coupon-btn" onclick="getCoupon(${i})">🎫 কুপন নিন</button>
+        </div>
+      </div>
+    `).join('');
+
+    wrap.style.display = 'block';
+    genericBox.style.display = 'none';
   }
 
   // প্রতিটা রোগ শনাক্তকরণ ফলাফল লগ হবে — উপজেলা কৃষি কর্মকর্তাদের লাইভ প্রাদুর্ভাব
@@ -2798,12 +3347,22 @@ ${medicineListText}
     document.getElementById('resultCropType').textContent = subtitle;
     document.getElementById('resultDesc').textContent = description;
 
+    const isLowConfidence = !isHealthy && confidence && confidence.includes('কম');
+
     // 🟢🟡🔴 রঙিন severity ব্যাজ — লেখা না পড়েই এক নজরে বোঝা যাবে
     const badge = document.getElementById('resultSeverityBadge');
     if (badge) {
       if (isHealthy) { badge.textContent = '🟢 সুস্থ'; badge.className = 'result-severity-badge sev-healthy'; }
-      else if (confidence && confidence.includes('কম')) { badge.textContent = '🟡 আরও ছবি লাগবে'; badge.className = 'result-severity-badge sev-warn'; }
+      else if (isLowConfidence) { badge.textContent = '🟡 আরও ছবি লাগবে'; badge.className = 'result-severity-badge sev-warn'; }
       else { badge.textContent = '🔴 সমস্যা পাওয়া গেছে'; badge.className = 'result-severity-badge sev-danger'; }
+    }
+
+    // নিশ্চিতির মাত্রা কম হলে সরাসরি করণীয় (কীভাবে আবার ছবি তুলতে হবে) দেখানো
+    document.getElementById('retakePhotoBanner').style.display = isLowConfidence ? 'block' : 'none';
+    // নিশ্চিত না হয়ে ওষুধ কেনার দিকে ঠেলে দেওয়া ঠিক না — তাই কম নিশ্চিত হলে অর্ডার/কুপন বক্স লুকানো থাকবে
+    if (isLowConfidence) {
+      document.getElementById('suggestedMedCard').style.display = 'none';
+      document.getElementById('medOrderBox').style.display = 'none';
     }
 
     document.getElementById('resultHdr').className = isHealthy ? 'result-hdr healthy' : 'result-hdr';
@@ -2860,7 +3419,10 @@ ${medicineListText}
   let gpsCoordinates = null;
   let selectedPhoneMode = 'this'; // 'this' or 'other'
 
-  function orderNow() {
+  function orderNow(productIndex) {
+    if (typeof productIndex === 'number' && lastRecommendedProductList[productIndex]) {
+      lastRecommendedProduct = lastRecommendedProductList[productIndex];
+    }
     document.getElementById('orderModalDesc').textContent =
       currentResultText ? 'রোগ অনুযায়ী প্রস্তাবিত ওষুধ আপনার ঠিকানায় পাঠানো হবে' : 'ওষুধ অর্ডার করতে তথ্য দিন';
     document.getElementById('orderModal').classList.add('show');
@@ -2967,8 +3529,8 @@ ${medicineListText}
       phone = userData.phone; // login করা নম্বর ব্যবহার হবে
     } else {
       phone = document.getElementById('orderPhone').value.trim();
-      if (!phone || phone.length < 11) {
-        alert('দয়া করে সঠিক ফোন নম্বর দিন!');
+      if (!isValidBDPhone(phone)) {
+        alert('দয়া করে সঠিক বাংলাদেশি মোবাইল নম্বর দিন! (যেমন: 017XXXXXXXX)');
         return;
       }
     }
@@ -3016,7 +3578,10 @@ ${medicineListText}
     return 'KB-' + num;
   }
 
-  async function getCoupon() {
+  async function getCoupon(productIndex) {
+    if (typeof productIndex === 'number' && lastRecommendedProductList[productIndex]) {
+      lastRecommendedProduct = lastRecommendedProductList[productIndex];
+    }
     const user = auth.currentUser;
     if (!user) { alert('লগইন করুন!'); return; }
 
@@ -3186,30 +3751,37 @@ ${medicineListText}
         updatedAt: new Date().toISOString()
       };
 
-      // Firestore এ cache হিসেবে সেভ করা
-      await db.collection('weatherCache').doc(districtName).set(weatherData);
+      // নিচের সবগুলো Firestore write — cache সেভ করা ব্যর্থ হলেও (যেমন permission
+      // সমস্যা) কৃষক যেন তবুও আবহাওয়ার তথ্য দেখতে পান, তাই এগুলো আলাদা try/catch এ
+      // রাখা হলো যাতে মূল fetch করা ডেটা রিটার্ন করতে বাধা না দেয় (আগের বাগ এখানেই ছিল)
+      try {
+        // Firestore এ cache হিসেবে সেভ করা
+        await db.collection('weatherCache').doc(districtName).set(weatherData);
 
-      // যদি ঝড়/বৃষ্টির ঝুঁকি থাকে তাহলে flag করা যাতে বেশি বার check হয়
-      if (hasStormRisk) {
-        await db.collection('weatherAlerts').doc(districtName).set({
-          district: districtName,
-          alertLevel: 'high',
-          message: 'ঝড় বা ভারী বৃষ্টির সম্ভাবনা আছে',
-          updatedAt: new Date().toISOString()
-        });
-      }
+        // যদি ঝড়/বৃষ্টির ঝুঁকি থাকে তাহলে flag করা যাতে বেশি বার check হয়
+        if (hasStormRisk) {
+          await db.collection('weatherAlerts').doc(districtName).set({
+            district: districtName,
+            alertLevel: 'high',
+            message: 'ঝড় বা ভারী বৃষ্টির সম্ভাবনা আছে',
+            updatedAt: new Date().toISOString()
+          });
+        }
 
-      // আর্দ্রতা/বৃষ্টি বেশি থাকলে সবজি ফসলে রোগের ঝুঁকি বাড়ে — আগাম সতর্কতা তৈরি করা
-      // (এই কল শুধু cache রিফ্রেশ হওয়ার সময়ই হয়, প্রতি কৃষকের জন্য আলাদা না — খরচ নিয়ন্ত্রণে থাকে)
-      const highRiskWeather = hasStormRisk || weatherData.humidity >= 80;
-      if (highRiskWeather) {
-        weatherData.diseaseAdvisory = await generatePreemptiveDiseaseAdvisory(weatherData);
-        await db.collection('weatherCache').doc(districtName).update({ diseaseAdvisory: weatherData.diseaseAdvisory });
+        // আর্দ্রতা/বৃষ্টি বেশি থাকলে সবজি ফসলে রোগের ঝুঁকি বাড়ে — আগাম সতর্কতা তৈরি করা
+        // (এই কল শুধু cache রিফ্রেশ হওয়ার সময়ই হয়, প্রতি কৃষকের জন্য আলাদা না — খরচ নিয়ন্ত্রণে থাকে)
+        const highRiskWeather = hasStormRisk || weatherData.humidity >= 80;
+        if (highRiskWeather) {
+          weatherData.diseaseAdvisory = await generatePreemptiveDiseaseAdvisory(weatherData);
+          await db.collection('weatherCache').doc(districtName).update({ diseaseAdvisory: weatherData.diseaseAdvisory });
+        }
+      } catch (cacheErr) {
+        console.error('আবহাওয়া cache সেভ করতে সমস্যা (Firestore rules চেক করুন — weatherCache/weatherAlerts এ write অনুমতি আছে কিনা):', cacheErr);
       }
 
       return weatherData;
     } catch (err) {
-      console.error('আবহাওয়া আনতে সমস্যা:', err);
+      console.error('আবহাওয়া API থেকে আনতে সমস্যা (/api/weather চেক করুন):', err);
       return null;
     }
   }
@@ -3241,9 +3813,40 @@ ${medicineListText}
 
   // কৃষক app খুললে এই function চলবে — Firestore থেকে cached data দেখাবে
   // কৃষক app খুললে এই function চলবে — Firestore থেকে cached data দেখাবে
+  // হোমপেজের আবহাওয়া মিনি-স্ট্রিপ + জরুরি সতর্কতা ব্যানার (শুধু read করে, নতুন করে API কল করে না)
+  const wxIconMap = { Clear:'☀️', Clouds:'⛅', Rain:'🌧️', Thunderstorm:'⛈️', Drizzle:'🌦️', Mist:'🌫️', Haze:'🌫️' };
+  async function loadHomeWeatherStrip() {
+    const strip = document.getElementById('homeWeatherStrip');
+    const banner = document.getElementById('homeStormBanner');
+    if (!strip) return;
+    try {
+      await detectUserDistrict();
+      const doc = await db.collection('weatherCache').doc(currentMarketDistrict).get();
+      if (!doc.exists) return; // ডেটা না থাকলে স্ট্রিপ hidden-ই থাকবে, হোমপেজ স্বাভাবিক চলবে
+      const data = doc.data();
+      document.getElementById('homeWxTemp').textContent = data.temp + '°সে';
+      document.getElementById('homeWxDesc').textContent = escapeHtml(data.description || '') + (data.humidity ? ' • আর্দ্রতা ' + data.humidity + '%' : '');
+      document.getElementById('homeWxIcon').textContent = wxIconMap[(data.icon || '').replace(/[dn]$/,'')] || '⛅';
+      strip.style.display = 'flex';
+
+      if (data.stormRisk) {
+        document.getElementById('homeStormDesc').textContent = data.diseaseAdvisory
+          ? 'ঝড়/ভারী বৃষ্টির সম্ভাবনা — বিস্তারিত দেখুন'
+          : 'আগামী কিছু সময়ে ঝড় বা ভারী বৃষ্টির সম্ভাবনা আছে';
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+    } catch (err) {
+      // ব্যর্থ হলেও হোমপেজ স্বাভাবিক চলবে, স্ট্রিপ শুধু hidden থাকবে
+    }
+  }
+
+
   async function showWeatherPage() {
     hideAllPages();
     document.getElementById('weatherPage').style.display = 'block';
+    setActiveNavItem('weather');
 
     await detectUserDistrict();
     await loadCachedWeather(currentMarketDistrict);
@@ -3356,6 +3959,7 @@ ${medicineListText}
   function showSellPage() {
     hideAllPages();
     document.getElementById('sellPage').style.display = 'block';
+    setActiveNavItem('sell');
     updateGigUnitOptions(); // ডিফল্ট ক্যাটাগরি (ফসল) অনুযায়ী একক বাটন দেখানো
   }
 
@@ -3573,6 +4177,9 @@ ${medicineListText}
 
   async function loadGigs() {
     const grid = document.getElementById('gigGrid');
+    const searchInput = document.getElementById('gigSearchInput');
+    if (searchInput) searchInput.value = '';
+    currentGigCategory = 'all';
     grid.innerHTML = '<div class="coming-soon">লোড হচ্ছে...</div>';
     try {
       const snapshot = await db.collection('cropGigs')
@@ -3660,7 +4267,10 @@ ${medicineListText}
     'হাঁস-মুরগি': ['মুরগি', 'হাঁস', 'ডিম']
   };
 
+  let currentGigCategory = 'all';
+
   function filterGigsByCategory(category, btnEl) {
+    currentGigCategory = category;
     document.querySelectorAll('.gig-cat-chip').forEach(c => c.classList.remove('active'));
     btnEl.classList.add('active');
 
@@ -3676,7 +4286,18 @@ ${medicineListText}
       subcatWrap.innerHTML = '';
     }
 
-    const filtered = category === 'all' ? allGigsData : allGigsData.filter(g => g.category === category);
+    applyGigFilters();
+  }
+
+  // সার্চ বক্সে লিখলে বর্তমান ক্যাটাগরি ফিল্টারের সাথে মিলিয়ে ফলাফল দেখানো
+  function filterGigsBySearch() {
+    applyGigFilters();
+  }
+
+  function applyGigFilters() {
+    const query = (document.getElementById('gigSearchInput')?.value || '').trim().toLowerCase();
+    let filtered = currentGigCategory === 'all' ? allGigsData : allGigsData.filter(g => g.category === currentGigCategory);
+    if (query) filtered = filtered.filter(g => (g.cropName || '').toLowerCase().includes(query));
     renderGigGrid(filtered);
   }
 
@@ -4019,8 +4640,12 @@ ${medicineListText}
   let reviewTargetUserId = null;
   let reviewTargetContext = null; // 'gig' বা 'demand'
   let selectedStarRating = 0;
+  let reviewTargetType = 'user'; // 'user' (কৃষক/পাইকার একে অপরকে) বা 'product' (কৃষক প্রোডাক্টকে)
+  let reviewTargetProductId = null;
+  let reviewTargetProductName = null;
 
   function openReviewPrompt(targetUserId, targetUserName, context) {
+    reviewTargetType = 'user';
     reviewTargetUserId = targetUserId;
     reviewTargetContext = context;
     selectedStarRating = 0;
@@ -4031,9 +4656,23 @@ ${medicineListText}
     document.getElementById('reviewModalOverlay').classList.add('show');
   }
 
+  // কৃষক কেনা প্রোডাক্ট (বীজ/ওষুধ) নিয়ে রিভিউ দিতে চাইলে এটা খুলবে — উপরের মডালটাই reuse করা হচ্ছে
+  function openProductReviewPrompt(productId, productName) {
+    reviewTargetType = 'product';
+    reviewTargetProductId = productId;
+    reviewTargetProductName = productName;
+    selectedStarRating = 0;
+
+    document.getElementById('reviewTargetName').textContent = productName;
+    renderStars(0);
+    document.getElementById('reviewCommentInput').value = '';
+    document.getElementById('reviewModalOverlay').classList.add('show');
+  }
+
   function closeReviewPrompt() {
     document.getElementById('reviewModalOverlay').classList.remove('show');
     reviewTargetUserId = null;
+    reviewTargetProductId = null;
   }
 
   function selectStar(rating) {
@@ -4050,7 +4689,8 @@ ${medicineListText}
 
   async function submitReview() {
     if (selectedStarRating === 0) { alert('দয়া করে স্টার দিয়ে রেটিং দিন!'); return; }
-    if (!reviewTargetUserId) return;
+    if (reviewTargetType === 'product' && !reviewTargetProductId) return;
+    if (reviewTargetType === 'user' && !reviewTargetUserId) return;
 
     const user = auth.currentUser;
     if (!user) { alert('লগইন করুন!'); return; }
@@ -4060,6 +4700,32 @@ ${medicineListText}
     try {
       const userDoc = await db.collection('users').doc(user.uid).get();
       const reviewerName = userDoc.data().name;
+
+      if (reviewTargetType === 'product') {
+        // প্রোডাক্টের (বীজ/ওষুধ) রিভিউ সেভ করা
+        await db.collection('companyProducts').doc(reviewTargetProductId).collection('reviews').add({
+          reviewerId: user.uid,
+          reviewerName,
+          rating: selectedStarRating,
+          comment: comment || null,
+          createdAt: new Date().toISOString()
+        });
+
+        // প্রোডাক্টের গড় রেটিং আপডেট করা
+        const reviewsSnapshot = await db.collection('companyProducts').doc(reviewTargetProductId).collection('reviews').get();
+        let total = 0, count = 0;
+        reviewsSnapshot.forEach(doc => { total += doc.data().rating; count++; });
+        const avgRating = count > 0 ? (total / count) : 0;
+
+        await db.collection('companyProducts').doc(reviewTargetProductId).set({
+          avgRating, reviewCount: count
+        }, { merge: true });
+
+        alert('✅ ধন্যবাদ! আপনার রিভিউ জমা হয়েছে।');
+        closeReviewPrompt();
+        if (document.getElementById('seedPage').style.display === 'block') filterSeeds();
+        return;
+      }
 
       // রিভিউ সেভ করা
       await db.collection('users').doc(reviewTargetUserId).collection('reviews').add({
@@ -4636,12 +5302,19 @@ ${medicineListText}
   async function showSeedPage() {
     hideAllPages();
     document.getElementById('seedPage').style.display = 'block';
+    setActiveNavItem('seed');
     await loadSeeds();
   }
+
+  let currentSeedCategory = 'all';
 
   async function loadSeeds() {
     const grid = document.getElementById('seedGrid');
     grid.innerHTML = '<div class="coming-soon" style="grid-column:1/-1;">লোড হচ্ছে...</div>';
+    currentSeedCategory = 'all';
+    const searchInput = document.getElementById('seedSearchInput');
+    if (searchInput) searchInput.value = '';
+    document.querySelectorAll('.seed-cat-chip').forEach((b, i) => b.classList.toggle('active', i === 0));
 
     try {
       const snapshot = await db.collection('companyProducts')
@@ -4657,21 +5330,52 @@ ${medicineListText}
         grid.innerHTML = '<div class="coming-soon" style="grid-column:1/-1;">এখনো কোনো বীজ পাওয়া যাচ্ছে না</div>';
         return;
       }
-
-      grid.innerHTML = allSeedsData.map(s => `
-        <div class="seed-card">
-          <div class="seed-card-media">${s.photo ? `<img src="${escapeHtml(s.photo)}">` : '🌱'}</div>
-          <div class="seed-card-body">
-            <div class="seed-card-name">${escapeHtml(s.name)}</div>
-            ${s.seedPerBigha ? `<div class="seed-card-per-bigha">প্রতি বিঘায়: ${escapeHtml(s.seedPerBigha)}</div>` : ''}
-            <div class="seed-card-price">৳ ${s.hasOffer ? s.offerPrice : s.price}</div>
-            <button class="seed-order-btn" onclick="openLandSizeModal('${s.id}')">🛒 কিনুন</button>
-          </div>
-        </div>
-      `).join('');
+      renderSeedGrid(allSeedsData);
     } catch (err) {
       grid.innerHTML = '<div class="coming-soon" style="grid-column:1/-1;">লোড করা যায়নি</div>';
     }
+  }
+
+  function renderSeedGrid(list) {
+    const grid = document.getElementById('seedGrid');
+    if (!list.length) {
+      grid.innerHTML = '<div class="coming-soon" style="grid-column:1/-1;">কোনো বীজ পাওয়া যায়নি</div>';
+      return;
+    }
+    grid.innerHTML = list.map(s => `
+      <div class="seed-card">
+        <div class="seed-card-media">${s.photo ? `<img src="${escapeHtml(s.photo)}">` : '🌱'}</div>
+        <div class="seed-card-body">
+          <div class="seed-card-name">${escapeHtml(s.name)}</div>
+          <div class="seed-card-rating">${s.reviewCount ? '⭐ ' + (s.avgRating || 0).toFixed(1) + ' (' + s.reviewCount + ' রিভিউ)' : '⭐ নতুন প্রোডাক্ট'}</div>
+          ${s.seedPerBigha ? `<div class="seed-card-per-bigha">প্রতি বিঘায়: ${escapeHtml(s.seedPerBigha)}</div>` : ''}
+          <div class="seed-card-price">৳ ${s.hasOffer ? s.offerPrice : s.price}</div>
+          <button class="seed-order-btn" onclick="openLandSizeModal('${s.id}')">🛒 কিনুন</button>
+          <button class="seed-review-btn" onclick="openProductReviewPrompt('${s.id}', '${escapeHtml(s.name).replace(/'/g, "\\'")}')">⭐ রিভিউ দিন</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ক্যাটাগরি বাটনে চাপ দিলে (category ফিল্ড admin panel থেকে সেট হবে; না থাকলে "other" হিসেবে ধরা হয়)
+  function selectSeedCategory(cat, btnEl) {
+    currentSeedCategory = cat;
+    document.querySelectorAll('.seed-cat-chip').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    filterSeeds();
+  }
+
+  // সার্চ বক্সে লিখলে বা ক্যাটাগরি পাল্টালে বীজের তালিকা ফিল্টার হবে
+  function filterSeeds() {
+    const query = (document.getElementById('seedSearchInput')?.value || '').trim().toLowerCase();
+    let filtered = allSeedsData;
+    if (currentSeedCategory !== 'all') {
+      filtered = filtered.filter(s => (s.category || 'other') === currentSeedCategory);
+    }
+    if (query) {
+      filtered = filtered.filter(s => (s.name || '').toLowerCase().includes(query));
+    }
+    renderSeedGrid(filtered);
   }
 
   // ===== জমির পরিমাণ জিজ্ঞেস করা ও প্রয়োজনীয় বীজের পরিমাণ হিসাব =====
@@ -4997,12 +5701,17 @@ ${medicineListText}
   function toggleSeedFields() {
     const isSeed = document.getElementById('cpProductType').value === 'seed';
     document.getElementById('seedQuantityField').style.display = isSeed ? 'block' : 'none';
+    document.getElementById('seedCategoryField').style.display = isSeed ? 'block' : 'none';
+    document.getElementById('medicineCategoryField').style.display = isSeed ? 'none' : 'block';
   }
 
   async function publishProduct() {
     const name = document.getElementById('cpName').value.trim();
     const productType = document.getElementById('cpProductType').value; // 'medicine' বা 'seed'
-    const category = document.getElementById('cpCategory').value.trim();
+    // বীজের জন্য নির্দিষ্ট ক্যাটাগরি ড্রপডাউন (কৃষক ফিল্টার করতে ব্যবহার করবে), ওষুধের জন্য ফ্রি-টেক্সট (AI matching এর জন্য)
+    const category = productType === 'seed'
+      ? document.getElementById('cpSeedCategory').value
+      : document.getElementById('cpCategory').value.trim();
     const seedPerBigha = document.getElementById('cpSeedPerBigha').value.trim();
     const price = document.getElementById('cpPrice').value.trim();
     const hasOffer = document.getElementById('cpOfferToggle').checked;
@@ -5036,6 +5745,7 @@ ${medicineListText}
         companyId: user.uid,
         companyName: userData.name,
         status: 'active',
+        avgRating: 0, reviewCount: 0,
         createdAt: new Date().toISOString()
       });
 
@@ -5047,6 +5757,8 @@ ${medicineListText}
       document.getElementById('cpCategory').value = '';
       document.getElementById('cpSeedPerBigha').value = '';
       document.getElementById('seedQuantityField').style.display = 'none';
+      document.getElementById('seedCategoryField').style.display = 'none';
+      document.getElementById('medicineCategoryField').style.display = 'block';
       document.getElementById('cpPrice').value = '';
       document.getElementById('cpOfferToggle').checked = false;
       document.getElementById('cpOfferPrice').value = '';
@@ -5116,13 +5828,20 @@ ${medicineListText}
       let html = '';
       snapshot.forEach(doc => {
         const o = doc.data();
+        // রিটেইলার অর্ডার (ওষুধ) হলে retailerName/retailerPhone, কৃষকের বীজ অর্ডার হলে farmerName/farmerPhone — দুটোই সামলানো হচ্ছে
+        const buyerLabel = o.productType === 'seed' ? '👨‍🌾' : '🏬';
+        const buyerName = o.retailerName || o.farmerName || 'অজানা';
+        const buyerPhone = o.retailerPhone || o.farmerPhone || '-';
+        const qtyText = o.productType === 'seed'
+          ? (o.calculatedQuantity ? ` • প্রয়োজন: ${escapeHtml(String(o.calculatedQuantity))}` : '')
+          : (o.quantity ? ` • পরিমাণ: ${o.quantity}` : '');
         html += `
           <div class="company-order-item">
             <div class="coi-top">
               <div class="coi-product">${escapeHtml(o.productName)}</div>
               <div class="coi-status">${o.status === 'pending' ? '⏳ পেন্ডিং' : '✅ সম্পন্ন'}</div>
             </div>
-            <div class="coi-retailer">🏬 ${escapeHtml(o.retailerName)} • 📞 ${escapeHtml(o.retailerPhone)} • ৳${o.price}</div>
+            <div class="coi-retailer">${buyerLabel} ${escapeHtml(buyerName)} • 📞 ${escapeHtml(buyerPhone)} • ৳${o.price}${qtyText}</div>
           </div>`;
       });
       list.innerHTML = html;
@@ -5198,6 +5917,40 @@ ${medicineListText}
       document.getElementById('floatingSupportBtn').style.display='none';
     }
   });
+  // ===== নিচের নেভিগেশন বার (শুধু কৃষক/আড়তদার রোলের জন্য) =====
+  function showBottomNav() {
+    document.getElementById('bottomNavBar').classList.add('show');
+    ['homePage','detectPage','marketPage','weatherPage','sellPage'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('nav-pad-for-bottom-nav');
+    });
+  }
+  function hideBottomNavBar() {
+    document.getElementById('bottomNavBar').classList.remove('show');
+  }
+  function setActiveNavItem(key) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById('nav-' + key);
+    if (el) el.classList.add('active');
+  }
 </script>
+
+<div class="bottom-nav" id="bottomNavBar">
+  <button class="nav-item" id="nav-home" onclick="showHomePage(); setActiveNavItem('home')">
+    <div class="nav-icon">🏠</div><div class="nav-label">হোম</div><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="nav-detect" onclick="showDetectPage(); setActiveNavItem('detect')">
+    <div class="nav-icon">📸</div><div class="nav-label">রোগ</div><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="nav-market" onclick="showMarketPage(); setActiveNavItem('market')">
+    <div class="nav-icon">💰</div><div class="nav-label">বাজার</div><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="nav-sell" onclick="showSellPage(); setActiveNavItem('sell')">
+    <div class="nav-icon">🛒</div><div class="nav-label">বিক্রি</div><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="nav-seed" onclick="showSeedPage(); setActiveNavItem('seed')">
+    <div class="nav-icon">🌱</div><div class="nav-label">বীজ</div><div class="nav-dot"></div>
+  </button>
+</div>
 </body>
 </html>
