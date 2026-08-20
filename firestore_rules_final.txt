@@ -1,0 +1,438 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============================================================
+    // সহায়ক ফাংশন
+    // ============================================================
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwnerUser(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+    // Admin Panel এর "adminTeam" কালেকশনে ইমেইল থাকলেই সে admin (owner/operations/support/marketing)
+    function isAdmin() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/adminTeam/$(request.auth.token.email));
+    }
+    function adminRole() {
+      return get(/databases/$(database)/documents/adminTeam/$(request.auth.token.email)).data.role;
+    }
+    function isOwnerAdmin() {
+      return isAdmin() && adminRole() == 'owner';
+    }
+    function isOpsAdmin() {
+      return isOwnerAdmin() || (isAdmin() && adminRole() == 'operations');
+    }
+    function isSupportAdmin() {
+      return isOwnerAdmin() || (isAdmin() && adminRole() == 'support');
+    }
+    function isMarketingAdmin() {
+      return isOwnerAdmin() || (isAdmin() && adminRole() == 'marketing');
+    }
+    function isRetailer() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'retailer';
+    }
+    // অ্যাডমিন প্যানেলের "ফিচার বন্ধ/চালু" টগল আগে শুধু অ্যাপের UI-তে কাজ করতো —
+    // টেকনিক্যাল কেউ সরাসরি Firestore-এ রিকোয়েস্ট পাঠালে rules সেটা আটকাতো না।
+    // এখন rules নিজেই এই সেটিং চেক করে, তাই "বন্ধ" মানে সত্যিই সম্পূর্ণ বন্ধ।
+    function isFeatureEnabled(key) {
+      return !exists(/databases/$(database)/documents/appConfig/features) ||
+        get(/databases/$(database)/documents/appConfig/features).data.get(key, true) != false;
+    }
+
+    // ============================================================
+    // কমিশন জালিয়াতি ঠেকাতে সহায়ক ফাংশন — Master Control-এ owner যে হার
+    // সেট করেছেন তার বেশি কেউ যেন নিজে থেকে কমিশন/আয় লিখতে না পারে
+    // (২ টাকা tolerance রাখা হয়েছে জাভাস্ক্রিপ্টের Math.round() এর সামান্য
+    // পার্থক্যের জন্য। সম্পূর্ণ জালিয়াতি-প্রুফ করতে হলে ভবিষ্যতে এই হিসাব
+    // Cloud Function দিয়ে সার্ভার-সাইডে সরানো উচিত — এখন rules দিয়ে যতটা
+    // সম্ভব শক্ত করা হলো।)
+    // ============================================================
+    function retailerRateFraction() {
+      return exists(/databases/$(database)/documents/appConfig/commissionRates) &&
+        get(/databases/$(database)/documents/appConfig/commissionRates).data.retailerCommissionPercent is number
+        ? get(/databases/$(database)/documents/appConfig/commissionRates).data.retailerCommissionPercent / 100
+        : 0.10; // override সেট করা না থাকলে সর্বোচ্চ ধাপ (১০%) ধরে নেওয়া হচ্ছে
+    }
+    function referralRateFraction() {
+      // ⚠️ আগে এখানে শুধু ratePercent পড়া হতো, "enabled" ফিল্ড চেক হতো না — মানে
+      // Admin Panel-এর Referral Dashboard থেকে বন্ধ করলেও rules-এর হিসাবে রেট
+      // শূন্য হতো না। এখন enabled=false থাকলে rate সরাসরি ০ (রেফারেল কমিশন লেখাই
+      // সম্পূর্ণ বন্ধ)।
+      return exists(/databases/$(database)/documents/settings/referralConfig) &&
+        get(/databases/$(database)/documents/settings/referralConfig).data.get('enabled', true) == false
+        ? 0
+        : (exists(/databases/$(database)/documents/settings/referralConfig) &&
+           get(/databases/$(database)/documents/settings/referralConfig).data.ratePercent is number
+          ? get(/databases/$(database)/documents/settings/referralConfig).data.ratePercent / 100
+          : 0.05); // কনফিগ না থাকলে ডিফল্ট ৫%
+    }
+
+    // ============================================================
+    // adminTeam — টিম ম্যানেজমেন্ট (সবচেয়ে সংবেদনশীল, শুধু owner লিখতে পারবে)
+    // ============================================================
+    match /adminTeam/{email} {
+      allow read: if isAdmin();       // নিজের role যাচাই করতে যেকোনো admin পড়তে পারবে
+      allow write: if isOwnerAdmin(); // শুধু owner যোগ/বাদ/পরিবর্তন করতে পারবে
+    }
+
+    // ============================================================
+    // users — সব ইউজারের প্রোফাইল (কৃষক, রিটেইলার, কোম্পানি, ড্রাইভার, অফিসার)
+    // ============================================================
+    match /users/{userId} {
+      // ⚠️⚠️ সবচেয়ে গুরুত্বপূর্ণ ফিক্স: আগে এখানে "সাইন-ইন করা যেকেউ" (isSignedIn())
+      // পড়তে পারতো — মানে যেকোনো ইউজারের ফোন নম্বর (users/{uid}.phone) দেখে ফেলা যেত।
+      // লগইনের পাসওয়ার্ড বানানো হয় PIN + ফোন নম্বরের শেষ ৪ ডিজিট দিয়ে — আর ফোন নম্বর
+      // জানা থাকলে শেষ ৪ ডিজিটও এমনিতেই জানা, তাই আসল নিরাপত্তা পুরোপুরি PIN-এর (৪-৬ সংখ্যা)
+      // উপর নির্ভর করে। কেউ এখান থেকে টার্গেটের ফোন নম্বর দেখে, তারপর PIN brute-force
+      // করে সেই ইউজারের অ্যাকাউন্ট দখল করে ফেলতে পারতো — এটা এখন সম্পূর্ণ বন্ধ।
+      // (অ্যাপ কোড চেক করে নিশ্চিত হওয়া হয়েছে যে অন্য কারো নাম/ফোন এখান থেকে সরাসরি
+      // পড়া হয় না — অর্ডার/কুপন/লেনদেনে যেই নাম-ফোন দেখানো হয় সেটা তৈরির সময়ই আলাদাভাবে
+      // ওই ডকুমেন্টে কপি করে রাখা থাকে, তাই এই রেস্ট্রিকশনে অ্যাপ ভাঙবে না।)
+      allow read: if isOwnerUser(userId) || isAdmin();
+      // নিজের একাউন্ট নিজেই বানাবে (সাইনআপের সময়)
+      allow create: if isOwnerUser(userId);
+      // নিজের ডেটা নিজে বদলাতে পারবে, owner সব বদলাতে পারবে।
+      // ⚠️ কমিশন/আয়/পয়েন্ট ফিল্ড (totalCommissionEarned, totalReferralEarned, totalTokens)
+      // এখন থেকে ইউজার নিজে থেকে একেবারেই লিখতে/বাড়াতে পারবে না (আগে totalCommissionEarned ও
+      // totalReferralEarned-এ ৫০,০০০ টাকা পর্যন্ত tolerance ছিল যা কেউ বারবার কল করে অসীম টাকা
+      // বানাতে পারতো, আর totalTokens-এ তো কোনো চেকই ছিল না)। এই তিনটি ফিল্ড শুধু owner-ই
+      // বদলাতে পারবেন। অ্যাপে প্রকৃত কমিশন/রেফারেল আয় দেখানো হয় এখন সরাসরি salesTransactions /
+      // referralEarnings লেজার থেকে যোগফল করে (rate-capped, create-only, তাই জাল করা সম্ভব না)।
+      allow update: if isOwnerAdmin() || (
+        isOwnerUser(userId) &&
+        request.resource.data.get('totalCommissionEarned', 0) == resource.data.get('totalCommissionEarned', 0) &&
+        request.resource.data.get('totalReferralEarned', 0) == resource.data.get('totalReferralEarned', 0) &&
+        request.resource.data.get('totalTokens', 0) == resource.data.get('totalTokens', 0)
+      );
+      allow delete: if isOwnerAdmin();
+
+      // কৃষক/পাইকার একে অপরকে যে রিভিউ দেয়
+      match /reviews/{reviewId} {
+        allow read: if true;
+        // ⚠️ reviewerId caller-এর uid-এর সাথে মিলতেই হবে, অন্য কারো নামে ভুয়া রিভিউ দেওয়া যাবে না।
+        allow create: if isSignedIn() && request.resource.data.reviewerId == request.auth.uid;
+        allow update, delete: if isOwnerAdmin();
+      }
+    }
+
+    // ============================================================
+    // userPublic — গড় রেটিং/রিভিউ সংখ্যা (সবার জন্য প্রকাশ্য)
+    // ⚠️ এই অ্যাপে কোনো ব্যাকএন্ড/Cloud Function নেই, তাই গড় রেটিং ক্লায়েন্ট থেকেই
+    // হিসাব করে লেখা হয় — এই একটা জায়গায় পুরোপুরি সুরক্ষিত করা সম্ভব হয়নি (কেউ ভুল
+    // মান লিখে দিলে ঠেকানো যাবে না)। ভবিষ্যতে Cloud Function দিয়ে ঠিক করা উচিত।
+    // ============================================================
+    match /userPublic/{userId} {
+      allow read: if true;
+      // ⚠️ কোনো ব্যাকএন্ড না থাকায় গড় রেটিং ক্লায়েন্ট থেকেই হিসাব করে লেখা হয়, তাই যেই
+      // রিভিউ দেয় সে-ই এই ডকুমেন্টে লেখে (নিজের না বলে isOwnerUser দিয়ে আটকানো যায় না)।
+      // তবে অন্তত মান দুটো বাস্তবসম্মত সীমার মধ্যে থাকতে বাধ্য করা হলো, যাতে কেউ ইচ্ছাকৃতভাবে
+      // অস্বাভাবিক (যেমন ঋণাত্মক বা লাখো) সংখ্যা বসিয়ে কারো রেটিং নষ্ট করতে না পারে।
+      allow write: if isSignedIn() &&
+        request.resource.data.avgRating is number &&
+        request.resource.data.avgRating >= 0 && request.resource.data.avgRating <= 5 &&
+        request.resource.data.reviewCount is number &&
+        request.resource.data.reviewCount >= 0;
+    }
+
+    // ============================================================
+    // appConfig — হোমপেজ কার্ড, ফিচার অন/অফ, কমিশন হার ইত্যাদি (লাইভ কনফিগ)
+    // "features" (মাস্টার ফিচার সুইচ) ও "commissionRates" (কমিশন হার) —
+    // এই দুইটা ডকুমেন্ট শুধু owner লিখতে পারবে (🎛️ মাস্টার কন্ট্রোল প্যানেল),
+    // বাকি সব ডকুমেন্ট (যেমন homeCards) আগের মতোই operations-ও লিখতে পারবে।
+    // ============================================================
+    match /appConfig/{docId} {
+      allow read: if true;
+      allow write: if (docId == 'features' || docId == 'commissionRates') ? isOwnerAdmin() : isOpsAdmin();
+    }
+
+    // ============================================================
+    // companyProducts — বীজ/ওষুধ লিস্টিং (কোম্পানি নিজে, বা admin companyId:"admin" দিয়ে)
+    // ============================================================
+    match /companyProducts/{productId} {
+      allow read: if true;
+      allow create: if isSignedIn() && (
+        request.resource.data.companyId == request.auth.uid ||
+        (request.resource.data.companyId == 'admin' && isOpsAdmin())
+      );
+      allow update, delete: if isSignedIn() && (
+        resource.data.companyId == request.auth.uid ||
+        (resource.data.companyId == 'admin' && isOpsAdmin()) ||
+        isOwnerAdmin() ||
+        // ⚠️ প্রোডাক্ট রিভিউ দেওয়ার পর গড় রেটিং লেখার জন্য: শুধু avgRating/reviewCount
+        // ফিল্ড দুটোই বদলানো যাবে (বাউন্ড করা মান সহ), বাকি কোনো ফিল্ড (price, companyId
+        // ইত্যাদি) স্পর্শ করা যাবে না।
+        (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['avgRating', 'reviewCount']) &&
+          request.resource.data.avgRating is number &&
+          request.resource.data.avgRating >= 0 && request.resource.data.avgRating <= 5 &&
+          request.resource.data.reviewCount is number &&
+          request.resource.data.reviewCount >= 0
+        )
+      );
+
+      // কৃষকের দেওয়া প্রোডাক্ট রিভিউ
+      match /reviews/{reviewId} {
+        allow read: if true;
+        // ⚠️ reviewerId caller-এর uid-এর সাথে মিলতেই হবে, অন্য কারো নামে ভুয়া রিভিউ দেওয়া যাবে না।
+        allow create: if isSignedIn() && request.resource.data.reviewerId == request.auth.uid;
+        allow update, delete: if isOwnerAdmin();
+      }
+    }
+
+    // ============================================================
+    // companyOrders / medicineOrders — বীজ/ওষুধ অর্ডার
+    // ============================================================
+    match /companyOrders/{orderId} {
+      allow read: if isSignedIn() && (
+        resource.data.farmerId == request.auth.uid ||
+        resource.data.retailerId == request.auth.uid ||
+        resource.data.companyId == request.auth.uid ||
+        (resource.data.companyId == 'admin' && isOpsAdmin()) ||
+        isOwnerAdmin()
+      );
+      // ⚠️ আগে যেকোনো সাইন-ইন ইউজার অন্য কারো নামে (farmerId/retailerId স্পুফ করে) ভুয়া
+      // অর্ডার বসাতে পারতো। এখন অর্ডারে যে farmerId/retailerId লেখা হচ্ছে সেটা caller-এর
+      // নিজের uid-এর সাথে মিলতেই হবে।
+      allow create: if isSignedIn() && (
+        request.resource.data.get('farmerId', null) == request.auth.uid ||
+        request.resource.data.get('retailerId', null) == request.auth.uid
+      );
+      allow update: if isSignedIn() && (
+        resource.data.companyId == request.auth.uid ||
+        (resource.data.companyId == 'admin' && isOpsAdmin()) ||
+        isOwnerAdmin()
+      );
+    }
+
+    match /medicineOrders/{orderId} {
+      allow read: if isSignedIn() && (resource.data.farmerId == request.auth.uid || isOwnerAdmin());
+      // ⚠️ একই কারণে — farmerId caller-এর নিজের uid-এর সাথে মিলতেই হবে, অন্য কারো নামে
+      // ভুয়া অর্ডার বসানো যাবে না।
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+      allow update: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // medicineDatabase — AI যে ওষুধ suggest করে তার অনুমোদিত তালিকা
+    // ============================================================
+    match /medicineDatabase/{medId} {
+      allow read: if true;   // AI প্রম্পটে বসাতে অ্যাপের প্রয়োজন
+      allow write: if isOpsAdmin();
+    }
+
+    // ============================================================
+    // marketPrices — বাজারদর (admin নিয়ন্ত্রণ করে)
+    // ============================================================
+    match /marketPrices/{priceId} {
+      allow read: if true;
+      allow write: if isOpsAdmin();
+    }
+
+    // ============================================================
+    // weatherCache / weatherAlerts — আবহাওয়ার ক্যাশ ও সতর্কতা
+    // ⚠️ এটা যেকোনো কৃষক অ্যাপ খুললেই রিফ্রেশ হয় (কোনো নির্দিষ্ট ইউজারের ডেটা না,
+    // ভাগাভাগি করা cache), তাই এখনো ইউজার লিখতে পারবে। কিন্তু আগে এই ডেটার কোনো
+    // গঠন/সীমা যাচাই হতো না — কেউ ইচ্ছা করলে ভুয়া ঝড়ের সতর্কতা বসিয়ে সব কৃষককে
+    // আতঙ্কিত করতে পারতো, বা আসল সতর্কতা মুছে দিতে পারতো। এখন অন্তত মান/দৈর্ঘ্য
+    // বাস্তবসম্মত সীমায় বাধ্য করা হলো। সম্পূর্ণ সুরক্ষার জন্য ভবিষ্যতে আবহাওয়ার
+    // ডেটা সার্ভার-সাইড (Cloud Function) থেকে fetch করে লেখা উচিত, ক্লায়েন্ট থেকে না।
+    // ============================================================
+    match /weatherCache/{district} {
+      allow read: if true;
+      // ⚠️ এই ডকুমেন্টের গঠন জটিল (temp, forecast array, diseaseAdvisory ইত্যাদি অনেক
+      // ফিল্ড, আংশিক update() কলও হয়) — পুরোপুরি ফিল্ড-লেভেল validation করতে গেলে
+      // ভুল বসিয়ে অ্যাপ ভাঙার ঝুঁকি বেশি, তাই আপাতত শুধু সাইন-ইন থাকলেই লেখা যাবে
+      // (আগের অবস্থাই বহাল)। প্রকৃত সুরক্ষার জন্য এটা ভবিষ্যতে Cloud Function-এ
+      // সরানো উচিত (নিচের নোট দেখুন)।
+      allow write: if isSignedIn();
+    }
+    match /weatherAlerts/{district} {
+      allow read: if true;
+      // ⚠️ এই ডকুমেন্টের গঠন ছোট ও নির্দিষ্ট, তাই এখানে অন্তত বাস্তবসম্মত সীমা
+      // বেঁধে দেওয়া গেল — alertLevel নির্দিষ্ট মানের বাইরে যেতে পারবে না, আর message
+      // অস্বাভাবিক লম্বা কিছু (যেমন junk/স্প্যাম টেক্সট) হতে পারবে না।
+      allow write: if isSignedIn() &&
+        request.resource.data.alertLevel in ['low', 'medium', 'high'] &&
+        request.resource.data.message is string &&
+        request.resource.data.message.size() <= 300;
+    }
+
+    // ============================================================
+    // cropGigs — কৃষকের ফসল বিক্রির পোস্ট
+    // ============================================================
+    match /cropGigs/{gigId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+      allow update, delete: if isSignedIn() && (resource.data.farmerId == request.auth.uid || isOwnerAdmin());
+    }
+
+    // ============================================================
+    // cropDemands — কৃষক/পাইকারের ফসল কেনার চাহিদা পোস্ট + বিড
+    // ============================================================
+    match /cropDemands/{demandId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+      allow update, delete: if isSignedIn() && (resource.data.farmerId == request.auth.uid || isOwnerAdmin());
+
+      match /bids/{bidId} {
+        allow read: if true;
+        // ⚠️ farmerId caller-এর uid-এর সাথে মিলতেই হবে, অন্য কারো নামে ভুয়া বিড করা যাবে না।
+        allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+        allow update, delete: if isOwnerAdmin();
+      }
+    }
+
+    // ============================================================
+    // coupons — কৃষকের ছাড়ের কুপন (রিটেইলার ভেরিফাই করে)
+    // ============================================================
+    match /coupons/{code} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn()
+        && isFeatureEnabled('medicineOrderEnabled')
+        && request.resource.data.farmerId == request.auth.uid
+        && !exists(/databases/$(database)/documents/coupons/$(code));
+      // ⚠️ শুধু "active" অবস্থায় থাকা কুপনই "used" করা যাবে, তাও শুধু আসল retailer role-এর
+      // ইউজার নিজের জন্যই — আর saleAmount/retailerCommission salesTransactions-এর মতোই
+      // owner-নির্ধারিত rate-এর বেশি লেখা যাবে না (আগে এখানে কোনো amount/role চেক ছিল না)।
+      allow update: if isOwnerAdmin() || (
+        isSignedIn() && resource.data.status == 'active' &&
+        isRetailer() && isFeatureEnabled('retailerPanelEnabled') &&
+        request.resource.data.status == 'used' &&
+        request.resource.data.usedByRetailerId == request.auth.uid &&
+        request.resource.data.saleAmount is number && request.resource.data.saleAmount > 0 &&
+        request.resource.data.retailerCommission is number &&
+        request.resource.data.retailerCommission >= 0 &&
+        request.resource.data.retailerCommission <= (request.resource.data.saleAmount * retailerRateFraction()) + 2
+      );
+      allow delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // salesTransactions / officerReferralActivity / referralEarnings
+    // — আর্থিক ও রেফারেল হিসাবের রেকর্ড, স্পর্শকাতর
+    // ============================================================
+    match /salesTransactions/{txId} {
+      allow read: if isSignedIn() && (resource.data.retailerId == request.auth.uid || isOwnerAdmin());
+      // saleAmount ধনাত্মক হতে হবে, আর retailerCommission কখনোই owner-নির্ধারিত সর্বোচ্চ হারের
+      // (Master Control override, বা সেটা না থাকলে সর্বোচ্চ ধাপ ১০%) বেশি হতে পারবে না —
+      // এটাই রিটেইলার নিজে থেকে কমিশনের অংক বাড়িয়ে লেখা ঠেকায়।
+      allow create: if isSignedIn()
+        && isFeatureEnabled('retailerPanelEnabled')
+        && request.resource.data.retailerId == request.auth.uid
+        && request.resource.data.saleAmount is number && request.resource.data.saleAmount > 0
+        && request.resource.data.retailerCommission is number
+        && request.resource.data.retailerCommission >= 0
+        && request.resource.data.retailerCommission <= (request.resource.data.saleAmount * retailerRateFraction()) + 2;
+      allow update, delete: if isOwnerAdmin();
+    }
+    match /officerReferralActivity/{docId} {
+      allow read: if isSignedIn() && (resource.data.officerId == request.auth.uid || isOwnerAdmin());
+      // ⚠️ এটা শুধুই raw activity log (আসল পয়েন্ট admin ম্যানুয়ালি পরে চূড়ান্ত করেন), তাই
+      // টাকার সরাসরি ঝুঁকি ছিল না। তবু কেউ যেন আগে থেকেই "approved" অবস্থায় বা পয়েন্ট বসিয়ে
+      // ভুয়া এন্ট্রি তৈরি করতে না পারে, সেটা বন্ধ করা হলো।
+      allow create: if isSignedIn()
+        && isFeatureEnabled('retailerPanelEnabled')
+        && request.resource.data.pointsAwarded == 0
+        && request.resource.data.reviewStatus == 'pending';
+      allow update, delete: if isOwnerAdmin();
+    }
+    match /referralEarnings/{docId} {
+      // ⚠️ আগে এখানে ভুলে "officerId" ফিল্ড চেক করা হতো, কিন্তু আসলে এই কালেকশনে
+      // ফিল্ডের নাম "referrerId" — তাই স্বাভাবিক রেফারেল-কারীরা নিজের earning
+      // পড়তে পারতেন না। এখন ঠিক করা হলো।
+      allow read: if isSignedIn() && (resource.data.referrerId == request.auth.uid || isOwnerAdmin());
+      // commission-এর অংক owner-নির্ধারিত রেফারেল হারের বেশি লেখা যাবে না,
+      // আর নিজেকে নিজে refer করার এন্ট্রিও আটকানো থাকলো।
+      allow create: if isSignedIn()
+        && isFeatureEnabled('referralEnabled')
+        && request.resource.data.referrerId is string && request.resource.data.referrerId != request.resource.data.fromUserId
+        && request.resource.data.baseAmount is number && request.resource.data.baseAmount > 0
+        && request.resource.data.commission is number
+        && request.resource.data.commission >= 0
+        && request.resource.data.commission <= (request.resource.data.baseAmount * referralRateFraction()) + 2;
+      allow update, delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // settings — referralConfig ইত্যাদি (সার্বজনীন কনফিগ)
+    // ============================================================
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // supportTickets — কাস্টমার সাপোর্ট বার্তা
+    // ============================================================
+    match /supportTickets/{ticketId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isSupportAdmin());
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && (resource.data.userId == request.auth.uid || isSupportAdmin());
+    }
+
+    // ============================================================
+    // officerMessages — কৃষি কর্মকর্তার পরামর্শ বার্তা
+    // ============================================================
+    match /officerMessages/{msgId} {
+      allow read: if isSignedIn() && (
+        resource.data.farmerId == request.auth.uid ||
+        resource.data.officerId == request.auth.uid ||
+        isOwnerAdmin()
+      );
+      allow create: if isSignedIn() && request.resource.data.officerId == request.auth.uid;
+      // কৃষক শুধু "read" ফ্ল্যাগ বদলাতে পারবে (নিজের বার্তা)
+      allow update: if isSignedIn() && resource.data.farmerId == request.auth.uid;
+    }
+
+    // ============================================================
+    // drivers — ট্রাক/গাড়ির লাইভ স্ট্যাটাস
+    // ============================================================
+    // ============================================================
+    // livestockReceipts — গরু/ছাগল বিক্রির ডিজিটাল রশিদ
+    // যাচাইয়ের জন্য যে কেউ পড়তে পারবে (হাট কমিটি/ভবিষ্যৎ ক্রেতা), কিন্তু একবার তৈরি
+    // হলে কখনো বদলানো/মোছা যাবে না — প্রমাণ হিসেবে অক্ষত রাখতে ইচ্ছাকৃতভাবে এমন
+    // ============================================================
+    match /livestockReceipts/{receiptId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.sellerId == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    match /drivers/{driverId} {
+      allow read: if true; // কৃষক গাড়ি খুঁজতে দেখবে
+      allow write: if isOwnerUser(driverId) || isOwnerAdmin();
+    }
+
+    // ============================================================
+    // diagnosisLogs — রোগ শনাক্তকরণের লগ (প্রাদুর্ভাব ট্র্যাকিং, শুধু admin বিশ্লেষণ করবে)
+    // ============================================================
+    match /diagnosisLogs/{logId} {
+      allow read: if isOwnerAdmin();
+      // ⚠️ কোনো পয়েন্ট/আয় এর সাথে যুক্ত না (শুধু admin-এর outbreak-ট্র্যাকিং অ্যানালিটিক্স),
+      // তাই টাকার ঝুঁকি নেই। তবু অন্য ফিচারের মতোই সামঞ্জস্যের জন্য farmerId caller-এর
+      // নিজের uid-এর সাথে মিলতেই হবে — যাতে কেউ অন্যের নামে ভুয়া রোগের রিপোর্ট বসিয়ে
+      // এলাকার outbreak পরিসংখ্যান নষ্ট করতে না পারে।
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+    }
+
+    // ============================================================
+    // marketingChannels — মার্কেটিং ড্যাশবোর্ডের ডেটা
+    // ============================================================
+    match /marketingChannels/{docId} {
+      allow read, write: if isMarketingAdmin();
+    }
+
+    // ============================================================
+    // এই তালিকার বাইরে অন্য কোনো কালেকশনে ভুলে/অজানাভাবে অ্যাক্সেসের চেষ্টা হলে
+    // ডিফল্টভাবে সম্পূর্ণ বন্ধ থাকবে — নতুন কোনো ফিচারে নতুন কালেকশন লাগলে
+    // এখানে আলাদা করে rule যোগ করতে হবে, নাহলে সেটা কাজ করবে না
+    // ============================================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
