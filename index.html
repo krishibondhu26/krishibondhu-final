@@ -3946,15 +3946,20 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
 
     try {
       const response = await fetch('/api/gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: prompt,
-          images: filledImages // একাধিক ছবি — [{base64, mimeType}, ...]
-        })
-      });
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: prompt,
+        images: filledImages
+      })
+    });
 
-      const data = await response.json();
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error || `সার্ভার এরর: ${response.status}`);
+    }
+
+    const data = await response.json();
       document.getElementById('analyzeLoading').style.display = 'none';
       document.querySelector('.cam-actions').style.display = 'flex';
 
