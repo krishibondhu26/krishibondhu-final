@@ -3620,21 +3620,44 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     input.click();
   }
 
-  function handleSlotImage(slotNum, input) {
-    const file = input.files[0];
-    if (!file) return;
+function handleSlotImage(slotNum, input) {
+  const file = input.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+      const maxDim = 1024;
+      if (width > height && width > maxDim) {
+        height = Math.round((height * maxDim) / width);
+        width = maxDim;
+      } else if (height > maxDim) {
+        width = Math.round((width * maxDim) / height);
+        height = maxDim;
+      }
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
       const slot = document.getElementById('slot' + slotNum);
-      slot.innerHTML = '<img src="' + e.target.result + '">';
+      slot.innerHTML = '<img src="' + compressedDataUrl + '">';
       slot.classList.add('filled');
-      slotImages[slotNum] = { base64: e.target.result.split(',')[1], mimeType: file.type };
+      slotImages[slotNum] = {
+        base64: compressedDataUrl.split(',')[1],
+        mimeType: 'image/jpeg'
+      };
       updateAnalyzeButtonState();
     };
-    reader.readAsDataURL(file);
-  }
-
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
   // আক্রান্ত স্থানের অন্তত ১টা কাছের ছবি (slot 2) না দিলে বিশ্লেষণ বাটন সক্রিয় হবে না — পুরো গাছের ছবি ঐচ্ছিক
   function updateAnalyzeButtonState() {
     document.getElementById('analyzeBtn').disabled = !slotImages[2];
