@@ -2813,6 +2813,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   // "আপনার ফসল" section এ highlight করে দেখানো হয়, বাকি ফসল collapse করা থাকে
 
   const CROP_IMAGE_MAP = {
+    'সুগার বিট': 'data:image/webp;base64,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',
+    'কাকরোল': 'data:image/webp;base64,UklGRuIKAABXRUJQVlA4INYKAAAwKgCdASpbAGQAPok2lEglIyIhOFt40KARCWwAuRd7kMygbl3nQ/Ftz0g7e3zRecN6bP8t6bfUcbzj/jbUr3/YoOev5nIWcEtSPvjxj78/kLqFvS+WPoI3/+FGmqmo+VT7B9hLdY0/y1jjGoEIaOmj6gXQclyUbK29DPeXP31FcuGwpxL92rAVWehSaYNrSEDXWRoo0QZKq5zzXD5HOKzkKYom3cdnjwTVlyBYqCFDTvVjQLocpiISeEwp/O9Yq0azvolVMl/5cvgObV+gEZBjpMQFEHLUMPvHjII/uyz5pk5D4yB2qLgdEnaeqhTjq27vn7YFISKxvwhOaEigL1bvBuXpYfFpMnwRRvUIwo0UmG6uNeYIhIBFS0YCq06b2r8Ryz1p64TaTgowuL5FejDQQaeqAXw5GvxKmpsntdyWMy3rurgPD0buYbjUyTOD5fibYpYvMrnKPOAAAP7fY4ii5lrdOfl184Qg4Ox18FhzQRowITEQkXKD0cTxuU3Ot4xx53uLm0lgGGfH/gf/hAP/hg2TPxT3uiZapM3c9ETpOXADkroL18tYmWQh6BQAksduTMccbRMW9xXhfhKgU1oSnFAwrklzxUjqtJZIOT34RRPUu2DC0ZMGC/iLzDKWQ+d46p/d/9JsAeN9IOVQYbrTNVNFqnI/R74ROXCqIMvEyprTzEHr6vUmeYvtHKql5N6ll5FbQ2DlM79K2POZuIQNBXZvhiCT6mixAUj4XnWfHWizJ3naqfCwoYbj+UHBQWZ59ZstawkxmTUB8xJUdEaCn1Gb5wBBQJade86XStY7KIeZFBQpnfU7RqNUuqJz7ApmCiQnqPuvHRwuYFq9d8wy7aKCIqiRlezx96XshbHvAlrQMRNEsUXvlwugJFh9xLwoWZ8SeRsLzdtw7GXzhHKCzVBQpMF8FcyyP8VUqbNICyOxLPaI0w7tDaVHToFuYymzkoDMwW1AMN6T1eJxYdf6kAciIw8+SEAHzx3DFwjq1d3h2QuVVooGLcgD2QXd99+aLVzVlMuqha68JWAHMGzFUuwIdPI4JkVE/QIKJXqVeTs0Jcfv58apaYz2U3hB8Q3VHgvoX7cqO0/1gNN4FkpSaxcfn9qmPewToE4qTQObk9Y6rFagijyXIh92812obQU4hLLG5nSuwY8GbnIJqIM6IXFhDz1EMB+rMdyTX6li85o52JtakbFbuCZWptMP6mWqSsJ9xCB9h6OT5ZAbnSXRzY3/CfhCAEcaUEDUyImtXkwgmOP8kj8WsaAI5FOFOK1ogQcuKXl8VN3Q5Ib6URlLLMn9RX/pRGYQTDUQ721zjh4B4DJMJWLVGRbk5RvGA+arKtaMWGOWAPYA6CvxxL8YJQZkprWoRqoZnrHdcVe50CtEG15pnHSTlw4Zehnkte85Vb40mc96ofDMBlg0msm0SfFiD1VUU1WygLAfwL59os0JAgOUWY+Bbn7/85RcjxJ2bhWiNT1CNnX/bYbenX2QLX+3T1LGrFcYxNTZ+0TAFA3h50v2eJ52N5U3RRxkpqjxpJfTV0Y0wE6jmQy6d+6utGOGg6zzdZMGimXdy0sDTF74XSFuLmccqmFWRrtIvtmuc9hKvWJxwmcD1BsGHQdKSbcSYlUwUQ4sOMLsa8xCOCM4Ly4XyD47RMdtwsZtu9NP03aEB5yYQWrl6yIf6yZV3lnpMJ6x33xL6f9cMpKjA9j+vhFfDQkoR+IPG18FbPALRKZGkob12154DZB1V8opFf8jBUJ49Oxo9BXsjc9VFuIqWtQfRafN6ohjr7ofxRQ6caXT2ejtXzb3JaZy3y0vy5J3Ovo2AzCFJ4JLTLsYIeH8EE2dRVbTj1faJXeQXNZQfTUrGjdJYTjmW6R7IFGkiGLpXSdTfLV4NqpQyBxEWgp9r8nB6hSQsrcG6gKNLoYfGI3uv6oWYupywxCkk1SQZZIFYHZG+W+rPyzdXiI1XIluALIq/2sVRSNNYv8Xzn8TPr44fxIFYUZEnwEE/WYoke4rCRHADMSzFBZP5P3bHA01bKDbUEcAdb+nsywFtJaUxyUFjIaoGWCUwYDxgEKyh/lVKk9WOufAdJt2tPB7u1SLF8nPMbu4i/CT+MJHqnJKOU6fNcI74TBgQUcDFSRvE2ppoZCWVWJdIwAsXKPf7RoiGyT6yvmg9FcJuDOZVBJ33oQWpTNRCrdhRFsZN2nqI3Q+djjK2r7taNlQ55PMAlkcIBYA9c1YERTuMOf9+EtmLLYvbqL9547fzHT+pNZq03kBEoRvcLPGBFUoBYCoBha7QxEa4/Yqf8ytXyGXDaCR8xSRJiO2u8uecnZHmssSqvRaBftHWbOUSg0AcM7sDQTyoSuw2UCagi5Y4T0e8+OW7dVvX36hFAhZOuB/tZlNLg5myxs1/z0gFohnYjVAD537jG2rpA0RG1W6ruRKJDR+uop9dO0JSi8tIBEqRv/z+c209FbOCfLk9FleH9o6qZDbHsFOXsb7Ojb5iXCVnsbf8KcPJbDQel2P+qBJJ6c0VRoEzSECCmSY+K816l9YePBjmFhgoE30Cu6WB32x4VLM287P5xkQDqmw6kdOpRuTczue/9T+0xjgcf6yrtjyzQcFus5PpR39rEPKxBuMqN56Y+E/JYeAtA+yDejwiz0AqSI/UeytM/tFSHDp/NaIsYv/bbDgB51mdxFAsEc528ytWaYL5Sfn9abCSSRRSJljkhPunqeGsn4LC7dLZYcVUGnBIciox50K3nkFDmqqwdPPXxPhQ6upRWK7Sk1jSThYuArLyoKAiPv0M1v5YaInzLzADzC1o2SdttcLKgDcQSWcaN8KPHYk3CZTHjydVTI7eSQQzLS9zrqWFmJ002Nvu6t7hmWMG38IW6b553T1sUOwB3+O0p0zUeOQ5d4EzAVZhFyxcW3NbZt4WrxlGN4TilK3RyZ3/dUGhEyxpolF2C8rgACWfGlEL2j6OOw5AnCyFDyoxYvyiXCSfjgYteHO5smEYxwYUa/68bc9dCbdn9fItSBVxRg6kwD0tsc3oQYaBz6CgK5ikTx3oc7xizaoDKwO1AwdNjKjVH7RICfezA5UNOh1UhMAowI5I58n5XqE0ak/MFiTxPUBiWMyFTCx/duZ/6zqLrR33isYhGwx43IyCEclVNi2yHBT2jrNyVNQFuXipGZ0gjhTHchnyB+nw8l2sXjW4Cb6vZB9EkqADKeoI9XS7RllEkuRwsAvd7mVVkCg+aqUs7HJ2ASbMlmsCNYmY+KpM0m7jUpJIWm2STH8mAaW+MBEAIoU6ffn+uaftuoWWcruPFz/ukXhmBujkIunIHOGO9Zq8avmdFQ3zr+E80cAZC6LpVRnbXYgAHbLeQ5zpzl5JnMjwvJ4zfpgOqTrOFNr+JvDsO6wzs3xnxRe6WjlHuIIPy9SaIDULM963VZCLWe2cO1Y09/NLsMIGm/UV5tgUQktMME47n3bdqEuOUf+KTBSs1tyywZEqIn3VNQS7pCIXfZK6ph957pwiC/2o8pJ1lQqW/mmKUtzobbO2j0SOd+XXIp3zDMg7bWRu3wbt6M/Lpx9idWPjsmpCPAAz4Sg2DXGJdHq8GfHTBWAAKe4mgjzp0UOKG82F1Z6ASwADGt6pSuyApL1GwiI1gti6Nh0etB1YEIpL8JF6TbKQPVIJGk6iWAeh4AB09Z8ux507S72nrC3v1sMzVo3hqoCvgAAAA==',
     'অড়হর': 'data:image/webp;base64,UklGRl4KAABXRUJQVlA4IFIKAABQKgCdASpXAGQAPp0+mUiloyIhLbnMULATiWQAskvtklSs8A3CJDNuD097fbnT29d/n/BHxR++s7XHf1a6h3zL8h48uTvyU1C/Zfm4QZHC/fbwCdaHw7yzvk3ehewH4q+hX619hDpmoYzQmZr5+QsVEi+I6LsiuK2/MkqZy34JO4UGJcymaYCW9IY6JLR20I0h3kS6jp+LfSSwIRIPj9nxNeNngFt7RKilk35uVEVZ9A7IwddGNJTe3zVp9bLsc5JZZrsB8EZ4h6YHs0ZLnyPdNEP6fTspkKsf45cSrajdRMkaoTBuKGNHh6qDvysBj90hR2qw1WT169kfF3enula5FVP0Z3Schwcu0XuREP87OSViS46UZbRLqV7ZWohs/0CissuikYH8fOeNOw+rj5DrtfUR7cmwfKEa8wwEpd/kSbuY0CGv7g6JneVfw0tNt5bAEerr5LeGq6jiAAD+gR/McwQqjX3B57S+vCtvr0LkOAUN3gu3OpJnc6zyr7MnHsQiz8UGM0GlXPw0CxLJ7MC61iKNjTGwiMDWQjrBXdVrVtoR3ZeBQ7DU8WZso4nmDejjS1m8KHPnnpY6D0usjE54HC5dv81/xvtLV9N6Q7JWQwXqOLiJUYWdbFcPkW7sCrnfJagVK6UGttSTXkrsJLeMJz6+bwr0+5v+AQo9My1dxjYp6vajQvEMZE51yuB7laxH8u9aRoNFdTFDeT+LV4iBOZw9l0/K1Z4GdszNkUTHKadoEFOsG/AAJNU+l2Bvr3jytFR5VRII8oYVaLlEsrf6vLTr6ivqhIVLCSo9NVx9EMUbyqaTe7kjfBCqy36QOwkTbwIaAl6S9mmN3dUbl7LKYMh3mhTzbIAczfBdIRngDsWmpecfxm1mj2JXpkubC/TiAot+coqWEKNib9Vp9HMXGyOTx5hulep0vaohAYNleIcBurg24HWS4sFun+jSDwbrxT8TFYt4kIdzeOgBbsSPAUtj7/GJANtdJbmGDv/5eYJ/bukUN8c2J8dGGR/BRijv2n+wXYXl3ynagaslivU+2/uX9/Pd32Zfbo9ZjN5X3Bl39nNG2NYsFw+T9dzw3GrPhZsfMTZgUcHE0Z9KtOGSToB8ZoKu4vzDazMSlMLVyOEHBnxXZN7wvbuYokbPfNBeyxP8+fG/4MOSRJZiTJdWf6muR+mh+95hahwAx++0uLx7UUI4X4Js15ACroY9ILgkjhYmjj+U3sWa4mGWnpUdaXje6tjZC/or0tt0jiwcv1sVkcRB7GTF8yxuczlae0b24JfZXsZ+RHBCve43/PdfmfaXFd5c91Cn5fLcSZZeAZZspXH4YOFu1Ql8VUphXPjpyeLLLPcU8WCFawVeCTcdEF+LWW+0zfy5UMiwoIuweNb3t252R9qct6Mvtb2B0dy7Z59pb+oqgMlrSzMlzzWwhHzuPzz5HgOiUOYsukanaX8QLYHC7prsXZhPRhRv472QOu5OXKZNgmE2sDvH2UyhvcG+oCkP5wWaktHeSiYdgRHlbNk+6i9NA9OCxrVo7Y4NOJeITN6atgRzgPqXPu76BUZZVRcmmdorzSo7b0AaW47guE+2MRDVlU3jkLqxDORfcA04SJa7bw1PVLA8zFWYMAB5WYd4yQWBqZQmzBetbtwad94DcW1uckxrfpXi0zDl/m90f912+9noVvz42GVViq7HFJRWzpntOT9VMCIcKR7u9MUlwTEG9UeFCJMHGY78ii7L52XaCj6THlK+iv2sGbj5c4EvYJGtu4AIQC0U2tMmV7LJnhApzPGYPxbQm6ti3YFE3urSLuIfsm+3c4PdtgfRmKuDSFLTjbjFjCOd0Qc/alW3wybEj6uacEu3LfcJpj0110oRw9zB0FUYJ52gOOE1L+8hQR4fdU8ylNqHdaNTzk/T+Au0mE982v6pqUMDJuAgi9CU7uCK9J/f7BlrQ2u/3ay59EvjdaGQrDNcdLgOCWxDQwurYS8ZY8E6YNdZVTgG5ghn/aFDFkS19KxaeJViexP9nt7vKO5rFZQ5H42ERyiuIFnwolvCA4eJyjRVFx59qgJYaO3qaqWK3qP5gC+ItQCl7gPTfLg9/uTlvfCr+z0nxcgYKFafZw48RO0EB7dTWv5sJFjgFSttekcmkfxELfD9kAMbMl2Axlzl6TGQpKeRIKj/EXug3KHgSlvua2JF2t19cUQQIwQwuY3QCy8+Nizh2xP+HRbPOV+/CbjM7KWzmmTAjT6p8bWAyCJxGrDFZE91S7kCDqZ5ej3Ca3vuYNZadiDGqunwp87+M23iVgHGAcXsl/I20pQdFZ9e4pyWN11Ehsyyp9zrHmyy5Hzw2PtBRReFtBtkpYdJEfCeT2LRJX8FeO2g0dJ78j0aC9EJE6qB3V225nNCxCfkN+Z9njYT7fBj+iynK2z4V5hZd+OHo2eTtfGWyMG2iuwQFPA8AZh4uD8RHh+vvGg2MQjtMZy4KI5xwbloaMVBtrjYgc2VHgEhjFeuqK5Ug+ZgUUKklOBV7yJnDTFdVdqTTdGm/DBgouewz5xlZOWIus73lrl1MuS/JneDpltPg6g1rCX6c3FDJEhQt29ztMrKLwtQQrcB5WwcwPUxkqodSTqAMWoIjOgz17seWQXSSeVVRguIyjJpWHYKvqBdHSQIvm5enOMgzv6a0wZxu44ShcUre1rODmK/7uoUAPOvPoplO2koHy5qZ4rBWrtZieXvEHgZXzGTtUluVueZ/5Vm6lUkQaOplJXISB5/WStQukPuz/RrccuTvSdfmirCszEPy7bV0Qu3TGBnUepD1OY7OIbUf91WLNwnXCiq9v/m9i2j7fnt+gAse6/UGfzC3iovpx0O13j8jIGtwKyL36jmXqG2lZ2P+6xjYew7iQeVVK+zof+wG6G5h7QFSXOawr4Fv+3l5o309FYNgG/RLA6OodnkBP1JUICA4u42mGXtAM5XLKSmgMN07VSHv5mVxQZ4WaJNEZnRiLo9ZE9ssmhzllULqLWEeRHuWEKU7RdFBishe4TCKj4JFCrs37EclZSbOs1JSK10ljY3qpGQGioRQsmZfmPy+vA8pDG10Fho4VBfn0yNi7M48ExjtId8cUUcTponN/v/XeF4Foyqp4Yz7B4VTMSJipb/0SIUsd0G5znSb6m+Ry6AQSPzCahoLA9+GwAOv+xHxkkoivhilpH3FU0qvMfgmamIdhzR+aLSxpHqhUsd4KFfZglQpMZU86UBjNUX9BWkSP2OyNScEATgadpxrg0dciyTAHRfyZSPUt0LsoedECK4KfhZ8YjJhhg93ul82JM3SfhPcsR5v/PBK2ekLb43/P7yuLxM1H8+z3IwEa90nlqad619nFQb/mP8sbKt3UOG4snH4mM78Jhn7iXkjLCDi/afs9t5NcDmC6IXSJtcpYwAZP4s1+VMbAMngBIQOpQJInavP6I2SzHrMhYwwoHy3UiMBWUJIGrp7eKt8rueuHyO6Pn9yWKXThGug4w4DpR9VEs9AoAzdEh3JDQrnCQTJVwycgCkIJ9JpAAAAA==',
     'আখ': 'data:image/webp;base64,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',
     'আঙুর': 'data:image/webp;base64,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',
@@ -3002,7 +3004,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     { icon: CROP_IMAGE_MAP['চীনা'], cropName: 'চীনা', price: 70, unit: 'প্রতি কেজি', change: 5, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['বাজরা'], cropName: 'বাজরা', price: 45, unit: 'প্রতি কেজি', change: 13, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['জোয়ার'], cropName: 'জোয়ার', price: 45, unit: 'প্রতি কেজি', change: 12, up: false, district: 'রংপুর' },
-    { icon: '🍃', cropName: 'কলাই শাক', price: 25, unit: 'প্রতি কেজি', change: 14, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['ধনেপাতা'], cropName: 'ধনেপাতা', price: 100, unit: 'প্রতি কেজি', change: 1, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['পুদিনা পাতা'], cropName: 'পুদিনা পাতা', price: 80, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['সাজনা'], cropName: 'সাজনা', price: 70, unit: 'প্রতি কেজি', change: 12, up: false, district: 'রংপুর' },
@@ -3021,24 +3022,17 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     { icon: CROP_IMAGE_MAP['চা'], cropName: 'চা', price: 25, unit: 'প্রতি কেজি', change: 15, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['রাবার'], cropName: 'রাবার', price: 150, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['তামাক'], cropName: 'তামাক', price: 180, unit: 'প্রতি কেজি', change: 1, up: true, district: 'রংপুর' },
-    { icon: '🫛', cropName: 'উচ্ছে', price: 55, unit: 'প্রতি কেজি', change: 15, up: true, district: 'রংপুর' },
-    { icon: '🟢', cropName: 'কচুশাক', price: 30, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
-    { icon: '🍃', cropName: 'সরিষা শাক', price: 25, unit: 'প্রতি কেজি', change: 11, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['অড়হর'], cropName: 'অড়হর', price: 115, unit: 'প্রতি কেজি', change: 1, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['আঙুর'], cropName: 'আঙুর', price: 220, unit: 'প্রতি কেজি', change: 14, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['আপেল'], cropName: 'আপেল', price: 220, unit: 'প্রতি কেজি', change: 7, up: false, district: 'রংপুর' },
     { icon: '🌱', cropName: 'কাকরোল', price: 70, unit: 'প্রতি কেজি', change: 6, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['কাঠ বাদাম'], cropName: 'কাঠ বাদাম', price: 900, unit: 'প্রতি কেজি', change: 11, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['গাঁদা ফুল'], cropName: 'গাঁদা ফুল', price: 150, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
-    { icon: '🌱', cropName: 'গুয়ার', price: 60, unit: 'প্রতি কেজি', change: 1, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['গোলাপ'], cropName: 'গোলাপ', price: 300, unit: 'প্রতি কেজি', change: 7, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['গ্লাডিওলাস'], cropName: 'গ্লাডিওলাস', price: 350, unit: 'প্রতি কেজি', change: 15, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['চন্দ্রমল্লিকা'], cropName: 'চন্দ্রমল্লিকা', price: 300, unit: 'প্রতি কেজি', change: 5, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['চেরি'], cropName: 'চেরি', price: 600, unit: 'প্রতি কেজি', change: 8, up: true, district: 'রংপুর' },
-    { icon: '🌱', cropName: 'ছোলা', price: 110, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
-    { icon: '🌱', cropName: 'ছোলা ও বুট', price: 110, unit: 'প্রতি কেজি', change: 12, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['জলপাই'], cropName: 'জলপাই', price: 120, unit: 'প্রতি কেজি', change: 7, up: false, district: 'রংপুর' },
-    { icon: '🌱', cropName: 'জারবেরা', price: 350, unit: 'প্রতি কেজি', change: 8, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['তুলা'], cropName: 'তুলা', price: 95, unit: 'প্রতি কেজি', change: 3, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['দুরিয়ান'], cropName: 'দুরিয়ান', price: 600, unit: 'প্রতি কেজি', change: 6, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['ধুনদুল'], cropName: 'ধুনদুল', price: 40, unit: 'প্রতি কেজি', change: 9, up: true, district: 'রংপুর' },
@@ -3463,7 +3457,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     { icon: '🌱', name: 'চীনা', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'বাজরা', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'জোয়ার', group: 'মাঠ ফসল' },
-    { icon: '🍃', name: 'কলাই শাক', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'ধনেপাতা', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'পুদিনা পাতা', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'সাজনা', group: 'সবজি ও মসলা' },
@@ -3482,24 +3475,17 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     { icon: '🌱', name: 'চা', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'রাবার', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'তামাক', group: 'মাঠ ফসল' },
-    { icon: '🫛', name: 'উচ্ছে', group: 'সবজি ও মসলা' },
-    { icon: '🟢', name: 'কচুশাক', group: 'সবজি ও মসলা' },
-    { icon: '🍃', name: 'সরিষা শাক', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'অড়হর', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'আঙুর', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'আপেল', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'কাকরোল', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'কাঠ বাদাম', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'গাঁদা ফুল', group: 'সবজি ও মসলা' },
-    { icon: '🌱', name: 'গুয়ার', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'গোলাপ', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'গ্লাডিওলাস', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'চন্দ্রমল্লিকা', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'চেরি', group: 'সবজি ও মসলা' },
-    { icon: '🌱', name: 'ছোলা', group: 'মাঠ ফসল' },
-    { icon: '🌱', name: 'ছোলা ও বুট', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'জলপাই', group: 'সবজি ও মসলা' },
-    { icon: '🌱', name: 'জারবেরা', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'তুলা', group: 'মাঠ ফসল' },
     { icon: '🌱', name: 'দুরিয়ান', group: 'সবজি ও মসলা' },
     { icon: '🌱', name: 'ধুনদুল', group: 'সবজি ও মসলা' },
@@ -3620,44 +3606,21 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     input.click();
   }
 
-function handleSlotImage(slotNum, input) {
-  const file = input.files[0];
-  if (!file) return;
+  function handleSlotImage(slotNum, input) {
+    const file = input.files[0];
+    if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new Image();
-    img.onload = function() {
-      const canvas = document.createElement('canvas');
-      let width = img.width;
-      let height = img.height;
-      const maxDim = 1024;
-      if (width > height && width > maxDim) {
-        height = Math.round((height * maxDim) / width);
-        width = maxDim;
-      } else if (height > maxDim) {
-        width = Math.round((width * maxDim) / height);
-        height = maxDim;
-      }
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, width, height);
-
-      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+    const reader = new FileReader();
+    reader.onload = function(e) {
       const slot = document.getElementById('slot' + slotNum);
-      slot.innerHTML = '<img src="' + compressedDataUrl + '">';
+      slot.innerHTML = '<img src="' + e.target.result + '">';
       slot.classList.add('filled');
-      slotImages[slotNum] = {
-        base64: compressedDataUrl.split(',')[1],
-        mimeType: 'image/jpeg'
-      };
+      slotImages[slotNum] = { base64: e.target.result.split(',')[1], mimeType: file.type };
       updateAnalyzeButtonState();
     };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
+    reader.readAsDataURL(file);
+  }
+
   // আক্রান্ত স্থানের অন্তত ১টা কাছের ছবি (slot 2) না দিলে বিশ্লেষণ বাটন সক্রিয় হবে না — পুরো গাছের ছবি ঐচ্ছিক
   function updateAnalyzeButtonState() {
     document.getElementById('analyzeBtn').disabled = !slotImages[2];
@@ -3969,20 +3932,15 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
 
     try {
       const response = await fetch('/api/gemini', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        prompt: prompt,
-        images: filledImages
-      })
-    });
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: prompt,
+          images: filledImages // একাধিক ছবি — [{base64, mimeType}, ...]
+        })
+      });
 
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error || `সার্ভার এরর: ${response.status}`);
-    }
-
-    const data = await response.json();
+      const data = await response.json();
       document.getElementById('analyzeLoading').style.display = 'none';
       document.querySelector('.cam-actions').style.display = 'flex';
 
