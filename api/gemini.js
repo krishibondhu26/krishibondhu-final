@@ -1,48 +1,57 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'শুধু POST অনুমোদিত' });
-  }
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'সার্ভারে GEMINI_API_KEY সেট করা হয়নি' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const { prompt, images, mimeType, imageBase64 } = req.body;
+    const { images, cropName, category } = req.body;
 
-    const imageList = images && images.length > 0
-      ? images
-      : (imageBase64 ? [{ base64: imageBase64, mimeType: mimeType || 'image/jpeg' }] : []);
+    if (!images || images.length === 0) {
+      return res.status(400).json({ error: "কোনো ছবি পাওয়া যায়নি।" });
+    }
 
-    const imageParts = imageList
-      .filter(img => img && img.base64)
-      .map(img => ({
-        inline_data: {
-          mime_type: img.mimeType || 'image/jpeg',
-          data: img.base64
-        }
-      }));
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      generationConfig: {
+        responseMimeType: "application/json",
+      },
+    });
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: prompt },
-              ...imageParts
-            ]
-          }]
-        })
-      }
-    );
+    const prompt = `তুমি একজন অভিজ্ঞ কৃষি বিশেষজ্ঞ। প্রদত্ত ছবি দেখে রোগ নির্ণয় করো। 
+ফসল: ${cropName || "অজানা"}, ক্যাটাগরি: ${category || "মাঠ ফসল"}।
+উত্তরটি শুধুমাত্র নিচের JSON কাঠামোতে দেবে:
+{
+  "diseaseName": "রোগের বাংলা নাম",
+  "cropName": "ফসলের নাম",
+  "severity": "danger",
+  "severityLabel": "উচ্চ ঝুঁকি / মাঝারি ঝুঁকি / সুস্থ",
+  "description": "লক্ষণ ও প্রতিকার সম্পর্কে বিস্তারিত বাংলা বিবরণ",
+  "isHealthy": false,
+  "medicines": [
+    { "name": "ওষুধের নাম", "company": "কোম্পানি", "dosage": "ব্যবহারের মাত্রা" }
+  ]
+}`;
 
-    const data = await geminiRes.json();
-    return res.status(geminiRes.status).json(data);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+    const imageParts = images.map((base64Str) => {
+      const cleanBase64 = base64Str.replace(/^data:image\/\w+;base64,/, "");
+      return {
+        inlineData: {
+          data: cleanBase64,
+          mimeType: "image/jpeg",
+        },
+      };
+    });
+
+    const result = await model.generateContent([prompt, ...imageParts]);
+    const responseText = result.response.text();
+
+    return res.status(200).json(JSON.parse(responseText));
+  } catch (error) {
+    console.error("Gemini API Error:", error);
+    return res.status(500).json({ error: "এআই বিশ্লেষণ ব্যর্থ হয়েছে। আবার চেষ্টা করুন।" });
   }
 }
