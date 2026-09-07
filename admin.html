@@ -192,16 +192,19 @@
     <div class="admin-nav-item active" data-panel="owner" onclick="switchAdminPanel('owner')"><span class="admin-nav-icon">👑</span> মালিক Dashboard</div>
     <div class="admin-nav-item" data-panel="master" onclick="switchAdminPanel('master')"><span class="admin-nav-icon">🎛️</span> মাস্টার কন্ট্রোল</div>
     <div class="admin-nav-item" data-panel="support" onclick="switchAdminPanel('support')"><span class="admin-nav-icon">🎧</span> কাস্টমার সাপোর্ট</div>
+    <div class="admin-nav-item" data-panel="verify" onclick="switchAdminPanel('verify')"><span class="admin-nav-icon">✅</span> ভেরিফিকেশন রিকোয়েস্ট</div>
+    <div class="admin-nav-item" data-panel="assuredDeals" onclick="switchAdminPanel('assuredDeals')"><span class="admin-nav-icon">🤝</span> অ্যাসিউরড ডিল রিকোয়েস্ট</div>
     <div class="admin-nav-item" data-panel="medicines" onclick="switchAdminPanel('medicines')"><span class="admin-nav-icon">💊</span> ওষুধ ডাটাবেজ</div>
     <div class="admin-nav-item" data-panel="diseaseDb" onclick="switchAdminPanel('diseaseDb')"><span class="admin-nav-icon">🩺</span> রোগ ও চিকিৎসা ডাটাবেজ</div>
     <div class="admin-nav-item" data-panel="products" onclick="switchAdminPanel('products')"><span class="admin-nav-icon">📦</span> আমাদের প্রোডাক্ট</div>
     <div class="admin-nav-item" data-panel="homecards" onclick="switchAdminPanel('homecards')"><span class="admin-nav-icon">🏠</span> হোমপেজ কার্ড</div>
     <div class="admin-nav-item" data-panel="team" onclick="switchAdminPanel('team')"><span class="admin-nav-icon">👥</span> টিম ম্যানেজমেন্ট</div>
     <div class="admin-nav-item" data-panel="referral" onclick="switchAdminPanel('referral')"><span class="admin-nav-icon">🔗</span> রেফারেল সিস্টেম</div>
-    <div class="admin-nav-item" data-panel="officers" onclick="switchAdminPanel('officers')"><span class="admin-nav-icon">🏛️</span> কর্মকর্তা Point Review</div>
+    <div class="admin-nav-item" data-panel="officers" onclick="switchAdminPanel('officers')"><span class="admin-nav-icon">🏛️</span> কৃষি অ্যামবাসাডর প্রোগ্রাম</div>
     <div class="admin-nav-item" data-panel="companies" onclick="switchAdminPanel('companies')"><span class="admin-nav-icon">🏭</span> কোম্পানি বিক্রয় রিপোর্ট</div>
     <div class="admin-nav-item" data-panel="traders" onclick="switchAdminPanel('traders')"><span class="admin-nav-icon">🏪</span> আড়তদার/ফড়িয়া</div>
     <div class="admin-nav-item" data-panel="drivers" onclick="switchAdminPanel('drivers')"><span class="admin-nav-icon">🚚</span> গাড়িওয়ালা</div>
+    <div class="admin-nav-item" data-panel="labor" onclick="switchAdminPanel('labor')"><span class="admin-nav-icon">👷</span> লেবার/শ্রমিক</div>
     <div class="admin-nav-item" data-panel="marketing" onclick="switchAdminPanel('marketing')"><span class="admin-nav-icon">📣</span> মার্কেটিং</div>
     <div class="admin-nav-item" data-panel="market" onclick="switchAdminPanel('market')"><span class="admin-nav-icon">💰</span> বাজারদর আপডেট</div>
     <div class="admin-nav-item" data-panel="sms" onclick="switchAdminPanel('sms')"><span class="admin-nav-icon">📱</span> SMS পুনঃসংযোগ</div>
@@ -409,6 +412,18 @@
               <label class="a-form-label">প্রতি বিঘায় প্রয়োজনীয় পরিমাণ</label>
               <input type="text" class="admin-form-input" id="prodSeedPerBigha" placeholder="যেমন: ৫ কেজি">
             </div>
+            <div class="a-form-group" id="prodSeedVarietyField">
+              <label class="a-form-label">বীজের জাত (ভ্যারাইটি)</label>
+              <select class="admin-form-input" id="prodSeedVariety">
+                <option value="hybrid">🧬 হাইব্রিড</option>
+                <option value="hyv">🌾 উফশী (HYV)</option>
+                <option value="local">🌱 স্থানীয় জাত</option>
+              </select>
+            </div>
+            <div class="a-form-group" id="prodSeedGerminationField">
+              <label class="a-form-label">জার্মিনেশন রেট (%)</label>
+              <input type="number" class="admin-form-input" id="prodSeedGermination" placeholder="যেমন: ৮৫" min="0" max="100">
+            </div>
             <div class="a-form-group">
               <label class="a-form-label">দাম (৳)</label>
               <input type="number" class="admin-form-input" id="prodPrice" placeholder="২৫০">
@@ -532,6 +547,13 @@
       </div>
 
       <div class="a-table-wrap">
+        <div class="a-table-head">🎁 রিটেলার-টু-রিটেলার রেফারেল বোনাস — রিভিউ <button class="a-btn a-btn-gray" onclick="loadReferralActivity()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="referralActivityTable">
+          <tr><th>রেফারারকারী</th><th>নতুন রিটেলার</th><th>তারিখ</th><th>বোনাস দিন (৳)</th><th>কাজ</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
         <div class="a-table-head">🏆 সেরা রেফারার তালিকা (এই বছর) <button class="a-btn a-btn-gray" onclick="loadReferralData()">🔄 রিফ্রেশ</button></div>
         <table class="a-table" id="referralLeaderTable">
           <tr><th>নাম</th><th>রোল</th><th>মোট রেফারেল কমিশন (এই বছর)</th><th>পেমেন্ট অবস্থা</th></tr>
@@ -542,14 +564,14 @@
     <div class="admin-panel" id="panel-officers">
       <div class="a-card" style="background:#EEF2FF;border:1px solid #C7D2FE;">
         <div style="font-size:12px;color:#4338CA;line-height:1.6;">
-          ℹ️ এখানে প্রতিটা কৃষি কর্মকর্তার রেফারেল activity দেখা যাবে। মৌসুম শেষে (৩ মাস পর) প্রতিটা কর্মকর্তার আনা কৃষকদের প্রকৃত সক্রিয়তা যাচাই করে ম্যানুয়ালি Point চূড়ান্ত করুন। কর্মকর্তা এই হিসাব-পদ্ধতি জানবেন না।
+          ℹ️ এটা "ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম" — কৃষি কর্মকর্তা কোনো রেফারেল কমিশন পান না়, বরং ডিজিটাল কৃষি সম্প্রসারণে তার অবদানের স্বীকৃতিস্বরূপ Point/Token পান (নগদ না)। এখানে প্রতিটা কৃষি কর্মকর্তার অ্যামবাসাডর কার্যক্রম দেখা যাবে। মৌসুম শেষে (৩ মাস পর) প্রতিটা কর্মকর্তার আনা কৃষকদের প্রকৃত সক্রিয়তা যাচাই করে ম্যানুয়ালি Point চূড়ান্ত করুন। কর্মকর্তা এই হিসাব-পদ্ধতি জানবেন না।
         </div>
       </div>
 
       <div class="a-table-wrap">
-        <div class="a-table-head">🏛️ কর্মকর্তা অনুযায়ী Referral Activity <button class="a-btn a-btn-gray" onclick="loadOfficersData()">🔄 রিফ্রেশ</button></div>
+        <div class="a-table-head">🏛️ কর্মকর্তা অনুযায়ী অ্যামবাসাডর কার্যক্রম <button class="a-btn a-btn-gray" onclick="loadOfficersData()">🔄 রিফ্রেশ</button></div>
         <table class="a-table" id="officersTable">
-          <tr><th>কর্মকর্তা</th><th>রেফারেল কোড</th><th>মোট Activity</th><th>মোট বিক্রি</th><th>অবস্থা</th><th>কাজ</th></tr>
+          <tr><th>কর্মকর্তা</th><th>অ্যামবাসাডর কোড</th><th>মোট Activity</th><th>মোট বিক্রি</th><th>অবস্থা</th><th>কাজ</th></tr>
         </table>
       </div>
 
@@ -557,6 +579,33 @@
         <div class="a-table-head">📋 বিস্তারিত Activity তালিকা (Pending Review)</div>
         <table class="a-table" id="officerActivityTable">
           <tr><th>কর্মকর্তা</th><th>কৃষক</th><th>কুপন কোড</th><th>বিক্রি</th><th>তারিখ</th><th>Point দিন</th><th>কাজ</th></tr>
+        </table>
+      </div>
+
+      <div class="a-card" style="background:#F0FDF4;border:1px solid #BBF7D0;margin-top:16px;">
+        <div style="font-size:12px;color:#166534;line-height:1.6;">
+          ℹ️ নিচের তিনটি সেকশন "অফিসার বন্ধু" লাইভ মনিটরিং ফিচার থেকে আসছে — এক্সটেনশন স্কোর/র‍্যাঙ্ক (অ্যাপে যা কর্মকর্তা নিজে দেখেন), কৃষকের রিপোর্ট করা ওষুধ কার্যকারিতা, এবং কর্মকর্তাদের পাঠানো নোটিশের লগ।
+        </div>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">⭐ এক্সটেনশন স্কোর লিডারবোর্ড (জেলাভিত্তিক) <button class="a-btn a-btn-gray" onclick="loadExtensionLeaderboard()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="extensionLeaderboardTable">
+          <tr><th>কর্মকর্তা</th><th>জেলা</th><th>কর্মএলাকা</th><th>এক্সটেনশন স্কোর</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">💊 ওষুধ কার্যকারিতা রিপোর্ট (কৃষকের সেল্ফ-রিপোর্ট, সারা দেশ) <button class="a-btn a-btn-gray" onclick="loadMedicineEffectivenessAdmin()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="medEffectivenessAdminTable">
+          <tr><th>ওষুধ</th><th>রোগ</th><th>মোট লগ</th><th>কমেছে</th><th>বেড়েছে</th><th>অপরিবর্তিত</th><th>ফলাফল বাকি</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">📢 কর্মকর্তাদের নোটিশ ব্রডকাস্ট লগ (সাম্প্রতিক ৫০টি) <button class="a-btn a-btn-gray" onclick="loadOfficerNoticesAdmin()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="officerNoticesAdminTable">
+          <tr><th>কর্মকর্তা</th><th>ক্যাটাগরি</th><th>বার্তা</th><th>টার্গেট এলাকা</th><th>তারিখ</th></tr>
         </table>
       </div>
     </div>
@@ -579,6 +628,28 @@
         <div class="a-table-head">🏭 কোম্পানিভিত্তিক বিক্রয় রিপোর্ট <button class="a-btn a-btn-gray" onclick="loadCompaniesData()">🔄 রিফ্রেশ</button></div>
         <table class="a-table" id="companiesTable">
           <tr><th>কোম্পানি</th><th>মোট প্রোডাক্ট</th><th>মোট অর্ডার</th><th>সক্রিয় অফার</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">📊 ক্যাটাগরি মার্কেট শেয়ার (সব কোম্পানি) <button class="a-btn a-btn-green" onclick="recalculateCategoryMarketStats()">🔄 পুনরায় হিসাব করুন</button></div>
+        <table class="a-table" id="marketStatsTable">
+          <tr><th>ক্যাটাগরি</th><th>মোট মার্কেট বিক্রয় (৳)</th><th>মোট অর্ডার</th><th>সর্বশেষ আপডেট</th></tr>
+        </table>
+        <div style="font-size:11px;color:#9CA3AF;padding:8px 12px;">প্রতিটা কোম্পানি নিজের ড্যাশবোর্ডে এই সংখ্যার সাথে তুলনা করে নিজের আনুমানিক মার্কেট শেয়ার % দেখতে পাবে (কোনো কোম্পানির আলাদা ডেটা অন্য কোম্পানিকে দেখানো হয় না — শুধু সম্মিলিত টোটাল)।</div>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">📦 রিটেলার বন্ধু B2B — সব অর্ডার (সব কোম্পানি) <button class="a-btn a-btn-gray" onclick="loadAllRetailerBondhuOrders()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="retailerBondhuOrdersTable">
+          <tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>পরিমাণ</th><th>দাম</th><th>অবস্থা</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">↩️ রিটার্ন রিকোয়েস্ট (সব কোম্পানি) <button class="a-btn a-btn-gray" onclick="loadAllReturnRequests()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="returnRequestsAdminTable">
+          <tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>কারণ</th><th>অবস্থা</th></tr>
         </table>
       </div>
 
@@ -720,6 +791,35 @@
         </div>
       </div>
 
+      <div class="a-card">
+        <div class="a-card-title">🔥 স্পন্সরড/বুস্ট পোস্ট ম্যানেজমেন্ট</div>
+        <div style="font-size:12px;color:#6B7280;margin-bottom:12px;line-height:1.6;">
+          কৃষক/পাইকার WhatsApp-এ যোগাযোগ করে বুস্ট ফি (বিকাশ/নগদ) পাঠালে, নিচে বিজ্ঞাপনের আইডি বসিয়ে বুস্ট চালু করুন। বিজ্ঞাপনের আইডি কৃষকের পাঠানো WhatsApp মেসেজে থাকবে।
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <input type="text" id="boostGigIdInput" placeholder="বিজ্ঞাপনের আইডি (Gig ID)" style="flex:1;padding:9px 12px;border:1px solid #E5E7EB;border-radius:8px;font-size:13px;">
+          <button class="a-btn a-btn-green" style="padding:9px 14px;font-size:13px;" onclick="lookupGigForBoost()">খুঁজুন</button>
+        </div>
+        <div id="boostLookupResult"></div>
+
+        <div style="margin-top:18px;border-top:1px solid #F3F4F6;padding-top:14px;">
+          <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">বর্তমানে বুস্টেড পোস্টসমূহ</div>
+          <div id="currentBoostedList" style="font-size:12px;color:#9CA3AF;">লোড হচ্ছে...</div>
+        </div>
+      </div>
+
+      <div class="a-card">
+        <div class="a-card-title">💳 পে-পার-কন্টাক্ট সাবস্ক্রিপশন ম্যানেজমেন্ট</div>
+        <div style="font-size:12px;color:#6B7280;margin-bottom:12px;line-height:1.6;">
+          কেউ WhatsApp-এ সাবস্ক্রিপশন ফি পাঠালে, নিচে তার ফোন নম্বর বসিয়ে "আনলিমিটেড" সাবস্ক্রিপশন দিয়ে দিন — তারপর সে সব বিজ্ঞাপনের কন্টাক্ট ফ্রিতে দেখতে পারবে।
+        </div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="contactSubPhoneInput" placeholder="ব্যবহারকারীর ফোন নম্বর" style="flex:1;padding:9px 12px;border:1px solid #E5E7EB;border-radius:8px;font-size:13px;">
+          <button class="a-btn a-btn-green" style="padding:9px 14px;font-size:13px;" onclick="lookupUserForSubscription()">খুঁজুন</button>
+        </div>
+        <div id="contactSubLookupResult" style="margin-top:12px;"></div>
+      </div>
+
       <button class="a-btn a-btn-green" style="padding:12px 24px;font-size:14px;" onclick="saveMasterControl()">💾 সব পরিবর্তন সেভ করুন</button>
     </div>
 
@@ -740,6 +840,27 @@
       </div>
 
       <div id="ticketsList"><div class="a-loading">লোড হচ্ছে...</div></div>
+    </div>
+
+    <!-- ============ প্যানেল: ✅ ভেরিফিকেশন রিকোয়েস্ট ============ -->
+    <div class="admin-panel" id="panel-verify">
+      <div class="a-filter-row">
+        <button class="a-filter-btn active" data-vstatus="pending" onclick="filterVerifyRequests('pending')">⏳ পর্যালোচনাধীন</button>
+        <button class="a-filter-btn" data-vstatus="approved" onclick="filterVerifyRequests('approved')">✅ অনুমোদিত</button>
+        <button class="a-filter-btn" data-vstatus="rejected" onclick="filterVerifyRequests('rejected')">❌ বাতিল</button>
+      </div>
+      <div id="verifyRequestsList"><div class="a-loading">লোড হচ্ছে...</div></div>
+    </div>
+
+    <!-- ============ প্যানেল: 🤝 অ্যাসিউরড ডিল রিকোয়েস্ট ============ -->
+    <div class="admin-panel" id="panel-assuredDeals">
+      <div class="a-filter-row">
+        <button class="a-filter-btn active" data-adstatus="pending" onclick="filterAssuredDeals('pending')">⏳ নতুন রিকোয়েস্ট</button>
+        <button class="a-filter-btn" data-adstatus="in_progress" onclick="filterAssuredDeals('in_progress')">🔄 চলমান</button>
+        <button class="a-filter-btn" data-adstatus="completed" onclick="filterAssuredDeals('completed')">✅ সম্পন্ন</button>
+        <button class="a-filter-btn" data-adstatus="cancelled" onclick="filterAssuredDeals('cancelled')">❌ বাতিল</button>
+      </div>
+      <div id="assuredDealsList"><div class="a-loading">লোড হচ্ছে...</div></div>
     </div>
 
     <!-- ============ প্যানেল ৬: আড়তদার/ফড়িয়া ============ -->
@@ -769,20 +890,64 @@
     <div class="admin-panel" id="panel-drivers">
       <div class="a-card" style="background:#EEF2FF;border:1px solid #C7D2FE;">
         <div style="font-size:12px;color:#4338CA;line-height:1.6;">
-          ℹ️ এই ফিচারটি (ট্রাক/গাড়ি বুকিং সিস্টেম) এখনো কৃষকের মূল অ্যাপে সম্পূর্ণভাবে তৈরি হয়নি। এই Dashboard পরিকাঠামো তৈরি আছে, বাস্তব বুকিং ডেটা আসা শুরু হলেই এখানে দেখা যাবে।
+          ℹ️ গাড়ি ভাড়া ফিচার (পণ্য পরিবহন + যাত্রী/ব্যক্তিগত ভ্রমণ) এখন মূল অ্যাপে চালু আছে — সরাসরি কল/হোয়াটসঅ্যাপ মডেল, কোনো কমিশন কাটা হয় না। গাড়িওয়ালাদের জন্য ৩০ দিন ফ্রি ট্রায়াল আছে; উপরের মাস্টার কন্ট্রোল থেকে "সাবস্ক্রিপশন বাধ্যতামূলক" চালু না করা পর্যন্ত সবাই সম্পূর্ণ ফ্রি ব্যবহার করতে পারবেন। বুস্ট ও সাবস্ক্রিপশন — দুটোই বর্তমানে সম্পূর্ণ ম্যানুয়াল (bKash-এ পেমেন্ট নিশ্চিত হওয়ার পরই নিচের রিকোয়েস্টগুলো অনুমোদন করবেন)।
         </div>
       </div>
 
       <div class="a-grid-3">
         <div class="a-stat-card"><div class="a-stat-icon">🚚</div><div class="a-stat-num" id="statTotalDrivers">-</div><div class="a-stat-label">মোট গাড়িওয়ালা</div></div>
-        <div class="a-stat-card"><div class="a-stat-icon">📦</div><div class="a-stat-num" id="statTotalBookings">০</div><div class="a-stat-label">মোট বুকিং</div></div>
-        <div class="a-stat-card"><div class="a-stat-icon">⭐</div><div class="a-stat-num">-</div><div class="a-stat-label">গড় রেটিং</div></div>
+        <div class="a-stat-card"><div class="a-stat-icon">🟢</div><div class="a-stat-num" id="statOnlineDrivers">-</div><div class="a-stat-label">এখন Online</div></div>
+        <div class="a-stat-card"><div class="a-stat-icon">🚀</div><div class="a-stat-num" id="statPendingBoosts">-</div><div class="a-stat-label">অপেক্ষমাণ বুস্ট রিকোয়েস্ট</div></div>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">👑 গাড়িওয়ালার সাবস্ক্রিপশন পেমেন্ট রিকোয়েস্ট <button class="a-btn a-btn-gray" onclick="loadDriverSubscriptionRequests()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="driverSubscriptionTable">
+          <tr><th>নাম</th><th>ফোন</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">🚀 গাড়িওয়ালার বুস্ট রিকোয়েস্ট <button class="a-btn a-btn-gray" onclick="loadDriverBoostRequests()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="driverBoostTable">
+          <tr><th>নাম</th><th>গাড়ির ধরন</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">🚀 পরিবহন-চাহিদা পোস্টের বুস্ট রিকোয়েস্ট <button class="a-btn a-btn-gray" onclick="loadDemandBoostRequests()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="demandBoostTable">
+          <tr><th>পোস্টকারী</th><th>বিবরণ</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>
+        </table>
       </div>
 
       <div class="a-table-wrap">
         <div class="a-table-head">🚚 নিবন্ধিত গাড়িওয়ালা <button class="a-btn a-btn-gray" onclick="loadDriversData()">🔄 রিফ্রেশ</button></div>
         <table class="a-table" id="driversTable">
           <tr><th>নাম</th><th>ফোন</th><th>যোগদানের তারিখ</th></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ প্যানেল: লেবার/শ্রমিক ============ -->
+    <div class="admin-panel" id="panel-labor">
+      <div class="a-grid-3">
+        <div class="a-stat-card"><div class="a-stat-icon">👷</div><div class="a-stat-num" id="statTotalLaborers">-</div><div class="a-stat-label">মোট লেবার</div></div>
+        <div class="a-stat-card"><div class="a-stat-icon">🟢</div><div class="a-stat-num" id="statOnlineLaborers">-</div><div class="a-stat-label">এখন Online</div></div>
+        <div class="a-stat-card"><div class="a-stat-icon">🚀</div><div class="a-stat-num" id="statPendingLaborBoosts">-</div><div class="a-stat-label">অপেক্ষমাণ বুস্ট রিকোয়েস্ট</div></div>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">🚀 লেবারের বুস্ট/স্পন্সর রিকোয়েস্ট <button class="a-btn a-btn-gray" onclick="loadLaborBoostRequests()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="laborBoostTable">
+          <tr><th>নাম</th><th>কাজের ধরন</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>
+        </table>
+      </div>
+
+      <div class="a-table-wrap">
+        <div class="a-table-head">👷 নিবন্ধিত লেবার/শ্রমিক <button class="a-btn a-btn-gray" onclick="loadLaborersData()">🔄 রিফ্রেশ</button></div>
+        <table class="a-table" id="laborersTable">
+          <tr><th>নাম</th><th>ফোন</th><th>কাজের ধরন</th><th>স্ট্যাটাস</th></tr>
         </table>
       </div>
     </div>
@@ -797,7 +962,7 @@
       </div>
 
       <div class="a-card">
-        <div class="a-card-title">🏆 শীর্ষ রেফারেলকারী কৃষি কর্মকর্তা (নতুন কৃষক আনার ভিত্তিতে)</div>
+        <div class="a-card-title">🏆 শীর্ষ কৃষি অ্যামবাসাডর কর্মকর্তা (নতুন কৃষক আনার ভিত্তিতে)</div>
         <div id="topOfficersRanking"><div class="a-loading">লোড হচ্ছে...</div></div>
       </div>
 
@@ -892,6 +1057,32 @@
       .replace(/'/g, '&#39;');
   }
 
+  // ===== কোম্পানি বন্ধু B2B অর্ডার স্টেট মেশিন: Pending → Confirmed → Dispatched → Delivered =====
+  // (index-final-2.html-এর সাথে সামঞ্জস্যপূর্ণ — একই normalize/label লজিক)
+  const ORDER_STATUS_LABEL = {
+    pending: '⏳ অপেক্ষমান',
+    confirmed: '✅ গ্রহণ করা হয়েছে',
+    dispatched: '🚚 ডেলিভারিতে পাঠানো হয়েছে',
+    delivered: '🟢 ডেলিভারি সম্পন্ন'
+  };
+  const ORDER_STATUS_BADGE_CLASS = { pending: 'b-yellow', confirmed: 'b-blue', dispatched: 'b-blue', delivered: 'b-green' };
+  const ORDER_STATUS_NEXT_LABEL = {
+    pending: '✓ অর্ডার গ্রহণ করুন',
+    confirmed: '📦 ডেলিভারিতে পাঠান',
+    dispatched: '✅ ডেলিভারি সম্পন্ন করুন'
+  };
+  function normalizeOrderStatus(raw) {
+    if (raw === 'confirmed') return 'confirmed';
+    if (raw === 'dispatched' || raw === 'shipped') return 'dispatched';
+    if (raw === 'delivered' || raw === 'completed') return 'delivered';
+    return 'pending';
+  }
+  function nextOrderStatus(current) {
+    if (current === 'pending') return 'confirmed';
+    if (current === 'confirmed') return 'dispatched';
+    return 'delivered';
+  }
+
   // escapeHtml শুধু HTML টেক্সট কনটেক্সটের জন্য নিরাপদ। onclick="fn('${x}')"-এর
   // ভেতরে বসানো মানের জন্য এই ফাংশন ব্যবহার করতে হবে (JS string + attribute দুটোই safe করে)।
   function jsAttr(str) {
@@ -926,6 +1117,8 @@
     owner: ['owner'],
     master: ['owner'],
     support: ['owner', 'support'],
+    verify: ['owner', 'support'],
+    assuredDeals: ['owner', 'operations'],
     medicines: ['owner', 'operations'],
     diseaseDb: ['owner', 'operations'],
     products: ['owner', 'operations'],
@@ -935,6 +1128,7 @@
     companies: ['owner', 'operations'],
     traders: ['owner', 'operations'],
     drivers: ['owner', 'operations'],
+    labor: ['owner', 'operations'],
     marketing: ['owner', 'marketing'],
     market: ['owner', 'operations'],
     sms: ['owner', 'marketing'],
@@ -1029,10 +1223,13 @@
     team: ['টিম ম্যানেজমেন্ট', 'নতুন টিম মেম্বার যোগ ও তাদের অ্যাক্সেস নিয়ন্ত্রণ'],
     referral: ['সার্বজনীন রেফারেল সিস্টেম', 'সবার জন্য রেফারেল কমিশন হার ও পেমেন্ট নিয়ন্ত্রণ'],
     support: ['কাস্টমার সাপোর্ট', 'কৃষক ও অংশীদারদের অভিযোগ ব্যবস্থাপনা'],
-    officers: ['কৃষি কর্মকর্তা Point Review', 'মৌসুম শেষে ম্যানুয়াল Point অনুমোদন'],
+    verify: ['✅ ভেরিফিকেশন রিকোয়েস্ট', 'NID/ট্রেড লাইসেন্স যাচাই করে ভেরিফাইড ব্যাজ অনুমোদন'],
+    assuredDeals: ['🤝 অ্যাসিউরড ডিল রিকোয়েস্ট', 'বড় লট বিক্রির জন্য ব্রোকারেজ রিকোয়েস্ট ব্যবস্থাপনা'],
+    officers: ['ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম', 'মৌসুম শেষে ম্যানুয়াল Point অনুমোদন'],
     companies: ['কোম্পানি বিক্রয় রিপোর্ট', 'কোম্পানিভিত্তিক পারফরম্যান্স'],
     traders: ['আড়তদার/ফড়িয়া', 'ফসল ক্রয়-বিক্রয় ব্যবস্থাপনা'],
     drivers: ['গাড়িওয়ালা', 'পরিবহন সেবা ব্যবস্থাপনা'],
+    labor: ['লেবার/শ্রমিক', 'শ্রমিক প্রোফাইল ও বুস্ট রিকোয়েস্ট ব্যবস্থাপনা'],
     marketing: ['মার্কেটিং', 'ব্যবহারকারী বৃদ্ধি ও রেফারেল বিশ্লেষণ'],
     market: ['বাজারদর আপডেট', 'কৃষকদের অ্যাপে দেখানো দাম নিয়ন্ত্রণ'],
     sms: ['SMS পুনঃসংযোগ', 'যেসব কৃষক অ্যাপ ব্যবহার করছেন না তাদের পরামর্শ পাঠানো']
@@ -1054,12 +1251,15 @@
     if (panel === 'master') loadMasterControl();
     if (panel === 'medicines') loadMedicines();
     if (panel === 'diseaseDb') ddbPopulateCropSelect();
-    if (panel === 'referral') loadReferralData();
+    if (panel === 'referral') { loadReferralData(); loadReferralActivity(); }
     if (panel === 'support') loadSupportTickets();
-    if (panel === 'officers') loadOfficersData();
-    if (panel === 'companies') { loadCompaniesData(); loadAIRecommendationFunnel(); }
+    if (panel === 'verify') loadVerificationRequests();
+    if (panel === 'assuredDeals') loadAssuredDealRequests();
+    if (panel === 'officers') { loadOfficersData(); loadExtensionLeaderboard(); loadMedicineEffectivenessAdmin(); loadOfficerNoticesAdmin(); }
+    if (panel === 'companies') { loadCompaniesData(); loadAIRecommendationFunnel(); loadAllRetailerBondhuOrders(); loadAllReturnRequests(); loadMarketStatsTable(); }
     if (panel === 'traders') loadTradersData();
-    if (panel === 'drivers') loadDriversData();
+    if (panel === 'drivers') { loadDriversData(); loadDriverSubscriptionRequests(); loadDriverBoostRequests(); }
+    if (panel === 'labor') { loadLaborersData(); loadLaborBoostRequests(); }
     if (panel === 'marketing') loadMarketingData();
     if (panel === 'market') { loadMarketPrices(); loadBulkPriceTable(); }
     if (panel === 'sms') loadInactiveFarmers();
@@ -1089,6 +1289,8 @@
     const isSeed = document.getElementById('prodType').value === 'seed';
     document.getElementById('prodSeedCategoryField').style.display = isSeed ? 'flex' : 'none';
     document.getElementById('prodSeedPerBighaField').style.display = isSeed ? 'flex' : 'none';
+    document.getElementById('prodSeedVarietyField').style.display = isSeed ? 'flex' : 'none';
+    document.getElementById('prodSeedGerminationField').style.display = isSeed ? 'flex' : 'none';
   }
 
   let prodPhotoBase64 = null;
@@ -1108,6 +1310,8 @@
     const productType = document.getElementById('prodType').value;
     const category = productType === 'seed' ? document.getElementById('prodSeedCategory').value : 'সাধারণ';
     const seedPerBigha = document.getElementById('prodSeedPerBigha').value.trim();
+    const seedVariety = productType === 'seed' ? document.getElementById('prodSeedVariety').value : null;
+    const seedGermination = productType === 'seed' ? document.getElementById('prodSeedGermination').value.trim() : '';
     const price = document.getElementById('prodPrice').value.trim();
 
     if (!name || !price) { alert('নাম ও দাম দিতে হবে!'); return; }
@@ -1116,6 +1320,8 @@
       await db.collection('companyProducts').add({
         name, productType, category, price: Number(price),
         seedPerBigha: productType === 'seed' ? seedPerBigha : null,
+        varietyType: productType === 'seed' ? seedVariety : null,
+        germinationRate: (productType === 'seed' && seedGermination) ? Number(seedGermination) : null,
         hasOffer: false, offerPrice: null,
         photo: prodPhotoBase64 || null,
         companyId: OWN_COMPANY_ID,
@@ -1129,6 +1335,7 @@
       document.getElementById('prodName').value = '';
       document.getElementById('prodPrice').value = '';
       document.getElementById('prodSeedPerBigha').value = '';
+      document.getElementById('prodSeedGermination').value = '';
       document.getElementById('prodPhotoZone').innerHTML = '📷 ছবি যোগ করতে চাপুন';
       prodPhotoBase64 = null;
       switchProductTab('list');
@@ -1242,12 +1449,17 @@
           const o = doc.data();
           const buyerName = o.retailerName || o.farmerName || 'অজানা';
           const buyerPhone = o.retailerPhone || o.farmerPhone || '-';
+          const status = normalizeOrderStatus(o.status);
+          const sampleTag = o.orderKind === 'sample' ? ' <span class="a-badge b-gray">🎁 নমুনা</span>' : '';
           html += `<tr>
-            <td>${escapeHtml(o.productName)}</td>
+            <td>${escapeHtml(o.productName)}${sampleTag}</td>
             <td>${escapeHtml(buyerName)}</td>
             <td>${escapeHtml(buyerPhone)}</td>
-            <td>৳${o.price}</td>
-            <td><span class="a-badge ${o.status === 'pending' ? 'b-yellow' : 'b-green'}">${o.status === 'pending' ? '⏳ পেন্ডিং' : '✅ সম্পন্ন'}</span></td>
+            <td>৳${o.totalPrice || o.price}</td>
+            <td>
+              <span class="a-badge ${ORDER_STATUS_BADGE_CLASS[status]}">${ORDER_STATUS_LABEL[status]}</span>
+              ${status !== 'delivered' ? `<button class="a-btn a-btn-gray" style="padding:3px 8px;font-size:10px;margin-left:6px;" onclick="advanceOwnOrderStatus('${doc.id}','${status}')">${ORDER_STATUS_NEXT_LABEL[status]}</button>` : ''}
+            </td>
           </tr>`;
         });
       }
@@ -1255,6 +1467,30 @@
     } catch (err) {
       table.innerHTML = '<tr><td colspan="5" class="a-empty">লোড করতে সমস্যা হয়েছে</td></tr>';
       console.error(err);
+    }
+  }
+
+  async function advanceOwnOrderStatus(orderId, currentStatus) {
+    const nextStatus = nextOrderStatus(currentStatus);
+    try {
+      await db.collection('companyOrders').doc(orderId).update({ status: nextStatus });
+      try {
+        const orderDoc = await db.collection('companyOrders').doc(orderId).get();
+        const o = orderDoc.data();
+        const buyerId = o.retailerId || o.farmerId;
+        if (buyerId) {
+          await db.collection('notifications').add({
+            userId: buyerId,
+            title: 'অর্ডার স্ট্যাটাস আপডেট',
+            body: `${o.productName} — ${ORDER_STATUS_LABEL[nextStatus]}`,
+            orderId, read: false,
+            createdAt: new Date().toISOString()
+          });
+        }
+      } catch (notifErr) { /* নোটিফিকেশন ব্যর্থ হলেও স্ট্যাটাস আপডেট আটকাবে না */ }
+      await loadOwnProductOrders();
+    } catch (err) {
+      alert('স্ট্যাটাস পরিবর্তন করা যায়নি: ' + err.message);
     }
   }
 
@@ -1515,6 +1751,95 @@
     }
   }
 
+  // ===== রিটেলার-টু-রিটেলার রেফারেল বোনাস রিভিউ — "ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম"-এর মতোই ম্যানুয়াল পদ্ধতি =====
+  async function loadReferralActivity() {
+    const table = document.getElementById('referralActivityTable');
+    try {
+      const snapshot = await db.collection('referralActivity')
+        .where('reviewStatus', '==', 'pending')
+        .orderBy('createdAt', 'desc')
+        .get();
+
+      let html = '<tr><th>রেফারারকারী</th><th>নতুন রিটেলার</th><th>তারিখ</th><th>বোনাস দিন (৳)</th><th>কাজ</th></tr>';
+      if (snapshot.empty) {
+        html += '<tr><td colspan="5" class="a-empty">রিভিউ করার মতো কোনো Pending Activity নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const a = doc.data();
+          const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString('bn-BD') : '-';
+          html += `<tr>
+            <td>${escapeHtml(a.referrerName || '-')}</td>
+            <td>${escapeHtml(a.fromUserName || '-')}</td>
+            <td>${date}</td>
+            <td><input type="number" class="a-input-inline" id="refbonus-${doc.id}" placeholder="৩০"></td>
+            <td>
+              <button class="a-btn a-btn-green" onclick="approveReferralActivity('${doc.id}')">✅ অনুমোদন</button>
+              <button class="a-btn a-btn-red" onclick="rejectReferralActivity('${doc.id}')">❌ বাতিল</button>
+            </td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = html;
+    } catch (err) {
+      table.innerHTML = '<tr><th>রেফারারকারী</th><th>নতুন রিটেলার</th><th>তারিখ</th><th>বোনাস দিন (৳)</th><th>কাজ</th></tr><tr><td colspan="5" class="a-empty">লোড করতে সমস্যা হয়েছে</td></tr>';
+      console.error(err);
+    }
+  }
+
+  async function approveReferralActivity(activityId) {
+    const bonusInput = document.getElementById('refbonus-' + activityId);
+    const bonus = Number(bonusInput.value);
+
+    if (!bonus || bonus <= 0) {
+      alert('দয়া করে কত টাকা বোনাস দেবেন তা লিখুন!');
+      return;
+    }
+
+    try {
+      const activityDoc = await db.collection('referralActivity').doc(activityId).get();
+      const a = activityDoc.data();
+
+      // চূড়ান্ত এন্ট্রি referralEarnings-এ লেখা হয় (এখানেই রিটেলারের হোমপেজ ব্যালেন্স
+      // ও রেফারেল পেজ যোগফল দেখায়) — শুধু Admin এই কালেকশনে লিখতে পারেন।
+      await db.collection('referralEarnings').add({
+        referrerId: a.referrerId, referrerName: a.referrerName || null,
+        fromUserId: a.fromUserId, fromUserName: a.fromUserName || null,
+        sourceType: 'retailer_referral_signup', sourceId: null,
+        baseAmount: 0, ratePercent: 0,
+        commission: bonus,
+        year: new Date().getFullYear(),
+        payoutStatus: 'pending',
+        createdAt: new Date().toISOString()
+      });
+
+      await db.collection('referralActivity').doc(activityId).update({
+        reviewStatus: 'approved',
+        commission: bonus,
+        reviewedAt: new Date().toISOString()
+      });
+
+      alert('✅ ৳' + bonus + ' বোনাস অনুমোদন করা হয়েছে।');
+      loadReferralActivity();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  async function rejectReferralActivity(activityId) {
+    if (!confirm('আপনি কি নিশ্চিত এই রেফারেল বোনাস রিকোয়েস্ট বাতিল করতে চান?')) return;
+
+    try {
+      await db.collection('referralActivity').doc(activityId).update({
+        reviewStatus: 'rejected',
+        reviewedAt: new Date().toISOString()
+      });
+      alert('❌ বাতিল করা হয়েছে।');
+      loadReferralActivity();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
   // ================================================================
   // ===== 🎛️ মাস্টার কন্ট্রোল — ফিচার অন/অফ + রিটেইলার কমিশন হার =====
   // (appConfig/features ও appConfig/commissionRates ডকুমেন্ট, শুধু owner লিখতে পারবে)
@@ -1563,6 +1888,7 @@
 
     renderMasterToggleList();
     renderMasterCommissionControls();
+    loadCurrentBoostedList();
   }
 
   function renderMasterToggleList() {
@@ -1636,6 +1962,118 @@
   }
 
   // ================================================================
+  // ================================================================
+
+
+  // 🔥 বুস্ট ম্যানেজমেন্ট — অ্যাডমিন WhatsApp-এ পেমেন্ট নিশ্চিত হলে এখান থেকে ম্যানুয়ালি চালু/বন্ধ করবে
+  async function lookupGigForBoost() {
+    const gigId = document.getElementById('boostGigIdInput').value.trim();
+    const box = document.getElementById('boostLookupResult');
+    if (!gigId) { box.innerHTML = ''; return; }
+    box.innerHTML = '<div style="font-size:12px;color:#9CA3AF;">খোঁজা হচ্ছে...</div>';
+    try {
+      const doc = await db.collection('cropGigs').doc(gigId).get();
+      if (!doc.exists) {
+        box.innerHTML = '<div style="font-size:12px;color:#DC2626;">এই আইডিতে কোনো বিজ্ঞাপন পাওয়া যায়নি।</div>';
+        return;
+      }
+      const g = doc.data();
+      const isBoosted = g.boosted === true;
+      box.innerHTML = `
+        <div style="background:#F9FAFB;border-radius:10px;padding:12px;">
+          <div style="font-size:13px;font-weight:700;color:#374151;">${escapeHtmlAdmin(g.cropName || '')} — ৳${g.price || ''}/${g.unit || 'মণ'}</div>
+          <div style="font-size:12px;color:#6B7280;margin:4px 0 10px;">এলাকা: ${escapeHtmlAdmin(g.area || '')} • স্ট্যাটাস: ${isBoosted ? '🔥 বুস্টেড' : 'সাধারণ'}</div>
+          <button class="a-btn ${isBoosted ? '' : 'a-btn-green'}" style="padding:8px 14px;font-size:12px;" onclick="setGigBoost('${gigId}', ${!isBoosted})">
+            ${isBoosted ? '❌ বুস্ট বন্ধ করুন' : '🔥 বুস্ট চালু করুন'}
+          </button>
+        </div>`;
+    } catch (err) {
+      box.innerHTML = '<div style="font-size:12px;color:#DC2626;">খুঁজতে সমস্যা হয়েছে: ' + err.message + '</div>';
+    }
+  }
+
+  async function setGigBoost(gigId, boostedValue) {
+    try {
+      await db.collection('cropGigs').doc(gigId).update({ boosted: boostedValue });
+      alert(boostedValue ? '✅ পোস্টটি এখন স্পন্সরড হিসেবে দেখাবে।' : '✅ বুস্ট বন্ধ করা হয়েছে।');
+      document.getElementById('boostGigIdInput').value = '';
+      document.getElementById('boostLookupResult').innerHTML = '';
+      loadCurrentBoostedList();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  async function loadCurrentBoostedList() {
+    const box = document.getElementById('currentBoostedList');
+    if (!box) return;
+    try {
+      const snap = await db.collection('cropGigs').where('boosted', '==', true).limit(20).get();
+      if (snap.empty) {
+        box.innerHTML = '<div style="font-size:12px;color:#9CA3AF;">এখন কোনো পোস্ট বুস্টেড নেই।</div>';
+        return;
+      }
+      box.innerHTML = snap.docs.map(d => {
+        const g = d.data();
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F3F4F6;font-size:12px;">
+          <span>🔥 ${escapeHtmlAdmin(g.cropName || '')} — ${escapeHtmlAdmin(g.area || '')} <span style="color:#9CA3AF;">(${d.id})</span></span>
+          <button class="a-btn" style="padding:4px 10px;font-size:11px;" onclick="setGigBoost('${d.id}', false)">বন্ধ করুন</button>
+        </div>`;
+      }).join('');
+    } catch (err) {
+      box.innerHTML = '<div style="font-size:12px;color:#DC2626;">লোড করা যায়নি: ' + err.message + '</div>';
+    }
+  }
+
+  function escapeHtmlAdmin(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ================================================================
+
+  // ===== 💳 পে-পার-কন্টাক্ট সাবস্ক্রিপশন ম্যানেজমেন্ট =====
+  // ================================================================
+  async function lookupUserForSubscription() {
+    const phone = document.getElementById('contactSubPhoneInput').value.trim();
+    const box = document.getElementById('contactSubLookupResult');
+    if (!phone) { box.innerHTML = ''; return; }
+    box.innerHTML = '<div style="font-size:12px;color:#9CA3AF;">খোঁজা হচ্ছে...</div>';
+    try {
+      const snap = await db.collection('users').where('phone', '==', phone).limit(1).get();
+      if (snap.empty) {
+        box.innerHTML = '<div style="font-size:12px;color:#DC2626;">এই ফোন নম্বরে কোনো ব্যবহারকারী পাওয়া যায়নি।</div>';
+        return;
+      }
+      const doc = snap.docs[0];
+      const u = doc.data();
+      const isUnlimited = u.contactUnlimited === true;
+      const unlockedCount = (u.unlockedGigIds || []).length;
+      box.innerHTML = `
+        <div style="background:#F9FAFB;border-radius:10px;padding:12px;">
+          <div style="font-size:13px;font-weight:700;color:#374151;">${escapeHtmlAdmin(u.name || '')} — ${escapeHtmlAdmin(u.role || '')}</div>
+          <div style="font-size:12px;color:#6B7280;margin:4px 0 10px;">এখন পর্যন্ত ব্যবহার করেছে: ${unlockedCount}টি ফ্রি কন্টাক্ট • স্ট্যাটাস: ${isUnlimited ? '💳 আনলিমিটেড সাবস্ক্রাইবার' : 'সাধারণ (লিমিটেড)'}</div>
+          <button class="a-btn ${isUnlimited ? '' : 'a-btn-green'}" style="padding:8px 14px;font-size:12px;" onclick="setContactSubscription('${doc.id}', ${!isUnlimited})">
+            ${isUnlimited ? '❌ সাবস্ক্রিপশন বন্ধ করুন' : '💳 আনলিমিটেড সাবস্ক্রিপশন দিন'}
+          </button>
+        </div>`;
+    } catch (err) {
+      box.innerHTML = '<div style="font-size:12px;color:#DC2626;">খুঁজতে সমস্যা হয়েছে: ' + err.message + '</div>';
+    }
+  }
+
+  async function setContactSubscription(userId, value) {
+    try {
+      await db.collection('users').doc(userId).update({ contactUnlimited: value });
+      alert(value ? '✅ আনলিমিটেড সাবস্ক্রিপশন দেওয়া হয়েছে।' : '✅ সাবস্ক্রিপশন বন্ধ করা হয়েছে।');
+      document.getElementById('contactSubPhoneInput').value = '';
+      document.getElementById('contactSubLookupResult').innerHTML = '';
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
   // ================================================================
 
   // ===== রোগ ও চিকিৎসা ডাটাবেজ — ফসল-ভিত্তিক রোগ/পোকা, একাধিক কোম্পানি প্রোডাক্ট (AdWords-স্টাইল priority/commission) =====
@@ -1989,11 +2427,11 @@
       const officersSnapshot = await db.collection('users').where('role', '==', 'officer').get();
       const officers = {};
       officersSnapshot.forEach(doc => {
-        officers[doc.id] = { name: doc.data().name, code: doc.data().officerReferralCode, activityCount: 0, totalSale: 0, pendingCount: 0 };
+        officers[doc.id] = { name: doc.data().name, code: doc.data().officerAmbassadorCode, activityCount: 0, totalSale: 0, pendingCount: 0 };
       });
 
       // সব referral activity বের করা
-      const activitySnapshot = await db.collection('officerReferralActivity').orderBy('createdAt', 'desc').get();
+      const activitySnapshot = await db.collection('officerAmbassadorActivity').orderBy('createdAt', 'desc').get();
       let activityRows = '';
       let hasActivity = false;
 
@@ -2026,7 +2464,7 @@
 
       // Officer summary table
       const officersTable = document.getElementById('officersTable');
-      let officerRows = '<tr><th>কর্মকর্তা</th><th>রেফারেল কোড</th><th>মোট Activity</th><th>মোট বিক্রি</th><th>অবস্থা</th><th>কাজ</th></tr>';
+      let officerRows = '<tr><th>কর্মকর্তা</th><th>অ্যামবাসাডর কোড</th><th>মোট Activity</th><th>মোট বিক্রি</th><th>অবস্থা</th><th>কাজ</th></tr>';
       const officerIds = Object.keys(officers);
       if (officerIds.length === 0) {
         officerRows += '<tr><td colspan="6" class="a-empty">এখনো কোনো কৃষি কর্মকর্তা নিবন্ধিত হয়নি</td></tr>';
@@ -2057,6 +2495,87 @@
     }
   }
 
+  // ===== অফিসার বন্ধু লাইভ মনিটরিং: এক্সটেনশন স্কোর লিডারবোর্ড =====
+  async function loadExtensionLeaderboard() {
+    const table = document.getElementById('extensionLeaderboardTable');
+    try {
+      const snap = await db.collection('users').where('role', '==', 'officer').get();
+      let officers = [];
+      snap.forEach(d => officers.push(d.data()));
+      officers.sort((a, b) => (b.extensionScore || 0) - (a.extensionScore || 0));
+
+      let rows = '<tr><th>কর্মকর্তা</th><th>জেলা</th><th>কর্মএলাকা</th><th>এক্সটেনশন স্কোর</th></tr>';
+      if (officers.length === 0) {
+        rows += '<tr><td colspan="4" class="a-empty">এখনো কোনো কৃষি কর্মকর্তা নিবন্ধিত হয়নি</td></tr>';
+      } else {
+        officers.forEach(o => {
+          const area = [o.union, o.upazila].filter(Boolean).join(', ') || '-';
+          rows += `<tr><td>${escapeHtml(o.name)}</td><td>${escapeHtml(o.district || '-')}</td><td>${escapeHtml(area)}</td><td><b>${(o.extensionScore || 0).toFixed(1)}</b></td></tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error('লিডারবোর্ড লোড করতে সমস্যা:', err);
+    }
+  }
+
+  // ===== অফিসার বন্ধু লাইভ মনিটরিং: ওষুধ কার্যকারিতা রিপোর্ট (সারা দেশ, treatmentLogs থেকে) =====
+  async function loadMedicineEffectivenessAdmin() {
+    const table = document.getElementById('medEffectivenessAdminTable');
+    try {
+      const snap = await db.collection('treatmentLogs').orderBy('appliedAt', 'desc').limit(1000).get();
+      const grouped = {};
+      snap.forEach(d => {
+        const l = d.data();
+        const key = (l.medicineName || 'অজানা ওষুধ') + '|' + l.diseaseName;
+        if (!grouped[key]) grouped[key] = { medicine: l.medicineName || 'অজানা ওষুধ', disease: l.diseaseName, total: 0, good: 0, bad: 0, same: 0, pending: 0 };
+        grouped[key].total++;
+        if (l.outcome === 'কমেছে') grouped[key].good++;
+        else if (l.outcome === 'বেড়েছে') grouped[key].bad++;
+        else if (l.outcome === 'অপরিবর্তিত') grouped[key].same++;
+        else grouped[key].pending++;
+      });
+      const list = Object.values(grouped).sort((a, b) => b.total - a.total);
+
+      let rows = '<tr><th>ওষুধ</th><th>রোগ</th><th>মোট লগ</th><th>কমেছে</th><th>বেড়েছে</th><th>অপরিবর্তিত</th><th>ফলাফল বাকি</th></tr>';
+      if (list.length === 0) {
+        rows += '<tr><td colspan="7" class="a-empty">এখনো কোনো কৃষক ওষুধ প্রয়োগের তথ্য লগ করেননি</td></tr>';
+      } else {
+        list.forEach(g => {
+          rows += `<tr><td>${escapeHtml(g.medicine)}</td><td>${escapeHtml(g.disease)}</td><td>${g.total}</td><td style="color:#16A34A;">${g.good}</td><td style="color:#DC2626;">${g.bad}</td><td>${g.same}</td><td style="color:#9CA3AF;">${g.pending}</td></tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error('ওষুধ কার্যকারিতা রিপোর্ট লোড করতে সমস্যা:', err);
+      table.innerHTML = '<tr><th>ওষুধ</th><th>রোগ</th><th>মোট লগ</th><th>কমেছে</th><th>বেড়েছে</th><th>অপরিবর্তিত</th><th>ফলাফল বাকি</th></tr><tr><td colspan="7" class="a-empty">লোড করতে সমস্যা হয়েছে (নতুন Firestore index লাগতে পারে)</td></tr>';
+    }
+  }
+
+  // ===== অফিসার বন্ধু লাইভ মনিটরিং: নোটিশ ব্রডকাস্ট লগ =====
+  async function loadOfficerNoticesAdmin() {
+    const table = document.getElementById('officerNoticesAdminTable');
+    try {
+      const snap = await db.collection('officerNotices').orderBy('createdAt', 'desc').limit(50).get();
+      let rows = '<tr><th>কর্মকর্তা</th><th>ক্যাটাগরি</th><th>বার্তা</th><th>টার্গেট এলাকা</th><th>তারিখ</th></tr>';
+      if (snap.empty) {
+        rows += '<tr><td colspan="5" class="a-empty">এখনো কোনো নোটিশ পাঠানো হয়নি</td></tr>';
+      } else {
+        snap.forEach(doc => {
+          const n = doc.data();
+          const date = new Date(n.createdAt).toLocaleDateString('bn-BD');
+          const target = n.targetUpazila || n.targetUnion ? [n.targetUnion, n.targetUpazila, n.targetDistrict].filter(Boolean).join(', ') : (n.targetDistrict || 'সব জেলা');
+          rows += `<tr><td>${escapeHtml(n.officerName)}</td><td>${escapeHtml(n.category)}</td><td>${escapeHtml(n.message)}</td><td>${escapeHtml(target)}</td><td>${date}</td></tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error('নোটিশ লগ লোড করতে সমস্যা:', err);
+      table.innerHTML = '<tr><th>কর্মকর্তা</th><th>ক্যাটাগরি</th><th>বার্তা</th><th>টার্গেট এলাকা</th><th>তারিখ</th></tr><tr><td colspan="5" class="a-empty">লোড করতে সমস্যা হয়েছে</td></tr>';
+    }
+  }
+
+
   async function approveOfficerActivity(activityId) {
     const pointsInput = document.getElementById('points-' + activityId);
     const points = Number(pointsInput.value);
@@ -2067,10 +2586,10 @@
     }
 
     try {
-      const activityDoc = await db.collection('officerReferralActivity').doc(activityId).get();
+      const activityDoc = await db.collection('officerAmbassadorActivity').doc(activityId).get();
       const activityData = activityDoc.data();
 
-      await db.collection('officerReferralActivity').doc(activityId).update({
+      await db.collection('officerAmbassadorActivity').doc(activityId).update({
         reviewStatus: 'approved',
         pointsAwarded: points,
         reviewedAt: new Date().toISOString()
@@ -2092,7 +2611,7 @@
     if (!confirm('আপনি কি নিশ্চিত এই activity বাতিল করতে চান?')) return;
 
     try {
-      await db.collection('officerReferralActivity').doc(activityId).update({
+      await db.collection('officerAmbassadorActivity').doc(activityId).update({
         reviewStatus: 'rejected',
         pointsAwarded: 0,
         reviewedAt: new Date().toISOString()
@@ -2195,6 +2714,126 @@
       table.innerHTML = rows;
     } catch (err) {
       console.error('কোম্পানি ডেটা লোড করতে সমস্যা:', err);
+    }
+  }
+
+  // ===== ক্যাটাগরি মার্কেট শেয়ার — সব কোম্পানির companyOrders থেকে productType-ভিত্তিক সম্মিলিত টোটাল =====
+  // (Multi-tenant isolation বজায় রাখতে এখানে কোনো কোম্পানি-ভিত্তিক ব্রেকডাউন লেখা হয় না,
+  //  শুধু সম্মিলিত মোট — কোনো কোম্পানির নাম বা আলাদা ডেটা উন্মুক্ত হয় না।)
+  async function recalculateCategoryMarketStats() {
+    try {
+      const snapshot = await db.collection('companyOrders').get();
+      const stats = {}; // { productType: { totalRevenue, totalOrders } }
+      snapshot.forEach(doc => {
+        const o = doc.data();
+        const key = o.productType || 'medicine';
+        if (!stats[key]) stats[key] = { totalRevenue: 0, totalOrders: 0 };
+        stats[key].totalRevenue += (o.totalPrice || o.price || 0);
+        stats[key].totalOrders += 1;
+      });
+
+      const now = new Date().toISOString();
+      const writes = Object.entries(stats).map(([key, s]) =>
+        db.collection('categoryMarketStats').doc(key).set({
+          totalRevenue: s.totalRevenue,
+          totalOrders: s.totalOrders,
+          updatedAt: now
+        })
+      );
+      await Promise.all(writes);
+
+      alert('✅ মার্কেট শেয়ার পুনরায় হিসাব করা হয়েছে।');
+      loadMarketStatsTable();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  async function loadMarketStatsTable() {
+    const table = document.getElementById('marketStatsTable');
+    if (!table) return;
+    try {
+      const snapshot = await db.collection('categoryMarketStats').get();
+      let rows = '<tr><th>ক্যাটাগরি</th><th>মোট মার্কেট বিক্রয় (৳)</th><th>মোট অর্ডার</th><th>সর্বশেষ আপডেট</th></tr>';
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="4" class="a-empty">এখনো হিসাব করা হয়নি — "পুনরায় হিসাব করুন" বাটনে চাপুন</td></tr>';
+      } else {
+        const categoryLabel = { seed: '🌱 বীজ', medicine: '💊 ওষুধ/কীটনাশক' };
+        snapshot.forEach(doc => {
+          const s = doc.data();
+          const date = s.updatedAt ? new Date(s.updatedAt).toLocaleDateString('bn-BD') : '-';
+          rows += `<tr>
+            <td>${categoryLabel[doc.id] || escapeHtml(doc.id)}</td>
+            <td>৳${(s.totalRevenue || 0).toLocaleString('bn-BD')}</td>
+            <td>${s.totalOrders || 0}</td>
+            <td>${date}</td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // ===== রিটেলার বন্ধু B2B — সব কোম্পানির সব অর্ডার (owner-level oversight) =====
+  async function loadAllRetailerBondhuOrders() {
+    const table = document.getElementById('retailerBondhuOrdersTable');
+    table.innerHTML = '<tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>পরিমাণ</th><th>দাম</th><th>অবস্থা</th></tr><tr><td colspan="6" class="a-loading">লোড হচ্ছে...</td></tr>';
+    try {
+      const snapshot = await db.collection('companyOrders').orderBy('createdAt', 'desc').limit(50).get();
+      let rows = '<tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>পরিমাণ</th><th>দাম</th><th>অবস্থা</th></tr>';
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="6" class="a-empty">এখনো কোনো B2B অর্ডার নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const o = doc.data();
+          const status = normalizeOrderStatus(o.status);
+          const sampleTag = o.orderKind === 'sample' ? ' <span class="a-badge b-gray">🎁 নমুনা</span>' : '';
+          const qty = o.orderKind === 'sample' ? 'নমুনা' : (o.quantity || '-');
+          rows += `<tr>
+            <td>${escapeHtml(o.productName || '-')}${sampleTag}</td>
+            <td>${escapeHtml(o.companyName || '-')}</td>
+            <td>${escapeHtml(o.retailerName || o.farmerName || '-')}</td>
+            <td>${qty}</td>
+            <td>৳${o.totalPrice || o.price || 0}</td>
+            <td><span class="a-badge ${ORDER_STATUS_BADGE_CLASS[status]}">${ORDER_STATUS_LABEL[status]}</span></td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      table.innerHTML = '<tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>পরিমাণ</th><th>দাম</th><th>অবস্থা</th></tr><tr><td colspan="6" class="a-empty">লোড করতে সমস্যা হয়েছে</td></tr>';
+      console.error(err);
+    }
+  }
+
+  // ===== রিটার্ন রিকোয়েস্ট — সব কোম্পানি (owner-level oversight) =====
+  async function loadAllReturnRequests() {
+    const table = document.getElementById('returnRequestsAdminTable');
+    table.innerHTML = '<tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>কারণ</th><th>অবস্থা</th></tr><tr><td colspan="5" class="a-loading">লোড হচ্ছে...</td></tr>';
+    try {
+      const snapshot = await db.collection('returnRequests').orderBy('createdAt', 'desc').limit(50).get();
+      let rows = '<tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>কারণ</th><th>অবস্থা</th></tr>';
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="5" class="a-empty">এখনো কোনো রিটার্ন রিকোয়েস্ট নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const r = doc.data();
+          const isResolved = r.status === 'resolved';
+          rows += `<tr>
+            <td>${escapeHtml(r.productName || '-')}</td>
+            <td>${escapeHtml(r.companyName || '-')}</td>
+            <td>${escapeHtml(r.retailerName || '-')}</td>
+            <td>${escapeHtml(r.reasonLabel || r.reason || '-')}${r.note ? ' • ' + escapeHtml(r.note) : ''}</td>
+            <td><span class="a-badge ${isResolved ? 'b-green' : 'b-yellow'}">${isResolved ? '✅ সমাধান হয়েছে' : '⏳ পেন্ডিং'}</span></td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      table.innerHTML = '<tr><th>প্রোডাক্ট</th><th>কোম্পানি</th><th>রিটেলার</th><th>কারণ</th><th>অবস্থা</th></tr><tr><td colspan="5" class="a-empty">লোড করতে সমস্যা হয়েছে</td></tr>';
+      console.error(err);
     }
   }
 
@@ -2762,6 +3401,141 @@ const MASTER_CROP_LIST = [
   }
 
   // ================================================================
+  // ===== ✅ ভেরিফিকেশন রিকোয়েস্ট (NID/ট্রেড লাইসেন্স) =====
+  // ================================================================
+  let currentVerifyFilter = 'pending';
+  let allVerifyRequests = [];
+
+  async function loadVerificationRequests() {
+    const list = document.getElementById('verifyRequestsList');
+    list.innerHTML = '<div class="a-loading">লোড হচ্ছে...</div>';
+    try {
+      const snapshot = await db.collection('verificationRequests').orderBy('createdAt', 'desc').get();
+      allVerifyRequests = [];
+      snapshot.forEach(doc => allVerifyRequests.push({ id: doc.id, ...doc.data() }));
+      renderVerifyRequests();
+    } catch (err) {
+      list.innerHTML = '<div class="a-empty">এখনো কোনো ভেরিফিকেশন আবেদন নেই।</div>';
+    }
+  }
+
+  function filterVerifyRequests(status) {
+    currentVerifyFilter = status;
+    document.querySelectorAll('[data-vstatus]').forEach(b => b.classList.remove('active'));
+    document.querySelector(`[data-vstatus="${status}"]`).classList.add('active');
+    renderVerifyRequests();
+  }
+
+  function renderVerifyRequests() {
+    const list = document.getElementById('verifyRequestsList');
+    const filtered = allVerifyRequests.filter(r => r.status === currentVerifyFilter);
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="a-empty">এই তালিকায় এখন কিছু নেই।</div>';
+      return;
+    }
+    list.innerHTML = filtered.map(r => `
+      <div class="a-card" style="margin-bottom:12px;">
+        <div style="display:flex;gap:12px;">
+          ${r.docPhoto ? `<img src="${r.docPhoto}" style="width:110px;height:110px;object-fit:cover;border-radius:10px;flex-shrink:0;cursor:pointer;" onclick="window.open('${r.docPhoto}','_blank')">` : ''}
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:#374151;">${escapeHtmlAdmin(r.userName || 'নাম নেই')}</div>
+            <div style="font-size:12px;color:#6B7280;margin:2px 0 8px;">📱 ${escapeHtmlAdmin(r.userPhone || '-')}</div>
+            ${currentVerifyFilter === 'pending' ? `
+              <div style="display:flex;gap:8px;">
+                <button class="a-btn a-btn-green" style="padding:7px 14px;font-size:12px;" onclick="reviewVerifyRequest('${r.id}', 'approved', '${r.userId}')">✅ অনুমোদন করুন</button>
+                <button class="a-btn a-btn-red" style="padding:7px 14px;font-size:12px;" onclick="reviewVerifyRequest('${r.id}', 'rejected', '${r.userId}')">❌ বাতিল করুন</button>
+              </div>
+            ` : `<span class="a-badge ${r.status === 'approved' ? 'b-green' : 'b-red'}">${r.status === 'approved' ? '✅ অনুমোদিত' : '❌ বাতিল'}</span>`}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function reviewVerifyRequest(reqId, decision, userId) {
+    try {
+      await db.collection('verificationRequests').doc(reqId).update({ status: decision, reviewedAt: new Date().toISOString() });
+      if (decision === 'approved') {
+        const pubDoc = await db.collection('userPublic').doc(userId).get();
+        const d = pubDoc.exists ? pubDoc.data() : { avgRating: 0, reviewCount: 0 };
+        await db.collection('userPublic').doc(userId).set({
+          avgRating: d.avgRating || 0,
+          reviewCount: d.reviewCount || 0,
+          verifiedBadge: true
+        }, { merge: true });
+      }
+      alert(decision === 'approved' ? '✅ ভেরিফাইড ব্যাজ দেওয়া হয়েছে।' : '❌ আবেদন বাতিল করা হয়েছে।');
+      loadVerificationRequests();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  // ================================================================
+  // ===== 🤝 অ্যাসিউরড ডিল / ভিআইপি ব্রোকারেজ রিকোয়েস্ট ব্যবস্থাপনা =====
+  // কোনো পেমেন্ট গেটওয়ে নেই — এটা শুধু রিকোয়েস্ট ট্র্যাক করে, লেনদেন/কমিশন সংগ্রহ
+  // পুরোপুরি আপনার টিম WhatsApp/ফোনে ম্যানুয়ালি করবে।
+  // ================================================================
+  let currentAssuredDealFilter = 'pending';
+  let allAssuredDeals = [];
+
+  async function loadAssuredDealRequests() {
+    const list = document.getElementById('assuredDealsList');
+    list.innerHTML = '<div class="a-loading">লোড হচ্ছে...</div>';
+    try {
+      const snapshot = await db.collection('assuredDealRequests').orderBy('createdAt', 'desc').get();
+      allAssuredDeals = [];
+      snapshot.forEach(doc => allAssuredDeals.push({ id: doc.id, ...doc.data() }));
+      renderAssuredDeals();
+    } catch (err) {
+      list.innerHTML = '<div class="a-empty">এখনো কোনো অ্যাসিউরড ডিল রিকোয়েস্ট নেই।</div>';
+    }
+  }
+
+  function filterAssuredDeals(status) {
+    currentAssuredDealFilter = status;
+    document.querySelectorAll('[data-adstatus]').forEach(b => b.classList.remove('active'));
+    document.querySelector(`[data-adstatus="${status}"]`).classList.add('active');
+    renderAssuredDeals();
+  }
+
+  function renderAssuredDeals() {
+    const list = document.getElementById('assuredDealsList');
+    const filtered = allAssuredDeals.filter(r => r.status === currentAssuredDealFilter);
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="a-empty">এই তালিকায় এখন কিছু নেই।</div>';
+      return;
+    }
+    const nextActionMap = {
+      pending: { next: 'in_progress', label: '🔄 কথা শুরু হয়েছে চিহ্নিত করুন', cls: 'a-btn-green' },
+      in_progress: { next: 'completed', label: '✅ ডিল সম্পন্ন হয়েছে চিহ্নিত করুন', cls: 'a-btn-green' }
+    };
+    list.innerHTML = filtered.map(r => {
+      const action = nextActionMap[r.status];
+      return `
+      <div class="a-card" style="margin-bottom:12px;">
+        <div style="font-size:14px;font-weight:700;color:#374151;">${escapeHtmlAdmin(r.cropName || '')}</div>
+        <div style="font-size:12px;color:#6B7280;margin:2px 0 4px;">অনুরোধকারী: ${escapeHtmlAdmin(r.requesterName || 'নাম নেই')} • 📱 ${escapeHtmlAdmin(r.requesterPhone || '-')}</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-bottom:10px;">বিজ্ঞাপন আইডি: ${escapeHtmlAdmin(r.gigId || '-')}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          ${action ? `<button class="a-btn ${action.cls}" style="padding:7px 14px;font-size:12px;" onclick="updateAssuredDealStatus('${r.id}', '${action.next}')">${action.label}</button>` : ''}
+          ${r.status !== 'completed' && r.status !== 'cancelled' ? `<button class="a-btn a-btn-red" style="padding:7px 14px;font-size:12px;" onclick="updateAssuredDealStatus('${r.id}', 'cancelled')">❌ বাতিল করুন</button>` : ''}
+          ${r.status !== 'pending' ? `<span class="a-badge ${r.status === 'completed' ? 'b-green' : (r.status === 'cancelled' ? 'b-red' : '')}">${r.status === 'completed' ? '✅ সম্পন্ন' : (r.status === 'cancelled' ? '❌ বাতিল' : '🔄 চলমান')}</span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function updateAssuredDealStatus(reqId, newStatus) {
+    try {
+      await db.collection('assuredDealRequests').doc(reqId).update({ status: newStatus, updatedAt: new Date().toISOString() });
+      loadAssuredDealRequests();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+
   // ===== প্যানেল ৬: আড়তদার/ফড়িয়া =====
   // ================================================================
   async function loadTradersData() {
@@ -2832,12 +3606,230 @@ const MASTER_CROP_LIST = [
         });
       }
       table.innerHTML = rows;
+
+      // live 'drivers' কালেকশন থেকে এখন কতজন Online তা গোনা
+      const liveSnapshot = await db.collection('drivers').where('isAvailable', '==', true).get();
+      document.getElementById('statOnlineDrivers').textContent = liveSnapshot.size;
     } catch (err) {
       console.error('গাড়িওয়ালার ডেটা লোড করতে সমস্যা:', err);
     }
   }
 
+  // ===== গাড়িওয়ালার সাবস্ক্রিপশন পেমেন্ট রিকোয়েস্ট (৩০ দিন ফ্রি ট্রায়াল শেষে মাসিক ৳৯৯) =====
+  async function loadDriverSubscriptionRequests() {
+    const table = document.getElementById('driverSubscriptionTable');
+    if (!table) return;
+    try {
+      const snapshot = await db.collection('drivers').where('subscriptionPaymentRequested', '==', true).get();
+      let rows = '<tr><th>নাম</th><th>ফোন</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>';
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="4" class="a-empty">এই মুহূর্তে কোনো পেমেন্ট রিকোয়েস্ট নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          const date = d.subscriptionPaymentRequestedAt ? new Date(d.subscriptionPaymentRequestedAt).toLocaleDateString('bn-BD') : '-';
+          rows += `<tr>
+            <td>${escapeHtml(d.name || '-')}</td>
+            <td>${escapeHtml(d.phone || '-')}</td>
+            <td>${date}</td>
+            <td><button class="a-btn a-btn-green" onclick="approveDriverSubscription('${doc.id}')">✅ ৩০ দিন সাবস্ক্রিপশন চালু করুন</button></td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error('সাবস্ক্রিপশন রিকোয়েস্ট লোড করতে সমস্যা:', err);
+    }
+  }
+
+  async function approveDriverSubscription(driverId) {
+    try {
+      const paidUntil = new Date();
+      paidUntil.setDate(paidUntil.getDate() + 30);
+      await db.collection('drivers').doc(driverId).update({
+        subscriptionPaidUntil: paidUntil.toISOString(),
+        subscriptionPaymentRequested: false
+      });
+      alert('✅ সাবস্ক্রিপশন চালু হয়েছে (৩০ দিনের জন্য)');
+      loadDriverSubscriptionRequests();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  // ===== গাড়িওয়ালার নিজের লিস্টিং বুস্ট করার রিকোয়েস্ট — এডমিন এখানে অনুমোদন করবেন (বর্তমানে ফ্রি) =====
+  async function loadDriverBoostRequests() {
+    const table = document.getElementById('driverBoostTable');
+    if (!table) return;
+    try {
+      const snapshot = await db.collection('drivers').where('boostRequested', '==', true).get();
+      let rows = '<tr><th>নাম</th><th>গাড়ির ধরন</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>';
+      let pendingCount = 0;
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="4" class="a-empty">এই মুহূর্তে কোনো বুস্ট রিকোয়েস্ট নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          pendingCount++;
+          const date = d.boostRequestedAt ? new Date(d.boostRequestedAt).toLocaleDateString('bn-BD') : '-';
+          rows += `<tr>
+            <td>${escapeHtml(d.name || '-')}</td>
+            <td>${escapeHtml(d.vehicleType || '-')}</td>
+            <td>${date}</td>
+            <td><button class="a-btn a-btn-green" onclick="approveDriverBoost('${doc.id}')">✅ ৭ দিন বুস্ট চালু করুন</button></td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+      const statEl = document.getElementById('statPendingBoosts');
+      if (statEl) statEl.textContent = pendingCount;
+    } catch (err) {
+      console.error('বুস্ট রিকোয়েস্ট লোড করতে সমস্যা:', err);
+    }
+  }
+
+  async function approveDriverBoost(driverId) {
+    try {
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+      await db.collection('drivers').doc(driverId).update({
+        isBoosted: true,
+        boostRequested: false,
+        boostExpiresAt: expiresAt.toISOString()
+      });
+      alert('✅ বুস্ট চালু হয়েছে (৭ দিনের জন্য)');
+      loadDriverBoostRequests();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  // ===== লেবার/শ্রমিক ব্যবস্থাপনা + বুস্ট/স্পন্সর রিকোয়েস্ট =====
+  async function loadLaborersData() {
+    try {
+      const snapshot = await db.collection('users').where('role', '==', 'labor').get();
+      const laborers = [];
+      snapshot.forEach(doc => laborers.push({ id: doc.id, ...doc.data() }));
+      document.getElementById('statTotalLaborers').textContent = laborers.length;
+
+      const liveSnapshot = await db.collection('laborers').get();
+      const liveData = {};
+      let onlineCount = 0;
+      liveSnapshot.forEach(doc => {
+        liveData[doc.id] = doc.data();
+        if (doc.data().isAvailable) onlineCount++;
+      });
+      document.getElementById('statOnlineLaborers').textContent = onlineCount;
+
+      const table = document.getElementById('laborersTable');
+      let rows = '<tr><th>নাম</th><th>ফোন</th><th>কাজের ধরন</th><th>স্ট্যাটাস</th></tr>';
+      if (laborers.length === 0) {
+        rows += '<tr><td colspan="4" class="a-empty">এখনো কোনো লেবার নিবন্ধিত হয়নি</td></tr>';
+      } else {
+        laborers.forEach(l => {
+          const live = liveData[l.id] || {};
+          const status = live.isAvailable ? '🟢 Online' : '🔴 Offline';
+          rows += `<tr><td>${escapeHtml(l.name || '-')}</td><td>${escapeHtml(l.phone || '-')}</td><td>${escapeHtml(live.profession || '-')}</td><td>${status}</td></tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error('লেবারের ডেটা লোড করতে সমস্যা:', err);
+    }
+  }
+
+  async function loadLaborBoostRequests() {
+    const table = document.getElementById('laborBoostTable');
+    if (!table) return;
+    try {
+      const snapshot = await db.collection('laborers').where('boostRequested', '==', true).get();
+      let rows = '<tr><th>নাম</th><th>কাজের ধরন</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>';
+      let pendingCount = 0;
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="4" class="a-empty">এই মুহূর্তে কোনো বুস্ট রিকোয়েস্ট নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          pendingCount++;
+          const date = d.boostRequestedAt ? new Date(d.boostRequestedAt).toLocaleDateString('bn-BD') : '-';
+          rows += `<tr>
+            <td>${escapeHtml(d.name || '-')}</td>
+            <td>${escapeHtml(d.profession || '-')}</td>
+            <td>${date}</td>
+            <td><button class="a-btn a-btn-green" onclick="approveLaborBoost('${doc.id}')">✅ ৭ দিন বুস্ট চালু করুন</button></td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+      const statEl = document.getElementById('statPendingLaborBoosts');
+      if (statEl) statEl.textContent = pendingCount;
+    } catch (err) {
+      console.error('লেবার বুস্ট রিকোয়েস্ট লোড করতে সমস্যা:', err);
+    }
+  }
+
+  async function approveLaborBoost(laborId) {
+    try {
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+      await db.collection('laborers').doc(laborId).update({
+        isBoosted: true,
+        boostRequested: false,
+        boostExpiresAt: expiresAt.toISOString()
+      });
+      alert('✅ বুস্ট চালু হয়েছে (৭ দিনের জন্য)');
+      loadLaborBoostRequests();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+
+  // ===== পরিবহন-চাহিদা পোস্টের বুস্ট রিকোয়েস্ট =====
+  async function loadDemandBoostRequests() {
+    const table = document.getElementById('demandBoostTable');
+    if (!table) return;
+    try {
+      const snapshot = await db.collection('transportDemands').where('boostRequested', '==', true).get();
+      let rows = '<tr><th>পোস্টকারী</th><th>বিবরণ</th><th>রিকোয়েস্ট করেছেন</th><th>অ্যাকশন</th></tr>';
+      if (snapshot.empty) {
+        rows += '<tr><td colspan="4" class="a-empty">এই মুহূর্তে কোনো বুস্ট রিকোয়েস্ট নেই</td></tr>';
+      } else {
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          const date = d.boostRequestedAt ? new Date(d.boostRequestedAt).toLocaleDateString('bn-BD') : '-';
+          rows += `<tr>
+            <td>${escapeHtml(d.posterName || '-')}</td>
+            <td>${escapeHtml(d.description || '-')}</td>
+            <td>${date}</td>
+            <td><button class="a-btn a-btn-green" onclick="approveDemandBoost('${doc.id}')">✅ ৭ দিন বুস্ট চালু করুন</button></td>
+          </tr>`;
+        });
+      }
+      table.innerHTML = rows;
+    } catch (err) {
+      console.error('চাহিদা বুস্ট রিকোয়েস্ট লোড করতে সমস্যা:', err);
+    }
+  }
+
+  async function approveDemandBoost(demandId) {
+    try {
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+      await db.collection('transportDemands').doc(demandId).update({
+        isBoosted: true,
+        boostRequested: false,
+        boostExpiresAt: expiresAt.toISOString()
+      });
+      alert('✅ বুস্ট চালু হয়েছে (৭ দিনের জন্য)');
+      loadDemandBoostRequests();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
   // ================================================================
+
   // ===== প্যানেল ৮: মার্কেটিং =====
   // ================================================================
   async function loadMarketingData() {
@@ -3110,16 +4102,9 @@ const MASTER_CROP_LIST = [
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone, message })
       });
-      const text = await res.text();
-      let data = null;
-      try { data = text ? JSON.parse(text) : null; } catch (e) {
-        alert('SMS পাঠানো যায়নি: সার্ভার থেকে ভুল ফরম্যাটে উত্তর এসেছে (HTTP ' + res.status + ')। Vercel-এ ফাংশনটা ঠিকভাবে deploy হয়েছে কিনা দেখুন।');
-        return;
-      }
+      const data = await res.json();
       if (!res.ok) {
-        const errMsg = data && data.error;
-        const errText = typeof errMsg === 'string' ? errMsg : (errMsg ? JSON.stringify(errMsg) : 'অজানা সমস্যা');
-        alert('SMS পাঠানো যায়নি: ' + errText + (errText === 'সার্ভারে SMS_API_KEY সেট করা হয়নি' ? '\n\n(Vercel Environment Variables এ SMS_API_KEY ও SMS_SENDER_ID বসাতে হবে, তারপর Redeploy করতে হবে)' : ''));
+        alert('SMS পাঠানো যায়নি: ' + (data.error || 'অজানা সমস্যা') + (data.error === 'সার্ভারে SMS_API_KEY সেট করা হয়নি' ? '\n\n(Vercel Environment Variables এ SMS_API_KEY ও SMS_SENDER_ID বসাতে হবে)' : ''));
         return;
       }
       alert('✅ SMS পাঠানো হয়েছে।');
