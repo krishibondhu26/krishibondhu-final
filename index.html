@@ -324,31 +324,21 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 
 /* ফসল বাছাইয়ের গ্রিড — PlantX স্টাইল আইকন-বৃত্ত */
 .crop-skip-btn { display: block; width: calc(100% - 32px); margin: 0 16px 12px; background: #FFF8E1; border: 1.5px dashed #F9A825; border-radius: 12px; padding: 11px; font-size: 12px; font-weight: 700; color: #E65100; cursor: pointer; font-family: inherit; }
+
+.crop-cycle-box { margin: 0 16px 16px; background: linear-gradient(135deg, #F1F8E9 0%, #E8F5E9 100%); border: 2px solid #A5D6A7; border-radius: 18px; padding: 22px 16px; text-align: center; cursor: pointer; }
+.crop-cycle-icon { font-size: 44px; height: 54px; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; }
+.crop-cycle-icon img { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; }
+.crop-cycle-label { font-size: 16px; font-weight: 800; color: #1B5E20; margin-top: 6px; transition: opacity 0.3s ease; }
+.crop-cycle-season { font-size: 11px; color: #558B2F; font-weight: 700; margin-top: 6px; }
+.crop-cycle-tap-hint { font-size: 11px; color: #7CB342; margin-top: 10px; animation: cropTapPulse 1.6s ease-in-out infinite; }
+@keyframes cropTapPulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.season-toggle-btn { background: white; border: 1.5px solid #C8E6C9; color: #2E7D32; font-size: 11px; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-family: inherit; }
 .crop-picker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 4px; padding: 0 16px 16px; max-height: 60vh; overflow-y: auto; }
 .crop-picker-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; padding: 6px 2px; border-radius: 10px; }
 .crop-picker-item:active { background: #F1F8E9; }
 .cpi-circle { width: 56px; height: 56px; border-radius: 10px; background: #F9FAFB; border: 1.5px solid #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 26px; overflow: hidden; }
 .cpi-circle img { width: 100%; height: 100%; object-fit: cover; }
 .cpi-label { font-size: 11px; font-weight: 600; color: #374151; text-align: center; line-height: 1.25; }
-
-/* ফসল বাছাই — ছোট্ট বাক্সে মৌসুমি ফসল একটার পর একটা ব্লিংক করে দেখানো, চাপ দিলে পূর্ণ তালিকা */
-.crop-picker-collapsed {
-  display: flex; align-items: center; gap: 12px; margin: 0 16px 10px; padding: 12px 14px;
-  background: linear-gradient(135deg,#F1F8E9,#E8F5E9); border: 1.5px solid #C5E1A5; border-radius: 14px; cursor: pointer;
-}
-.cpc-circle {
-  width: 48px; height: 48px; border-radius: 10px; background: white; border: 1.5px solid #AED581;
-  display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; flex-shrink: 0;
-  transition: opacity 0.3s ease;
-}
-.cpc-circle.fading { opacity: 0; }
-.cpc-circle img { width: 100%; height: 100%; object-fit: cover; }
-.cpc-info { flex: 1; min-width: 0; }
-.cpc-hint { font-size: 10px; color: #558B2F; font-weight: 600; }
-.cpc-name { font-size: 15px; font-weight: 800; color: #2E7D32; margin-top: 2px; transition: opacity 0.3s ease; }
-.cpc-name.fading { opacity: 0; }
-.cpc-arrow { font-size: 11px; font-weight: 700; color: #33691E; white-space: nowrap; flex-shrink: 0; }
-.crop-picker-see-all { display: block; width: calc(100% - 32px); margin: 0 16px 10px; background: none; border: none; color: #2E7D32; font-size: 12px; font-weight: 700; text-decoration: underline; cursor: pointer; font-family: inherit; padding: 4px; }
 
 /* ফসল বাছাই হয়ে গেলে ছোট চিপ আকারে দেখানো, বদলাতে চাইলে চাপ দেওয়া যাবে */
 .selected-crop-chip { display: flex; align-items: center; justify-content: space-between; background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 10px 14px; margin: 0 16px 10px; cursor: pointer; font-size: 13px; font-weight: 700; color: #065F46; }
@@ -512,8 +502,6 @@ body { font-family: 'Hind Siliguri', Arial, sans-serif; min-height: 100vh; overf
 .my-post-status { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; display: inline-block; margin-top: 4px; }
 .my-post-status.active { background: #E8F5E9; color: #2E7D32; }
 .my-post-status.sold { background: #EEF2FF; color: #4F46E5; }
-.my-post-boosted-tag { background: #FFF3E0; color: #E65100; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 8px; display: inline-block; margin-top: 6px; }
-.my-post-boost-btn { background: linear-gradient(135deg,#FF9800,#F57C00); color: white; border: none; border-radius: 10px; padding: 10px; font-size: 13px; font-weight: 700; width: 100%; margin-top: 6px; cursor: pointer; }
 .my-post-actions { display: flex; gap: 8px; margin-top: 10px; }
 .my-post-btn { flex: 1; padding: 9px; border-radius: 10px; border: none; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; }
 .my-post-btn.receipt { background: #059669; color: white; }
@@ -871,11 +859,19 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   background: white; border-radius: 16px; overflow: hidden;
   box-shadow: 0 3px 12px rgba(0,0,0,0.08); cursor: pointer;
 }
-.gig-card-boosted { border: 2px solid #FF9800; box-shadow: 0 2px 10px rgba(255,152,0,0.25); }
-.gig-sponsored-badge { position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg,#FF9800,#F57C00); color: white; font-size: 10px; font-weight: 800; padding: 3px 7px; border-radius: 8px; }
 .gig-card-media { width: 100%; height: 110px; background: #E8F5E9; display: flex; align-items: center; justify-content: center; font-size: 40px; position: relative; }
 .gig-card-media img { width: 100%; height: 100%; object-fit: cover; }
 .gig-voice-badge { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6); color: white; font-size: 9px; padding: 3px 7px; border-radius: 10px; display: flex; align-items: center; gap: 3px; }
+
+.gig-card-boosted { border: 2px solid #FF8F00; box-shadow: 0 3px 14px rgba(255,143,0,0.28); }
+.gig-sponsored-badge { position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg,#FF8F00,#FF6F00); color: white; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 10px; }
+.verified-tick-badge { display: inline-flex; align-items: center; background: #E8F5E9; color: #1B5E20; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+.verify-badge-card { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.verify-badge-card.state-verified { background: #F1F8E9; }
+.verify-badge-card.state-pending { background: #E3F2FD; }
+.my-post-boost-btn { width: 100%; border: none; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 8px; color: white; background: linear-gradient(135deg,#FF8F00,#FF6F00); }
+.my-post-boosted-tag { background: #FFF3E0; color: #E65100; font-size: 11px; font-weight: 700; padding: 8px; border-radius: 10px; text-align: center; margin-top: 8px; }
+.live-market-card { margin: 0 16px 12px; background: #F1F8E9; border: 1px solid #C8E6C9; border-radius: 14px; padding: 12px; }
 .gig-card-body { padding: 10px 12px; }
 .gig-card-crop { font-size: 13px; font-weight: 700; color: #212121; }
 .gig-card-farmer { font-size: 10px; color: #6B7280; margin-top: 2px; display: flex; align-items: center; gap: 3px; }
@@ -922,12 +918,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .review-author { font-size: 10px; color: #9CA3AF; margin-top: 4px; }
 
 .cs-support-bar { background: #FFF3E0; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin: 16px 0 90px; }
-
-.verify-badge-card { border-radius: 14px; padding: 14px; margin-bottom: 4px; }
-.verify-badge-card.state-none { background: #FFF8E1; border: 1px solid #FFE082; }
-.verify-badge-card.state-pending { background: #E3F2FD; border: 1px solid #90CAF9; }
-.verify-badge-card.state-verified { background: #E8F5E9; border: 1px solid #A5D6A7; }
-.verified-tick-badge { background: #1B5E20; color: white; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 8px; display: inline-flex; align-items: center; gap: 3px; }
 
 /* ===== লেনদেন সংক্রান্ত সতর্কতা (Payment Disclaimer) ===== */
 .txn-disclaimer { background: #FEF2F2; border: 1.5px solid #FECACA; border-radius: 12px; padding: 12px 14px; margin: 12px 16px; display: flex; gap: 10px; align-items: flex-start; }
@@ -1074,6 +1064,14 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .truck-meta-row { display: flex; gap: 10px; margin: 8px 0; font-size: 11px; color: #6B7280; }
 .truck-rating { color: #F9A825; }
 .truck-call-btn { width: 100%; background: #2E7D32; color: white; border: none; border-radius: 10px; padding: 10px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 8px; }
+.truck-filter-row { display: flex; gap: 8px; padding: 12px 16px 0; overflow-x: auto; }
+.truck-filter-chip { flex-shrink: 0; background: white; border: 1.5px solid #E0E0E0; color: #555; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 20px; font-family: inherit; cursor: pointer; white-space: nowrap; }
+.truck-filter-chip.active { background: #E65100; border-color: #E65100; color: white; }
+.truck-passenger-badge { background: #E3F2FD; color: #1565C0; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 8px; margin-left: 6px; }
+.driver-checkbox-row { display: flex; align-items: center; gap: 8px; padding: 10px 0; font-size: 13px; color: #333; }
+.driver-checkbox-row input { width: 18px; height: 18px; }
+.truck-card.boosted { border-left-color: #FF8F00; box-shadow: 0 3px 14px rgba(255,143,0,0.28); }
+.boost-badge { background: #FFF3E0; color: #E65100; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 8px; margin-left: 6px; }
 .cs-icon { font-size: 22px; }
 .cs-text { font-size: 12px; color: #E65100; font-weight: 600; flex: 1; }
 .cs-btn { background: #FF8F00; color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; font-family: inherit; }
@@ -1236,8 +1234,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
           <option value="trader">🏪 আড়তদার / পাইকার</option>
           <option value="retailer">🏬 রিটেলার / ডিলার</option>
           <option value="driver">🚚 গাড়িওয়ালা</option>
-          <option value="labor">👷 লেবার / শ্রমিক</option>
-          <option value="company">🏭 কীটনাশক কোম্পানি</option>
+          <option value="labor">👷 শ্রমিক / লেবার</option>
+          <option value="company">🏭 কীটনাশক ও বীজ কোম্পানি</option>
           <option value="officer">🏛️ কৃষি কর্মকর্তা</option>
         </select>
       </div>
@@ -1246,6 +1244,34 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         <label class="form-label">🎁 রেফারেল কোড (ঐচ্ছিক)</label>
         <input type="text" class="form-input" id="regReferralCode" placeholder="যেমন: KB-RAHIM-1234">
         <div class="referral-hint">কারো মাধ্যমে অ্যাপে যোগ দিলে তার রেফারেল কোড এখানে লিখুন</div>
+      </div>
+
+      <div class="form-group" id="officerDesignationGroup" style="display:none;">
+        <label class="form-label">🏛️ পদবী</label>
+        <select class="role-select" id="regOfficerDesignation">
+          <option value="SAAO">SAAO (উপ-সহকারী কৃষি অফিসার)</option>
+          <option value="UAO">UAO (উপজেলা কৃষি অফিসার)</option>
+          <option value="AEO">AEO (কৃষি সম্প্রসারণ কর্মকর্তা)</option>
+          <option value="অন্যান্য">অন্যান্য</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="laborInfoGroup" style="display:none;">
+        <label class="form-label">👷 কাজের ধরন</label>
+        <select class="role-select" id="regLaborProfession">
+          <option value="দিনমজুর/সাধারণ শ্রমিক">দিনমজুর / সাধারণ শ্রমিক</option>
+          <option value="ধান কাটা/রোপণ">ধান কাটা / রোপণ</option>
+          <option value="জমি চাষ/সেচ">জমি চাষ / সেচ</option>
+          <option value="রাজমিস্ত্রি">রাজমিস্ত্রি</option>
+          <option value="কাঠমিস্ত্রি">কাঠমিস্ত্রি</option>
+          <option value="ইলেকট্রিশিয়ান">ইলেকট্রিশিয়ান</option>
+          <option value="মাটি কাটা/খনন">মাটি কাটা / খনন</option>
+          <option value="পরিবহন/মালামাল ওঠানো-নামানো">পরিবহন / মালামাল ওঠানো-নামানো</option>
+          <option value="অন্যান্য">অন্যান্য</option>
+        </select>
+        <label class="form-label" style="margin-top:10px;">💰 মজুরি (ঐচ্ছিক)</label>
+        <input type="text" class="form-input" id="regLaborRate" placeholder="যেমন: ঘন্টায় ১০০৳ / দিনে ৬০০৳">
+        <div class="referral-hint">এই তথ্য পরেও নিজের প্রোফাইল থেকে বদলানো যাবে</div>
       </div>
 
       <div class="form-group">
@@ -1320,6 +1346,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         </button>
       </div>
     </div>
+    <div id="userAreaDisplay" onclick="openEditAreaModal()" style="font-size:11px;color:#6B7280;padding:4px 16px 0;cursor:pointer;">📍 এলাকা লোড হচ্ছে... ✏️</div>
   </div>
 
   <!-- ঝড়/ভারী বৃষ্টির সতর্কতা থাকলেই শুধু দেখানো হবে -->
@@ -1417,26 +1444,25 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 
   <!-- ধাপ ১.৫: ঠিক কোন ফসল তা বেছে দিলে AI-এর নির্ভুলতা অনেক বেড়ে যায় (PlantX-এর মতো) -->
   <div id="cropPickerStep" style="display:none">
+    <div class="detect-cat-title" id="cropPickerTitle">আপনার ফসল বেছে নিন</div>
 
-    <!-- ছোট্ট বাক্সে বর্তমান মৌসুমের ফসল একটার পর একটা দেখাবে (ব্লিংক করে) — চাপ দিলে সম্পূর্ণ তালিকা খুলবে -->
-    <div class="crop-picker-collapsed" id="cropPickerCollapsed" onclick="expandCropPicker()">
-      <div class="cpc-circle" id="cpcCircle">🌱</div>
-      <div class="cpc-info">
-        <div class="cpc-hint">এখন এই মৌসুমে যা চাষ হচ্ছে</div>
-        <div class="cpc-name" id="cpcName">লোড হচ্ছে...</div>
-      </div>
-      <div class="cpc-arrow">সব ফসল ▶</div>
+    <!-- 📱 কোলাপ্সড/ছোট ভিউ — মৌসুমের ফসল একটার পর একটা ব্লিংক করে দেখাবে, ট্যাপ করলে পুরো তালিকা খুলবে -->
+    <div class="crop-cycle-box" id="cropPickerCollapsed" onclick="expandCropPicker()">
+      <div class="crop-cycle-icon" id="cropCycleIcon"></div>
+      <div class="crop-cycle-label" id="cropCycleLabel"></div>
+      <div class="crop-cycle-season" id="cropCollapsedSeasonLabel"></div>
+      <div class="crop-cycle-tap-hint">👆 সব ফসল দেখতে চাপ দিন</div>
     </div>
-    <button class="crop-skip-btn" id="collapsedSkipBtn" onclick="pickCrop(null)">🤷 জানি না / তালিকায় নেই — AI নিজেই বুঝুক</button>
 
-    <div id="cropPickerExpanded" style="display:none">
-      <div class="detect-cat-title" id="cropPickerTitle">আপনার ফসল বেছে নিন</div>
+    <div id="cropPickerExpandedWrap" style="display:none">
       <div class="seed-search-box" style="padding:0 16px 10px;">
         <input type="text" class="seed-search-input" id="cropPickerSearch" placeholder="🔍 ফসলের নাম লিখুন..." oninput="filterCropPicker()">
       </div>
+      <div style="padding:0 16px 10px;text-align:center;">
+        <button class="season-toggle-btn" id="seasonToggleBtn" onclick="toggleShowAllSeasonCrops()">🌍 সব মৌসুমের ফসল দেখুন</button>
+      </div>
       <button class="crop-skip-btn" onclick="pickCrop(null)">🤷 জানি না / তালিকায় নেই — AI নিজেই বুঝুক</button>
       <div class="crop-picker-grid" id="cropPickerGrid"></div>
-      <button class="crop-picker-see-all" id="cropPickerSeeAllBtn" onclick="toggleSeeAllCrops()">সব ফসল দেখুন (মৌসুম বাদে)</button>
     </div>
   </div>
 
@@ -1506,8 +1532,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 
         <!-- ছবি অস্পষ্ট/অপর্যাপ্ত হলে সরাসরি নতুন ছবি তোলার নির্দেশনা — শুধু "কম নিশ্চিত" লেখা দেখানোর বদলে সরাসরি করণীয় বলে দেওয়া -->
         <div class="retake-photo-banner" id="retakePhotoBanner" style="display:none">
-          <div class="rpb-title">😕 রোগ শনাক্ত করতে পারিনি</div>
-          <div class="rpb-text">ছবি থেকে লক্ষণ ভালোভাবে বোঝা যায়নি। আক্রান্ত জায়গার একদম কাছ থেকে, দিনের আলোয়, স্পষ্ট করে আবার একটা ছবি দিন।</div>
+          <div class="rpb-title">📸 আরও ভালো ছবি লাগবে</div>
+          <div class="rpb-text">ছবি থেকে লক্ষণ ভালোভাবে বোঝা যায়নি। আক্রান্ত জায়গার একদম কাছ থেকে, দিনের আলোয়, স্পষ্ট করে আবার একটা ছবি তুলুন।</div>
           <button class="rpb-btn" onclick="resetScan()">🔄 নতুন ছবি দিয়ে আবার চেষ্টা করুন</button>
         </div>
 
@@ -1534,6 +1560,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
             </button>
           </div>
         </div>
+
+        <!-- ওষুধ প্রয়োগ লগ করা — কৃষি অফিসারের ব্লক-ভিত্তিক মনিটরিং এ ব্যবহার হবে -->
+        <button class="rpb-btn" id="logMedicineBtn" style="display:none;width:100%;margin-top:10px;" onclick="openLogMedicineModal()">💊 আমি এই ওষুধ প্রয়োগ করেছি (লগ করুন)</button>
       </div>
     </div>
     <button class="new-scan-btn" onclick="resetScan()">📸 নতুন ছবি তুলুন</button>
@@ -1701,6 +1730,73 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
+<!-- ===== গাড়ি খুঁজুন (কৃষক/পাইকারের জন্য) ===== -->
+<div class="truck-finder-page" id="truckFinderPage">
+  <div class="truck-finder-hdr">
+    <button class="back-btn" onclick="showHomePage()">←</button>
+    <div>
+      <div class="detect-title">গাড়ি ভাড়া করুন</div>
+      <div class="detect-sub">পণ্য পরিবহন অথবা ব্যক্তিগত যাত্রা — এখন যারা Online আছেন</div>
+    </div>
+  </div>
+
+  <div class="truck-filter-row">
+    <button class="truck-filter-chip active" id="truckFilterAll" onclick="filterTruckList('all', this)">🚗 সব গাড়ি</button>
+    <button class="truck-filter-chip" id="truckFilterCargo" onclick="filterTruckList('cargo', this)">📦 পণ্য পরিবহন</button>
+    <button class="truck-filter-chip" id="truckFilterPassenger" onclick="filterTruckList('passenger', this)">🧍 যাত্রী/ব্যক্তিগত ভ্রমণ</button>
+  </div>
+
+  <div style="display:flex;gap:8px;padding:8px 16px 0;">
+    <select class="driver-input" id="truckDistrictFilter" style="margin:0;font-size:12px;flex:1;min-width:0;" onchange="applyTruckExtraFilters()">
+      <option value="">📍 যেকোনো জেলা</option>
+    </select>
+    <select class="driver-input" id="truckCapacityFilter" style="margin:0;font-size:12px;flex:1;min-width:0;" onchange="applyTruckExtraFilters()">
+      <option value="0">⚖️ যেকোনো ধারণক্ষমতা</option>
+      <option value="1">১+ টন</option>
+      <option value="3">৩+ টন</option>
+      <option value="5">৫+ টন</option>
+      <option value="10">১০+ টন</option>
+    </select>
+  </div>
+
+  <button class="driver-save-btn" style="margin:12px 16px 0;width:calc(100% - 32px);" onclick="openDemandPostModal()">📢 আপনার প্রয়োজন পোস্ট করুন (গাড়িওয়ালারা দেখবেন)</button>
+
+  <div class="txn-disclaimer">
+    <div class="txn-disclaimer-icon">⚠️</div>
+    <div class="txn-disclaimer-text">ভাড়া ঠিক করা ও টাকা লেনদেন সরাসরি আপনার ও গাড়িওয়ালার মধ্যে হবে। কৃষক বন্ধু শুধু যোগাযোগ করিয়ে দেয়, লেনদেনের দায়িত্ব নেয় না।</div>
+  </div>
+
+  <div class="a-card" style="margin:0 16px 14px;background:white;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+    <div style="font-weight:700;font-size:14px;margin-bottom:4px;color:#374151;">🧮 পরিবহন খরচ আন্দাজ করুন</div>
+    <div style="font-size:11px;color:#9CA3AF;margin-bottom:10px;">দূরত্ব ও গাড়ির ধরন দিয়ে আনুমানিক ভাড়া হিসাব করুন — এটা শুধু একটা ধারণা, আসল ভাড়া গাড়িওয়ালার সাথে কথা বলে ঠিক করবেন।</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+      <div>
+        <label class="gig-fl">দূরত্ব (কিমি)</label>
+        <input type="number" class="gig-input" id="transportDistanceInput" placeholder="যেমন: ৩৫" min="0">
+      </div>
+      <div>
+        <label class="gig-fl">গাড়ির ধরন</label>
+        <select class="gig-input" id="transportVehicleSelect">
+          <option value="15">ভ্যান/টমটম (~১৫৳/কিমি)</option>
+          <option value="25">পিকআপ (~২৫৳/কিমি)</option>
+          <option value="35">ছোট ট্রাক (~৩৫৳/কিমি)</option>
+          <option value="55">বড় ট্রাক (~৫৫৳/কিমি)</option>
+        </select>
+      </div>
+    </div>
+    <button class="my-post-boost-btn" style="background:linear-gradient(135deg,#2E7D32,#1B5E20);margin-top:0;" onclick="calculateTransportCost()">হিসাব করুন</button>
+    <div id="transportCostResult" style="display:none;margin-top:10px;background:#F1F8E9;border-radius:10px;padding:12px;">
+      <div style="font-size:12px;color:#33691E;">আনুমানিক ভাড়া</div>
+      <div style="font-size:20px;font-weight:800;color:#1B5E20;" id="transportCostAmount">৳ ০</div>
+      <div style="font-size:10px;color:#7CB342;margin-top:4px;">রাস্তার অবস্থা, জ্বালানির দাম ও দর কষাকষির উপর আসল ভাড়া কমবেশি হতে পারে</div>
+    </div>
+  </div>
+
+  <div class="truck-list" id="truckList">
+    <div class="coming-soon">লোড হচ্ছে...</div>
+  </div>
+</div>
+
 <!-- ===== পরিবহন চাহিদা পোস্ট করার ফর্ম ===== -->
 <div class="modal-overlay" id="demandPostModal">
   <div class="modal-box">
@@ -1746,45 +1842,152 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
-
-<!-- ===== গাড়ি খুঁজুন (কৃষক/পাইকারের জন্য) ===== -->
-<div class="truck-finder-page" id="truckFinderPage">
-  <div class="truck-finder-hdr">
+<!-- ===== শ্রমিক/লেবারের নিজের প্রোফাইল পেজ ===== -->
+<div class="driver-page" id="laborPage">
+  <div class="driver-hdr">
     <button class="back-btn" onclick="showHomePage()">←</button>
     <div>
-      <div class="detect-title">গাড়ি ভাড়া করুন</div>
-      <div class="detect-sub">পণ্য পরিবহন অথবা ব্যক্তিগত যাত্রা — এখন যারা Online আছেন</div>
+      <div class="detect-title">আমার লেবার প্রোফাইল</div>
+      <div class="detect-sub">আপনার তথ্য ও অবস্থান আপডেট করুন</div>
     </div>
   </div>
 
-  <div class="truck-filter-row">
-    <button class="truck-filter-chip active" id="truckFilterAll" onclick="filterTruckList('all', this)">🚗 সব গাড়ি</button>
-    <button class="truck-filter-chip" id="truckFilterCargo" onclick="filterTruckList('cargo', this)">📦 পণ্য পরিবহন</button>
-    <button class="truck-filter-chip" id="truckFilterPassenger" onclick="filterTruckList('passenger', this)">🧍 যাত্রী/ব্যক্তিগত ভ্রমণ</button>
+  <!-- Online/Offline toggle -->
+  <div class="availability-card">
+    <div class="availability-status offline" id="laborAvailabilityStatusText">🔴 এখন Offline আছেন</div>
+    <div style="font-size:11px;color:#6B7280;">Online থাকলে আশেপাশের মানুষ আপনাকে খুঁজে পাবে</div>
+    <button class="availability-toggle-btn go-online" id="laborAvailabilityToggleBtn" onclick="toggleLaborAvailability()">🟢 Online হন (অবস্থান শেয়ার করুন)</button>
+    <div class="location-status-text" id="laborLocationStatus"></div>
   </div>
 
-  <div style="display:flex;gap:8px;padding:8px 16px 0;">
-    <select class="driver-input" id="truckDistrictFilter" style="margin:0;font-size:12px;flex:1;min-width:0;" onchange="applyTruckExtraFilters()">
-      <option value="">📍 যেকোনো জেলা</option>
-    </select>
-    <select class="driver-input" id="truckCapacityFilter" style="margin:0;font-size:12px;flex:1;min-width:0;" onchange="applyTruckExtraFilters()">
-      <option value="0">⚖️ যেকোনো ধারণক্ষমতা</option>
-      <option value="1">১+ টন</option>
-      <option value="3">৩+ টন</option>
-      <option value="5">৫+ টন</option>
-      <option value="10">১০+ টন</option>
-    </select>
+  <!-- কাজের তথ্য ফর্ম -->
+  <div class="driver-form">
+    <div class="section-title" style="padding:0;">👷 কাজের তথ্য</div>
+    <div>
+      <label class="driver-fl">কাজের ধরন</label>
+      <select class="driver-input" id="laborProfessionInput">
+        <option value="দিনমজুর/সাধারণ শ্রমিক">দিনমজুর / সাধারণ শ্রমিক</option>
+        <option value="ধান কাটা/রোপণ">ধান কাটা / রোপণ</option>
+        <option value="জমি চাষ/সেচ">জমি চাষ / সেচ</option>
+        <option value="রাজমিস্ত্রি">রাজমিস্ত্রি</option>
+        <option value="কাঠমিস্ত্রি">কাঠমিস্ত্রি</option>
+        <option value="ইলেকট্রিশিয়ান">ইলেকট্রিশিয়ান</option>
+        <option value="মাটি কাটা/খনন">মাটি কাটা / খনন</option>
+        <option value="পরিবহন/মালামাল ওঠানো-নামানো">পরিবহন / মালামাল ওঠানো-নামানো</option>
+        <option value="অন্যান্য">অন্যান্য</option>
+      </select>
+    </div>
+    <div>
+      <label class="driver-fl">মজুরি (ঐচ্ছিক)</label>
+      <input type="text" class="driver-input" id="laborRateInput" placeholder="যেমন: ঘন্টায় ১০০৳ / দিনে ৬০০৳">
+    </div>
+    <button class="driver-save-btn" onclick="saveLaborInfo()">✅ তথ্য সেভ করুন</button>
   </div>
 
-  <button class="driver-save-btn" style="margin:12px 16px 0;width:calc(100% - 32px);" onclick="openDemandPostModal()">📢 আপনার প্রয়োজন পোস্ট করুন (গাড়িওয়ালারা দেখবেন)</button>
+  <!-- 🚀 বুস্ট: বেশি মানুষের কাছে প্রোফাইল পৌঁছাতে (কাজের সন্ধানে থাকা শ্রমিকদের জন্য) -->
+  <div class="driver-form" style="margin-top:0;">
+    <div class="section-title" style="padding:0;">🚀 বুস্ট (তালিকার সবার উপরে থাকুন)</div>
+    <div class="location-status-text" id="laborBoostStatus" style="display:block;">লোড হচ্ছে...</div>
+    <button class="driver-save-btn" style="background:linear-gradient(135deg, #F57F17 0%, #FBC02D 100%);" id="laborBoostBtn" onclick="requestLaborBoost()">🚀 বুস্ট করুন (এখন সম্পূর্ণ ফ্রি)</button>
+  </div>
+</div>
+
+<!-- ===== লেবার খুঁজুন (সবার জন্য — অফিসার ও কোম্পানি বাদে) ===== -->
+<div class="truck-finder-page" id="laborFinderPage">
+  <div class="truck-finder-hdr">
+    <button class="back-btn" onclick="showHomePage()">←</button>
+    <div>
+      <div class="detect-title">লেবার লাগবে</div>
+      <div class="detect-sub">এখন যারা Online আছেন — কাছেরটা আগে</div>
+    </div>
+  </div>
 
   <div class="txn-disclaimer">
     <div class="txn-disclaimer-icon">⚠️</div>
-    <div class="txn-disclaimer-text">ভাড়া ঠিক করা ও টাকা লেনদেন সরাসরি আপনার ও গাড়িওয়ালার মধ্যে হবে। কৃষক বন্ধু শুধু যোগাযোগ করিয়ে দেয়, লেনদেনের দায়িত্ব নেয় না।</div>
+    <div class="txn-disclaimer-text">মজুরি ঠিক করা ও টাকা লেনদেন সরাসরি আপনার ও শ্রমিকের মধ্যে হবে। কৃষক বন্ধু শুধু যোগাযোগ করিয়ে দেয়, লেনদেনের দায়িত্ব নেয় না।</div>
   </div>
 
-  <div class="truck-list" id="truckList">
+  <div class="loc-select-row" style="margin-top:0;">
+    <select class="gig-input" id="laborProfessionFilter" onchange="loadOnlineLaborers()">
+      <option value="all">সব ধরনের কাজ</option>
+      <option value="দিনমজুর/সাধারণ শ্রমিক">দিনমজুর / সাধারণ শ্রমিক</option>
+      <option value="ধান কাটা/রোপণ">ধান কাটা / রোপণ</option>
+      <option value="জমি চাষ/সেচ">জমি চাষ / সেচ</option>
+      <option value="রাজমিস্ত্রি">রাজমিস্ত্রি</option>
+      <option value="কাঠমিস্ত্রি">কাঠমিস্ত্রি</option>
+      <option value="ইলেকট্রিশিয়ান">ইলেকট্রিশিয়ান</option>
+      <option value="মাটি কাটা/খনন">মাটি কাটা / খনন</option>
+      <option value="পরিবহন/মালামাল ওঠানো-নামানো">পরিবহন / মালামাল ওঠানো-নামানো</option>
+      <option value="অন্যান্য">অন্যান্য</option>
+    </select>
+  </div>
+
+  <div class="truck-list" id="laborList">
     <div class="coming-soon">লোড হচ্ছে...</div>
+  </div>
+</div>
+
+<!-- ===== কৃষি কর্মকর্তার হোম ড্যাশবোর্ড (অফিসার বন্ধু) ===== -->
+<div class="officer-page" id="officerDashboardPage">
+  <div class="od-hdr">
+    <div class="od-hdr-top">
+      <div class="od-hdr-title">🏛️ অফিসার বন্ধু</div>
+      <div class="od-hdr-badge" id="odDesignationBadge">পদবী: SAAO</div>
+    </div>
+    <div class="od-hdr-sub">
+      <span>স্বাগতম, <b id="odOfficerName">-</b></span>
+      <span class="od-hdr-area" id="odWorkArea" onclick="openEditAreaModal()" style="cursor:pointer;">কর্মএলাকা: -</span>
+    </div>
+  </div>
+
+  <div class="od-stats-grid">
+    <div class="od-stat-card">
+      <div class="od-stat-num" id="odFarmerCount">-</div>
+      <div class="od-stat-label">এলাকায় সংযুক্ত কৃষক</div>
+    </div>
+    <div class="od-stat-card">
+      <div class="od-stat-num warn" id="odActiveAlerts">-</div>
+      <div class="od-stat-label">সক্রিয় রোগ অ্যালার্ট (৭ দিন)</div>
+    </div>
+    <div class="od-stat-card">
+      <div class="od-stat-num gold" id="odExtScore">-</div>
+      <div class="od-stat-label">⭐ এক্সটেনশন স্কোর</div>
+    </div>
+    <div class="od-stat-card">
+      <div class="od-stat-num" id="odRank">-</div>
+      <div class="od-stat-label">প্ল্যাটফর্ম র‍্যাঙ্ক (জেলা)</div>
+    </div>
+  </div>
+
+  <div class="od-section-title">মূল সেবাসমূহ</div>
+  <div class="od-grid2">
+    <div class="od-tile" onclick="showOutbreakPage()">
+      <div class="od-tile-icon">📡</div>
+      <div class="od-tile-label">লাইভ রোগ প্রাদুর্ভাব</div>
+    </div>
+    <div class="od-tile" onclick="openSendNoticeModal()">
+      <div class="od-tile-icon">📢</div>
+      <div class="od-tile-label">সরকারি নোটিশ ও প্রণোদনা</div>
+    </div>
+    <div class="od-tile" onclick="showOfficerPanel()">
+      <div class="od-tile-icon">👥</div>
+      <div class="od-tile-label">এলাকার কৃষক তালিকা</div>
+    </div>
+    <div class="od-tile" onclick="showWeatherPage()">
+      <div class="od-tile-icon">🌦️</div>
+      <div class="od-tile-label">আবহাওয়া ও আগাম পরামর্শ</div>
+    </div>
+  </div>
+
+  <div class="od-section-title">📢 দ্রুত নোটিশ পাঠান</div>
+  <div class="od-quick-row">
+    <button class="od-quick-btn od-quick-text" onclick="openSendNoticeModal()"><span style="font-size:18px;">✍️</span>নতুন নোটিশ লিখুন</button>
+    <button class="od-quick-btn od-quick-voice" id="odVoiceBtn" onclick="startVoiceNotice()"><span style="font-size:18px;">🎙️</span>ভয়েস দিয়ে নোটিশ লিখুন</button>
+  </div>
+
+  <div class="od-section-title">⚡ সাম্প্রতিক আক্রান্ত এলাকার তালিকা (লাইভ ফিড)</div>
+  <div id="odLiveFeed" style="padding-bottom:90px;">
+    <div class="od-feed-card"><div style="color:#9CA3AF;font-size:13px;">লোড হচ্ছে...</div></div>
   </div>
 </div>
 
@@ -1880,7 +2083,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
-
 <!-- ===== এলাকা (জেলা/উপজেলা/ইউনিয়ন) ম্যানুয়াল সংশোধন — GPS/অটো-ডিটেকশন ভুল হলে কৃষক/অফিসার নিজেই ঠিক করতে পারবেন ===== -->
 <div class="modal-overlay" id="editAreaModal">
   <div class="modal-box">
@@ -1897,7 +2099,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
-
 <!-- ===== কৃষক: ওষুধ প্রয়োগ লগ করার মোডাল ===== -->
 <div class="modal-overlay" id="logMedicineModal">
   <div class="modal-box">
@@ -1909,7 +2110,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     <button class="modal-cancel-btn" onclick="closeLogMedicineModal()">বাতিল</button>
   </div>
 </div>
-
 
 <!-- ===== কৃষক: ওষুধ প্রয়োগের ফলাফল রিপোর্ট ===== -->
 <div class="modal-overlay" id="outcomeReportModal">
@@ -1924,159 +2124,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     <button class="modal-cancel-btn" style="margin-top:12px;" onclick="closeOutcomeReportModal()">পরে বলবো</button>
   </div>
 </div>
-
-
-<!-- ===== কৃষি কর্মকর্তার হোম ড্যাশবোর্ড (অফিসার বন্ধু) ===== -->
-<div class="officer-page" id="officerDashboardPage">
-  <div class="od-hdr">
-    <div class="od-hdr-top">
-      <div class="od-hdr-title">🏛️ অফিসার বন্ধু</div>
-      <div class="od-hdr-badge" id="odDesignationBadge">পদবী: SAAO</div>
-    </div>
-    <div class="od-hdr-sub">
-      <span>স্বাগতম, <b id="odOfficerName">-</b></span>
-      <span class="od-hdr-area" id="odWorkArea" onclick="openEditAreaModal()" style="cursor:pointer;">কর্মএলাকা: -</span>
-    </div>
-  </div>
-
-  <div class="od-stats-grid">
-    <div class="od-stat-card">
-      <div class="od-stat-num" id="odFarmerCount">-</div>
-      <div class="od-stat-label">এলাকায় সংযুক্ত কৃষক</div>
-    </div>
-    <div class="od-stat-card">
-      <div class="od-stat-num warn" id="odActiveAlerts">-</div>
-      <div class="od-stat-label">সক্রিয় রোগ অ্যালার্ট (৭ দিন)</div>
-    </div>
-    <div class="od-stat-card">
-      <div class="od-stat-num gold" id="odExtScore">-</div>
-      <div class="od-stat-label">⭐ এক্সটেনশন স্কোর</div>
-    </div>
-    <div class="od-stat-card">
-      <div class="od-stat-num" id="odRank">-</div>
-      <div class="od-stat-label">প্ল্যাটফর্ম র‍্যাঙ্ক (জেলা)</div>
-    </div>
-  </div>
-
-  <div class="od-section-title">মূল সেবাসমূহ</div>
-  <div class="od-grid2">
-    <div class="od-tile" onclick="showOutbreakPage()">
-      <div class="od-tile-icon">📡</div>
-      <div class="od-tile-label">লাইভ রোগ প্রাদুর্ভাব</div>
-    </div>
-    <div class="od-tile" onclick="openSendNoticeModal()">
-      <div class="od-tile-icon">📢</div>
-      <div class="od-tile-label">সরকারি নোটিশ ও প্রণোদনা</div>
-    </div>
-    <div class="od-tile" onclick="showOfficerPanel()">
-      <div class="od-tile-icon">👥</div>
-      <div class="od-tile-label">এলাকার কৃষক তালিকা</div>
-    </div>
-    <div class="od-tile" onclick="showWeatherPage()">
-      <div class="od-tile-icon">🌦️</div>
-      <div class="od-tile-label">আবহাওয়া ও আগাম পরামর্শ</div>
-    </div>
-  </div>
-
-  <div class="od-section-title">📢 দ্রুত নোটিশ পাঠান</div>
-  <div class="od-quick-row">
-    <button class="od-quick-btn od-quick-text" onclick="openSendNoticeModal()"><span style="font-size:18px;">✍️</span>নতুন নোটিশ লিখুন</button>
-    <button class="od-quick-btn od-quick-voice" id="odVoiceBtn" onclick="startVoiceNotice()"><span style="font-size:18px;">🎙️</span>ভয়েস দিয়ে নোটিশ লিখুন</button>
-  </div>
-
-  <div class="od-section-title">⚡ সাম্প্রতিক আক্রান্ত এলাকার তালিকা (লাইভ ফিড)</div>
-  <div id="odLiveFeed" style="padding-bottom:90px;">
-    <div class="od-feed-card"><div style="color:#9CA3AF;font-size:13px;">লোড হচ্ছে...</div></div>
-  </div>
-</div>
-
-
-<!-- ===== শ্রমিক/লেবারের নিজের প্রোফাইল পেজ ===== -->
-<div class="driver-page" id="laborPage">
-  <div class="driver-hdr">
-    <button class="back-btn" onclick="showHomePage()">←</button>
-    <div>
-      <div class="detect-title">আমার লেবার প্রোফাইল</div>
-      <div class="detect-sub">আপনার তথ্য ও অবস্থান আপডেট করুন</div>
-    </div>
-  </div>
-
-  <!-- Online/Offline toggle -->
-  <div class="availability-card">
-    <div class="availability-status offline" id="laborAvailabilityStatusText">🔴 এখন Offline আছেন</div>
-    <div style="font-size:11px;color:#6B7280;">Online থাকলে আশেপাশের মানুষ আপনাকে খুঁজে পাবে</div>
-    <button class="availability-toggle-btn go-online" id="laborAvailabilityToggleBtn" onclick="toggleLaborAvailability()">🟢 Online হন (অবস্থান শেয়ার করুন)</button>
-    <div class="location-status-text" id="laborLocationStatus"></div>
-  </div>
-
-  <!-- কাজের তথ্য ফর্ম -->
-  <div class="driver-form">
-    <div class="section-title" style="padding:0;">👷 কাজের তথ্য</div>
-    <div>
-      <label class="driver-fl">কাজের ধরন</label>
-      <select class="driver-input" id="laborProfessionInput">
-        <option value="দিনমজুর/সাধারণ শ্রমিক">দিনমজুর / সাধারণ শ্রমিক</option>
-        <option value="ধান কাটা/রোপণ">ধান কাটা / রোপণ</option>
-        <option value="জমি চাষ/সেচ">জমি চাষ / সেচ</option>
-        <option value="রাজমিস্ত্রি">রাজমিস্ত্রি</option>
-        <option value="কাঠমিস্ত্রি">কাঠমিস্ত্রি</option>
-        <option value="ইলেকট্রিশিয়ান">ইলেকট্রিশিয়ান</option>
-        <option value="মাটি কাটা/খনন">মাটি কাটা / খনন</option>
-        <option value="পরিবহন/মালামাল ওঠানো-নামানো">পরিবহন / মালামাল ওঠানো-নামানো</option>
-        <option value="অন্যান্য">অন্যান্য</option>
-      </select>
-    </div>
-    <div>
-      <label class="driver-fl">মজুরি (ঐচ্ছিক)</label>
-      <input type="text" class="driver-input" id="laborRateInput" placeholder="যেমন: ঘন্টায় ১০০৳ / দিনে ৬০০৳">
-    </div>
-    <button class="driver-save-btn" onclick="saveLaborInfo()">✅ তথ্য সেভ করুন</button>
-  </div>
-
-  <!-- বুস্ট: বেশি মানুষের কাছে প্রোফাইল পৌঁছাতে, তালিকার সবার উপরে থাকা -->
-  <div class="driver-form" style="margin-top:0;">
-    <div class="section-title" style="padding:0;">🚀 বুস্ট/স্পন্সর করুন (তালিকার সবার উপরে থাকুন)</div>
-    <div class="location-status-text" id="laborBoostStatus" style="display:block;">লোড হচ্ছে...</div>
-    <button class="driver-save-btn" style="background:linear-gradient(135deg, #F57F17 0%, #FBC02D 100%);" id="laborBoostBtn" onclick="requestLaborBoost()">🚀 বুস্ট করুন</button>
-  </div>
-</div>
-
-
-<!-- ===== লেবার খুঁজুন (সবার জন্য — অফিসার ও কোম্পানি বাদে) ===== -->
-<div class="truck-finder-page" id="laborFinderPage">
-  <div class="truck-finder-hdr">
-    <button class="back-btn" onclick="showHomePage()">←</button>
-    <div>
-      <div class="detect-title">লেবার লাগবে</div>
-      <div class="detect-sub">এখন যারা Online আছেন — কাছেরটা আগে</div>
-    </div>
-  </div>
-
-  <div class="txn-disclaimer">
-    <div class="txn-disclaimer-icon">⚠️</div>
-    <div class="txn-disclaimer-text">মজুরি ঠিক করা ও টাকা লেনদেন সরাসরি আপনার ও শ্রমিকের মধ্যে হবে। কৃষক বন্ধু শুধু যোগাযোগ করিয়ে দেয়, লেনদেনের দায়িত্ব নেয় না।</div>
-  </div>
-
-  <div class="loc-select-row" style="margin-top:0;">
-    <select class="gig-input" id="laborProfessionFilter" onchange="loadOnlineLaborers()">
-      <option value="all">সব ধরনের কাজ</option>
-      <option value="দিনমজুর/সাধারণ শ্রমিক">দিনমজুর / সাধারণ শ্রমিক</option>
-      <option value="ধান কাটা/রোপণ">ধান কাটা / রোপণ</option>
-      <option value="জমি চাষ/সেচ">জমি চাষ / সেচ</option>
-      <option value="রাজমিস্ত্রি">রাজমিস্ত্রি</option>
-      <option value="কাঠমিস্ত্রি">কাঠমিস্ত্রি</option>
-      <option value="ইলেকট্রিশিয়ান">ইলেকট্রিশিয়ান</option>
-      <option value="মাটি কাটা/খনন">মাটি কাটা / খনন</option>
-      <option value="পরিবহন/মালামাল ওঠানো-নামানো">পরিবহন / মালামাল ওঠানো-নামানো</option>
-      <option value="অন্যান্য">অন্যান্য</option>
-    </select>
-  </div>
-
-  <div class="truck-list" id="laborList">
-    <div class="coming-soon">লোড হচ্ছে...</div>
-  </div>
-</div>
-
 
 <!-- ===== সবার জন্য সার্বজনীন রেফারেল কোড পেজ ===== -->
 <div class="officer-page" id="referralPage">
@@ -2103,21 +2150,21 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   </div>
 </div>
 
-<!-- ===== কৃষি কর্মকর্তার নিজস্ব প্যানেল (ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম) ===== -->
+<!-- ===== কৃষি কর্মকর্তার নিজস্ব প্যানেল ===== -->
 <div class="officer-page" id="officerPage">
   <div class="officer-hdr">
     <button class="back-btn" onclick="showHomePage()">←</button>
     <div>
       <div class="detect-title">আমার প্যানেল</div>
-      <div class="detect-sub">অ্যামবাসাডর কোড ও কার্যক্রম</div>
+      <div class="detect-sub">রেফারেল কোড ও কার্যক্রম</div>
     </div>
   </div>
 
   <div class="officer-code-card">
-    <div class="officer-code-label">📢 আপনার অ্যামবাসাডর কোড</div>
+    <div class="officer-code-label">📢 আপনার রেফারেল কোড</div>
     <div class="officer-code-box" id="officerCodeDisplay">DAE-XXXX-0000</div>
     <button class="officer-code-share-btn" onclick="shareOfficerCode()">📤 কোড শেয়ার করুন</button>
-    <div class="officer-code-hint">নতুন কৃষককে এই কোড দিন। রেজিস্ট্রেশনের সময় তারা এই কোড দিলে আপনার সাথে যুক্ত হবে — ডিজিটাল কৃষি সম্প্রসারণে আপনার অবদান হিসেবে গণ্য হবে।</div>
+    <div class="officer-code-hint">নতুন কৃষককে এই কোড দিন। রেজিস্ট্রেশনের সময় তারা এই কোড দিলে আপনার সাথে যুক্ত হবে।</div>
   </div>
 
   <div class="officer-stats-grid">
@@ -2316,6 +2363,16 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     </div>
   </div>
 
+  <!-- 🤝 ম্যাচমেকিং — পোস্ট করার সাথে সাথে মিলে যাওয়া পাইকারের চাহিদা দেখানো -->
+  <div class="modal-overlay" id="matchmakingModal">
+    <div class="modal-box">
+      <div class="modal-title" style="text-align:center;">🤝 মিলে যাওয়া চাহিদা</div>
+      <div id="matchmakingResultBox"></div>
+      <button class="modal-cancel-btn" onclick="closeMatchmakingModal()">বন্ধ করুন</button>
+    </div>
+  </div>
+
+  <!-- ✅ ভেরিফাইড ব্যাজ আবেদন ফর্ম -->
   <div class="modal-overlay" id="verifyRequestModal">
     <div class="modal-box">
       <div class="modal-title">✅ ভেরিফাইড ব্যাজের জন্য আবেদন</div>
@@ -2436,10 +2493,45 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         <div class="gig-unit-select-row" id="gigUnitRow"></div>
       </div>
 
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label class="gig-fl">গ্রেড (ঐচ্ছিক)</label>
+          <select class="gig-input" id="gigGrade">
+            <option value="">— বাছাই করুন —</option>
+            <option value="A">A গ্রেড (সবচেয়ে ভালো)</option>
+            <option value="B">B গ্রেড (মাঝারি)</option>
+            <option value="C">C গ্রেড (সাধারণ)</option>
+          </select>
+        </div>
+        <div>
+          <label class="gig-fl">প্যাকেজিং (ঐচ্ছিক)</label>
+          <select class="gig-input" id="gigPackaging">
+            <option value="">— বাছাই করুন —</option>
+            <option value="বস্তা">বস্তা</option>
+            <option value="ক্যারেট">ক্যারেট</option>
+            <option value="খোলা">খোলা (প্যাকেট ছাড়া)</option>
+            <option value="অন্যান্য">অন্যান্য</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="gig-fl">সাইজ (ঐচ্ছিক)</label>
+        <input type="text" class="gig-input" id="gigSize" placeholder="যেমন: বড়, মাঝারি, ছোট">
+      </div>
+
+      <div>
+        <label class="gig-fl">জেলা বাছাই করুন</label>
+        <select class="gig-input" id="gigDistrict">
+          <option value="">— জেলা বাছাই করুন —</option>
+        </select>
+      </div>
+
       <div>
         <label class="gig-fl">আপনার এলাকা</label>
         <input type="text" class="gig-input" id="gigArea" placeholder="যেমন: পীরগঞ্জ, রংপুর">
       </div>
+
 
       <div>
         <label class="gig-fl">যোগাযোগের ফোন নম্বর</label>
@@ -2461,6 +2553,29 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   <!-- BROWSE GIGS GRID -->
   <div id="gigBrowseSection" style="display:none;">
     <div class="gig-browse-wrap">
+      <div class="live-market-card" id="liveMarketCard">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:12px;font-weight:700;color:#1B5E20;">📡 লাইভ মার্কেট কার্যকলাপ</div>
+          <select id="liveMarketDistrictSelect" onchange="loadLiveMarketStats()" style="font-size:11px;border:1px solid #C8E6C9;border-radius:8px;padding:3px 6px;background:white;color:#2E7D32;">
+            <option value="">সব জেলা</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <div style="flex:1;background:white;border-radius:10px;padding:8px 10px;text-align:center;">
+            <div style="font-size:18px;font-weight:800;color:#2E7D32;" id="liveTraderCount">-</div>
+            <div style="font-size:10px;color:#689F38;">সক্রিয় পাইকার</div>
+          </div>
+          <div style="flex:1;background:white;border-radius:10px;padding:8px 10px;text-align:center;">
+            <div style="font-size:18px;font-weight:800;color:#2E7D32;" id="liveDemandCount">-</div>
+            <div style="font-size:10px;color:#689F38;">চাহিদা পোস্ট</div>
+          </div>
+          <div style="flex:1;background:white;border-radius:10px;padding:8px 10px;text-align:center;">
+            <div style="font-size:13px;font-weight:800;color:#2E7D32;" id="liveTopCrop">-</div>
+            <div style="font-size:10px;color:#689F38;">সর্বোচ্চ চাহিদায়</div>
+          </div>
+        </div>
+      </div>
+
       <div class="seed-search-box" style="padding:4px 0 10px;">
         <input type="text" class="seed-search-input" id="gigSearchInput" placeholder="🔍 কী খুঁজছেন লিখুন... (যেমন: আলু, গরু)" oninput="filterGigsBySearch()">
       </div>
@@ -2498,6 +2613,12 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
             <label class="gig-fl">প্রস্তাবিত দাম (৳)</label>
             <input type="number" class="gig-input" id="demandPrice" placeholder="প্রতি মণ">
           </div>
+        </div>
+        <div>
+          <label class="gig-fl">জেলা বাছাই করুন</label>
+          <select class="gig-input" id="demandDistrict">
+            <option value="">— জেলা বাছাই করুন —</option>
+          </select>
         </div>
         <div>
           <label class="gig-fl">এলাকা (কোথায় লাগবে)</label>
@@ -2590,6 +2711,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       <div class="gig-detail-qty-badge" id="gigDetailQty">০ মণ</div>
     </div>
 
+    <div id="gigDetailSpecRow" style="display:none;flex-wrap:wrap;gap:6px;margin-bottom:10px;"></div>
+
     <button class="gig-voice-play" id="gigVoicePlayBtn" onclick="playGigVoice()" style="display:none;">
       <span class="gig-voice-play-icon">🔊</span>
       <span class="gig-voice-play-text">কৃষকের কথা শুনুন</span>
@@ -2600,6 +2723,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       <div class="gig-seller-avatar">👨‍🌾</div>
       <div class="gig-seller-info">
         <div class="gig-seller-name" id="gigSellerName">-</div>
+        <span class="verified-tick-badge" id="gigSellerVerifyBadge" style="display:none;margin-bottom:4px;">✅ ভেরিফাইড</span>
         <div class="gig-seller-loc" id="gigSellerLoc">📍 -</div>
         <div class="gig-seller-rating" id="gigSellerRating">⭐⭐⭐⭐⭐ (নতুন বিক্রেতা)</div>
       </div>
@@ -2618,6 +2742,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 
     <button class="gig-order-btn" onclick="showInterest()">🛒 আগ্রহ প্রকাশ করুন / অর্ডার দিন</button>
     <button class="gig-call-btn" style="width:100%;background:#F9A825;" onclick="openReviewForGigSeller()">⭐ কৃষককে রেটিং দিন</button>
+
 
     <div class="txn-disclaimer" style="margin:12px 0;">
       <div class="txn-disclaimer-icon">⚠️</div>
@@ -3029,6 +3154,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyDZ-mnbKea5yPo118yxShxsZJVONuOzv4g",
@@ -3042,6 +3168,39 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
+
+  // ================================================================
+  // 🔔 পুশ নোটিফিকেশন (Firebase Cloud Messaging) — "জরুরি বিক্রি"/বুস্টেড পোস্ট হলে
+  // একই জেলার কৃষক/পাইকারদের ফোনে ইনস্ট্যান্ট নোটিফিকেশন পাঠানোর জন্য।
+  // ⚠️ এটা কাজ করতে হলে ৩টা জিনিস আলাদাভাবে সেটআপ করতে হবে (এই HTML ফাইলে সম্ভব না):
+  //   ১. Firebase কনসোল থেকে "Web Push certificate" (VAPID key) জেনারেট করে নিচে বসাতে হবে
+  //   ২. রুট ডিরেক্টরিতে firebase-messaging-sw.js ফাইল রাখতে হবে (আলাদা দেওয়া হচ্ছে)
+  //   ৩. একটা Cloud Function ডিপ্লয় করতে হবে যেটা বুস্টেড পোস্ট তৈরি হলে টোকেনে মেসেজ পাঠাবে
+  //      (আলাদা functions/index.js ফাইলে দেওয়া হচ্ছে — এই অ্যাপের Firebase প্রজেক্টে ডিপ্লয় করতে হবে)
+  // ================================================================
+  const FCM_VAPID_KEY = 'YOUR_VAPID_KEY_HERE'; // ⚠️⚠️ Firebase Console > Project Settings > Cloud Messaging > Web configuration থেকে বসান
+
+  async function initPushNotifications() {
+    try {
+      if (!('Notification' in window) || !firebase.messaging.isSupported()) return;
+      const user = auth.currentUser;
+      if (!user) return;
+      if (Notification.permission === 'denied') return;
+
+      const messaging = firebase.messaging();
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') return;
+
+      const token = await messaging.getToken({ vapidKey: FCM_VAPID_KEY });
+      if (token) {
+        await db.collection('users').doc(user.uid).set({ fcmToken: token }, { merge: true });
+      }
+    } catch (err) {
+      // VAPID key না বসানো থাকলে বা ব্রাউজার সাপোর্ট না করলে চুপচাপ স্কিপ — বাকি অ্যাপ স্বাভাবিকভাবে চলবে
+      console.error('পুশ নোটিফিকেশন সেটআপ করা যায়নি:', err);
+    }
+  }
+
 
   // নিরাপত্তা: ইউজারের লেখা যেকোনো টেক্সট (crop name, review, bid, driver info ইত্যাদি)
   // innerHTML-এ বসানোর আগে অবশ্যই escape করতে হবে — নাহলে অন্য ইউজার
@@ -3198,9 +3357,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     trader: "🏪 আড়তদার/পাইকার",
     retailer: "🏬 রিটেলার/ডিলার",
     driver: "🚚 গাড়িওয়ালা",
-    labor: "👷 লেবার/শ্রমিক",
-    company: "🏭 কীটনাশক কোম্পানি",
-    officer: "🏛️ কৃষি কর্মকর্তা"
+    company: "🏭 কীটনাশক ও বীজ কোম্পানি",
+    officer: "🏛️ কৃষি কর্মকর্তা",
+    labor: "👷 শ্রমিক/লেবার"
   };
 
   // লগইনের পর role অনুযায়ী আলাদা headline দেখাবে
@@ -3209,9 +3368,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     trader: "পাইকার বন্ধু",
     retailer: "রিটেলার বন্ধু",
     driver: "গাড়িওয়ালা বন্ধু",
-    labor: "লেবার বন্ধু",
     company: "কোম্পানি বন্ধু",
-    officer: "অফিসার বন্ধু"
+    officer: "অফিসার বন্ধু",
+    labor: "লেবার বন্ধু"
   };
 
   function nextPin(current, nextId) {
@@ -3254,6 +3413,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   // এখন সব role-এর জন্য রেফারেল কোড প্রযোজ্য, তাই field সবসময় দেখানো হয়
   function toggleReferralField() {
     // সব role-এর জন্য field visible রাখা হচ্ছে (universal referral system)
+    const role = document.getElementById('regRole').value;
+    document.getElementById('officerDesignationGroup').style.display = (role === 'officer') ? 'block' : 'none';
+    document.getElementById('laborInfoGroup').style.display = (role === 'labor') ? 'block' : 'none';
   }
 
   // সার্বজনীন রেফারেল কোড তৈরি (যেকোনো role-এর ইউজারের জন্য), ফরম্যাট: KB-নাম-১২৩৪
@@ -3314,9 +3476,16 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       // প্রতিটা নতুন ইউজার নিজের সার্বজনীন রেফারেল কোড পাবে (role নির্বিশেষে)
       userData.myReferralCode = generateReferralCode(name);
 
-      // কৃষি কর্মকর্তা হলে তার আলাদা DAE কোডও তৈরি হবে (ভবিষ্যতের "ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম"-এর জন্য, আপাতত নিষ্ক্রিয়)
+      // কৃষি কর্মকর্তা হলে তার আলাদা DAE কোডও তৈরি হবে (ভবিষ্যতের officer point system-এর জন্য, আপাতত নিষ্ক্রিয়)
       if (role === 'officer') {
-        userData.officerAmbassadorCode = generateOfficerCode(name);
+        userData.officerReferralCode = generateOfficerCode(name);
+        userData.officerDesignation = document.getElementById('regOfficerDesignation').value;
+      }
+
+      // শ্রমিক/লেবার হলে কাজের ধরন ও মজুরি সেভ করা
+      if (role === 'labor') {
+        userData.laborProfession = document.getElementById('regLaborProfession').value;
+        userData.laborRate = document.getElementById('regLaborRate').value.trim() || null;
       }
 
       // কেউ সঠিক referral code দিয়ে থাকলে সেটা সেভ করা (একবারই সেট হবে, আজীবন লক থাকবে)
@@ -3335,7 +3504,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         myReferralCode: userData.myReferralCode,
         avgRating: 0, reviewCount: 0
       };
-      if (userData.officerAmbassadorCode) userPublicData.officerAmbassadorCode = userData.officerAmbassadorCode;
+      if (userData.officerReferralCode) userPublicData.officerReferralCode = userData.officerReferralCode;
       await db.collection('userPublic').doc(cred.user.uid).set(userPublicData);
 
       const successMsg = referredByUserId
@@ -3346,7 +3515,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       // রিটেলার-টু-রিটেলার রেফারেল বোনাস: নতুন রিটেলার অন্য রিটেলারের কোড দিয়ে যুক্ত হলে,
       // এটা এখন সরাসরি টাকার অংক client থেকে না লিখে শুধু raw activity হিসেবে জমা হয় —
       // ভুয়া/বাল্ক রিটেলার অ্যাকাউন্ট বানিয়ে বোনাস ফার্মিং ঠেকাতে Admin Panel থেকে
-      // ম্যানুয়ালি প্রতিটা রিভিউ করে চূড়ান্ত বোনাস বসাবেন (DAE "ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম"-এর মতো একই পদ্ধতি)
+      // ম্যানুয়ালি প্রতিটা রিভিউ করে চূড়ান্ত বোনাস বসাবেন (কৃষি কর্মকর্তার রেফারেল পয়েন্টের মতোই একই পদ্ধতি)
       if (referredByUserId && role === 'retailer') {
         try {
           await db.collection('referralActivity').add({
@@ -3402,10 +3571,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   async function doLogout() { await auth.signOut(); }
 
   // ===== PAGE NAVIGATION =====
-  const allPageIds = ['homePage','detectPage','marketPage','weatherPage','sellPage','verifyPage','productsPage','companyPage','driverPage','truckFinderPage','officerPage','seedPage','referralPage','outbreakPage','seedBookingPage','retailerOrdersPage','notificationsPage','officerDashboardPage','laborFinderPage','laborPage'];
+  const allPageIds = ['homePage','detectPage','marketPage','weatherPage','sellPage','verifyPage','productsPage','companyPage','driverPage','truckFinderPage','officerPage','seedPage','referralPage','outbreakPage','officerDashboardPage','laborPage','laborFinderPage','seedBookingPage','retailerOrdersPage','notificationsPage'];
 
   function hideAllPages() {
-    if (typeof stopCropCycle === 'function') stopCropCycle(); // পেজ বদলালে ফসল-সাইক্লিং টাইমার বন্ধ করা
     allPageIds.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
@@ -3481,11 +3649,12 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     marketStrip.style.display = isFarmerLayout ? 'block' : 'none';
     comingSoon.style.display = isFarmerLayout ? 'none' : 'block';
     greetingReferralBtn.style.display = isFarmerLayout ? 'flex' : 'none';
-    // "লেবার লাগবে" ট্যাব — কৃষি অফিসার ও কীটনাশক/বীজ কোম্পানি বাদে সবার জন্য দেখানো হয় (admin বন্ধ না করে থাকলে)
-    document.getElementById('laborTabBtn').style.display = (role === 'officer' || role === 'company' || featureFlags.laborFinderEnabled === false) ? 'none' : 'flex';
     moreFeaturesTitle.style.display = isFarmerLayout ? 'block' : 'none';
     moreFeaturesGrid.style.display = isFarmerLayout ? 'grid' : 'none';
     if (!isFarmerLayout) wxStrip.style.display = 'none';
+
+    // "লেবার লাগবে" ট্যাব — কৃষি অফিসার ও কীটনাশক/বীজ কোম্পানি বাদে সবার জন্য দেখানো হয় (admin বন্ধ না করে থাকলে)
+    document.getElementById('laborTabBtn').style.display = (role === 'officer' || role === 'company' || featureFlags.laborFinderEnabled === false) ? 'none' : 'flex';
 
     if (role === 'retailer') {
       title.textContent = 'কী করতে চান?';
@@ -3505,6 +3674,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
         <div class="feature-card fc-g" onclick="showSeedBookingPage()"><div class="fc-icon">🌱</div><div><div class="fc-label">বীজ বুকিং ও অফার</div><div class="fc-sub">প্রি-বুকিং, বাল্ক অর্ডার</div></div></div>
         <div class="feature-card fc-r" onclick="showRetailerOrdersPage()"><div class="fc-icon">📦</div><div><div class="fc-label">আমার পূর্বের অর্ডার</div><div class="fc-sub">অর্ডার স্ট্যাটাস দেখুন</div></div></div>
         <div class="feature-card fc-a" onclick="showReferralPage()"><div class="fc-icon">🎁</div><div><div class="fc-label">রিটেলার রেফারেল</div><div class="fc-sub">অন্য দোকানদার আনুন, বোনাস পান</div></div></div>
+        <div class="feature-card fc-a" onclick="showTruckFinderPage()"><div class="fc-icon">🚗</div><div><div class="fc-label">গাড়ি ভাড়া করুন</div><div class="fc-sub">পণ্য পরিবহন বা ব্যক্তিগত যাত্রা</div></div></div>
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
         <div class="retailer-offer-slider" id="retailerOfferSlider" style="display:none;">
           <div class="ros-title">🔥 সিজনাল বীজ ও কোম্পানির সেরা অফার</div>
@@ -3519,6 +3689,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-r" onclick="showCompanyPage()"><div class="fc-icon">💊</div><div><div class="fc-label">প্রোডাক্ট ব্যবস্থাপনা</div><div class="fc-sub">ওষুধ যোগ ও অফার দিন</div></div></div>
+        <div class="feature-card fc-a" onclick="showTruckFinderPage()"><div class="fc-icon">🚗</div><div><div class="fc-label">গাড়ি ভাড়া করুন</div><div class="fc-sub">পণ্য পরিবহন বা ব্যক্তিগত যাত্রা</div></div></div>
       `;
     } else if (role === 'farmer' || role === 'trader') {
       // শুধু কৃষক ও আড়তদার/পাইকার — Admin Panel থেকে কন্ট্রোল করা কার্ড লেআউট + বাজারদর স্ট্রিপ
@@ -3536,6 +3707,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       hideBottomNavBar();
       grid.innerHTML = `
         <div class="feature-card fc-r" onclick="showDriverPanel()"><div class="fc-icon">🚚</div><div><div class="fc-label">আমার গাড়ি</div><div class="fc-sub">Live/Available স্ট্যাটাস দিন</div></div></div>
+        <div class="feature-card fc-a" onclick="showTruckFinderPage()"><div class="fc-icon">🚗</div><div><div class="fc-label">গাড়ি ভাড়া করুন</div><div class="fc-sub">অন্য গাড়ি/পণ্য পরিবহন খুঁজুন</div></div></div>
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
       `;
     } else if (role === 'officer') {
@@ -3548,6 +3720,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       grid.innerHTML = `
         <div class="feature-card fc-r" onclick="showLaborPanel()"><div class="fc-icon">👷</div><div><div class="fc-label">আমার প্রোফাইল</div><div class="fc-sub">Live/Available স্ট্যাটাস দিন</div></div></div>
         <div class="feature-card fc-a" onclick="showLaborFinderPage()"><div class="fc-icon">🔎</div><div><div class="fc-label">লেবার লাগবে</div><div class="fc-sub">অন্য শ্রমিক খুঁজুন</div></div></div>
+        <div class="feature-card fc-a" onclick="showTruckFinderPage()"><div class="fc-icon">🚗</div><div><div class="fc-label">গাড়ি ভাড়া করুন</div><div class="fc-sub">পণ্য পরিবহন বা ব্যক্তিগত যাত্রা</div></div></div>
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
       `;
     } else {
@@ -3555,6 +3728,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
       title.textContent = 'কী করতে চান?';
       hideBottomNavBar();
       grid.innerHTML = `
+        <div class="feature-card fc-a" onclick="showTruckFinderPage()"><div class="fc-icon">🚗</div><div><div class="fc-label">গাড়ি ভাড়া করুন</div><div class="fc-sub">পণ্য পরিবহন বা ব্যক্তিগত যাত্রা</div></div></div>
         <div class="feature-card fc-s" onclick="showWeatherPage()"><div class="fc-icon">🌤️</div><div><div class="fc-label">আবহাওয়া</div><div class="fc-sub">সতর্কতা ও পরামর্শ</div></div></div>
       `;
     }
@@ -3582,7 +3756,6 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   }
 
   function resetDetectPageState() {
-    stopCropCycle(); // আগের কোনো cycling timer চলতে থাকলে বন্ধ করা (পেজে আবার ঢুকলে ডুপ্লিকেট এড়াতে)
     // প্রধান স্লট (২ নম্বর) — বড় আইকন+লেখা ফিরিয়ে আনা
     slotImages[2] = null;
     const mainSlot = document.getElementById('slot2');
@@ -3640,7 +3813,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     'আলু': 'data:image/webp;base64,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',
     'এলাচ': 'data:image/webp;base64,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',
     'ওলকচু': 'data:image/webp;base64,UklGRlIFAABXRUJQVlA4IEYFAADQGQCdASpXAGQAPp1KnkulpCKio9ZrqLATiUAZGZVylhsMIBm2uWAVcdHfnMD06LSaV9cG3sKIyP2dCs5JiuhoB4Py6NhAupc5Odxr/NWrZ4PAI6sooN59W2C0Z6BbenoGHWu+G5KegRn49gmh1lUOqFMDh15CT6g5ELSapN9OeULzQyRtQlfJEG7J3bfdFH9cehjFVeUJYZgBe0i21NW4VaRGQgvAeGZLFHH6ZMaZzdenZxjZJWBJvZje6VLZKv5XeF3bSa4lRdb1py7sMwEZ2/A1Bn4GwAD+9WJ/m2sh+G2OZ09pAZ+tNyraYPqr2h0Kd/vbDA+IOc8thglX0Q7vNJ2jCYE3onnQFn+31xbzMbhcqVZQPCnN7CmRfQWrTtPuJrcc+ajq992j/l9mWZQM6gaW2leEUO7gn81qoS6DOgpx94l1qp4xB3wOJ9H0KS1IrgRUzx3cBPIC08oee33Y8B90AJgAKLlLns/bRoecIGrRuG8gdh5AXSlz95CUMF4rjxMX1Lty6wjqZBPDpxd29n65Idwvz96I7WSfAfnGtYpxTx1ZQySOcMKzqPDov6roB9pSSKb0RmlsBdBtn0BIIpM312cFMwQrmwvPh/FhjNKZzvyGzFt5g2bG/He/XN5hQw720pheZtUykay8QvrgpcANqZR/sPR4qsW4LGImJL/LBtgwPNoOl2gITRDzm5Qy8xostEvDn2txFpG8TSizvmi491sBzpQ7a3ZsJYzRm9uCNYON/yfFos+ymeY+B/I278fAAHNQt9fslc4VuEdahxomLSQDQGQdCjcMYxzexwKagMamBmAv93/JNQvCGCulVcS0gcbYuovgmGByan1ptQ3Hw32SuXHPeR0Gs1mNACo+BOqhaM0+kdHhAT7e5TupFeQZ1lNekcvZCOf8o2egsOJIZYU+hAQlddMpIzdhMf49bQM2gf62v47omAMC/iI5BfBp3EYxIfCm4YPfAChZn2OX5Lb2PjDpTJyd5Jc15SM/n2nc8IPVur4Q63dPDzgNRpmoH3QX+lO/nAt3+edPwY6rnpKRFbx9Kpc8Kmf75q7Knuxxuo8tAEVFJxZz/PgiZEFvsIhw5fWid/xV/uCM25HjXn77JEiSwp2B1KM48Y+S06d4Cwt0qpP3pPgzmB7hPp+/lchrJc6qQR2jRnpjvLuu14RrJJoMOY5ONRC9BDObNdGsdhutpnwIN5xyzV+HH+h/HWll4qibzetPSl/Lyi27Eh3BJzA6Lg+iyBybSsnNLs0BsfAhg5HCljw7c5CxpZpriTIdhWwPQTQX+DMvB3ndTjQTuc36U61LIJzSrtVIC5oaaPAe4q6c6ZnoMRe2cc2HNsS3FPOTnpiisWchJJWseZUNlI41JnzqmODsc8CjXXU83QEK9hdzYEwlsIZxcFdWUdCdavMjAdE6rdVHBJVVi5vNFMd6wirbJ1xcumUEVM+kuXSj9ZV1JZHgplMYXQlaKEJbGxsbQAh1Luwah0KHJMIts12/DQfQuZwbwa1a35K1aGPCe/NicO9CQxEpwhjsSaW9eo0hdFbquHy/6DX2y/AE46q4sdheGBPDm9iQCwdZK+L3M7RI8YzdyAzLJCwU9Y570sr1cfiOkHWPmHKltdxBpfcl0rtbYzLQ0HCVoFKw20gTPh6o1Gjsgp8lgsIpTuWqpphSZoJ/7WPm/1QyFWYh3POq4zlMBfKCi8Uf5NjRZJvgAdeGuU9SmFeonVJqxjCljkGAFRYsC1F1lpVIV+xgPyNf+s/BAkuPSkwypQ0Hi/rcnEb/jduGEM2t4T3gAAA=',
-    'কচু': 'data:image/webp;base64,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',
+    'কচু': 'data:image/webp;base64,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',
     'কদবেল': 'data:image/webp;base64,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',
     'কফি': 'data:image/webp;base64,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',
     'করলা': 'data:image/webp;base64,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',
@@ -3828,6 +4001,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     { icon: CROP_IMAGE_MAP['আনারস'], cropName: 'আনারস', price: 60, unit: 'প্রতি কেজি', change: 15, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['স্ট্রবেরি'], cropName: 'স্ট্রবেরি', price: 350, unit: 'প্রতি কেজি', change: 12, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['বেল'], cropName: 'বেল', price: 60, unit: 'প্রতি কেজি', change: 3, up: true, district: 'রংপুর' },
+    { icon: CROP_IMAGE_MAP['কদবেল'], cropName: 'কদবেল', price: 50, unit: 'প্রতি কেজি', change: 13, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['জাম্বুরা'], cropName: 'জাম্বুরা', price: 40, unit: 'প্রতি কেজি', change: 2, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['তেঁতুল'], cropName: 'তেঁতুল', price: 120, unit: 'প্রতি কেজি', change: 2, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['কাজুবাদাম'], cropName: 'কাজুবাদাম', price: 1200, unit: 'প্রতি কেজি', change: 8, up: true, district: 'রংপুর' },
@@ -3869,6 +4043,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     { icon: CROP_IMAGE_MAP['তিসি'], cropName: 'তিসি', price: 160, unit: 'প্রতি কেজি', change: 13, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['দারুচিনি'], cropName: 'দারুচিনি', price: 600, unit: 'প্রতি কেজি', change: 4, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['পোস্ত বাদাম'], cropName: 'পোস্ত বাদাম', price: 2500, unit: 'প্রতি কেজি', change: 8, up: false, district: 'রংপুর' },
+    { icon: CROP_IMAGE_MAP['মুখীকচু'], cropName: 'মুখীকচু', price: 45, unit: 'প্রতি কেজি', change: 10, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['রাজমা'], cropName: 'রাজমা', price: 160, unit: 'প্রতি কেজি', change: 13, up: true, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['লটকন'], cropName: 'লটকন', price: 90, unit: 'প্রতি কেজি', change: 10, up: false, district: 'রংপুর' },
     { icon: CROP_IMAGE_MAP['লবঙ্গ'], cropName: 'লবঙ্গ', price: 2200, unit: 'প্রতি কেজি', change: 15, up: true, district: 'রংপুর' },
@@ -4056,15 +4231,17 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     companyPanelEnabled: true,       // কোম্পানি/কীটনাশক কোম্পানি প্যানেল
     marketplaceEnabled: true,        // ফসল বিক্রি/পাইকার মার্কেটপ্লেস
     truckFinderEnabled: true,        // গাড়ি খুঁজুন/পরিবহন
+    laborFinderEnabled: true,        // লেবার লাগবে/শ্রমিক খোঁজা
     marketPriceEnabled: true,        // বাজারদর
     weatherEnabled: true,            // আবহাওয়া সতর্কতা
     referralEnabled: true,           // রেফারেল সিস্টেম
-    laborFinderEnabled: true,        // লেবার লাগবে/শ্রমিক খোঁজা
+    driverSubscriptionRequired: false, // গাড়িওয়ালার জন্য ৩০ দিন ট্রায়াল-পরবর্তী মাসিক ফি বাধ্যতামূলক কিনা (ডিফল্ট: বন্ধ = সম্পূর্ণ ফ্রি)
     boostFeatureEnabled: false,      // 🔥 স্পন্সরড/বুস্ট পোস্ট (পেইড ফিচার) — যতক্ষণ না admin চালু করে ততক্ষণ সবার জন্য ফ্রি/লুকানো
     assuredDealEnabled: false        // 🤝 অ্যাসিউরড ডিল/ভিআইপি ব্রোকারেজ — ডিফল্ট বন্ধ
   };
   let boostFeeAmount = 50; // ডিফল্ট বুস্ট ফি (টাকা), admin থেকে appConfig/features এর boostFeePerBoost দিয়ে ওভাররাইড হয়
   // 💳 পে-পার-কন্টাক্ট — এখন ডিফল্ট বন্ধ (সবাই আনলিমিটেড ফ্রি কল/WhatsApp করতে পারবে)।
+  // ⚠️ এই লিমিট শুধু UX-লেভেলে সহায়ক — আসল গেট Firestore rules-এ (cropGigsContact কালেকশনে)।
   let payPerContactEnabled = false;
   let contactFreeLimit = 5;
 
@@ -4296,220 +4473,217 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
   // group ফিল্ডটা শুধু AI-প্রম্পটে পাঠানোর জন্য ভেতরে ভেতরে ব্যবহার হয়, কৃষককে আলাদা করে দেখানো হয় না
   // ব্যবহারকারীর দেওয়া ছবি থেকে তৈরি ফসলের তালিকা ও ছবি-ম্যাপ (আগের ইমোজি-ভিত্তিক তালিকা সম্পূর্ণ বাদ দিয়ে)
 
+  // সিজন কী: rabi = রবি (নভে-ফেব্রু), kharif1 = খরিফ-১/পূর্বখরিফ (মার্চ-জুন), kharif2 = খরিফ-২/আমন (জুলাই-অক্টো), all = সারাবছর/বহুবর্ষজীবী (গাছ/মসলা/ফুল ইত্যাদি) — মৌসুম-ফিল্টারে সবসময় দেখাবে
   const ALL_CROPS = [
-    { icon: '🌱', name: 'ধান', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'পাট', group: 'মাঠ ফসল', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'ভুট্টা', group: 'মাঠ ফসল', season: ['rabi','kharif1'] },
-    { icon: '🌱', name: 'আলু', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'গম', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'সরিষা', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'পেঁয়াজ', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'বেগুন', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'মরিচ', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'মসুর', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'টমেটো', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'খেসারি', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'লাউ', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'রসুন', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'বাঁধাকপি', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'ফুলকপি', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'পটল', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'মুগ', group: 'মাঠ ফসল', season: ['rabi','kharif1'] },
-    { icon: '🌱', name: 'শসা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'ক্ষীরা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'আখ', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'মিষ্টি কুমড়া', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'ঢেঁড়শ', group: 'সবজি ও মসলা', season: ['kharif1'] },
-    { icon: '🌱', name: 'লাল শাক', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'পালং শাক', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'তিল', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'চিনাবাদাম', group: 'মাঠ ফসল', season: ['rabi','kharif1'] },
-    { icon: '🌱', name: 'শিম', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'কলা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'পেঁপে', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'আদা', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'হলুদ', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'করলা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'মূলা', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'ঝিঙা', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'চিচিঙ্গা', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'মাষকলাই', group: 'মাঠ ফসল', season: ['rabi','kharif1'] },
-    { icon: '🌱', name: 'ধনিয়া', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'কচু', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'বরবটি', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'চালকুমড়া', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'পেয়ারা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'আম', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'কাঁঠাল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'তরমুজ', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'বাঙ্গি', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'মিষ্টি আলু', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'সয়াবিন', group: 'মাঠ ফসল', season: ['rabi','kharif1'] },
-    { icon: '🌱', name: 'গাজর', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'ড্রাগন ফল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'লেবু', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'মাল্টা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'সূর্যমুখী', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'বরই', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'ক্যাপসিকাম', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'ব্রকলি', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'কালোজিরা', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'পান ও সুপারি', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'লিচু', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'নারিকেল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'মেথি', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'মৌরি', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'কাউন', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'চীনা', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'বাজরা', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'জোয়ার', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'ধনেপাতা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'পুদিনা পাতা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'সাজনা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'ডাঁটা শাক', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'কলমি শাক', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'পুঁই শাক', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'ডালিম', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'আনারস', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'স্ট্রবেরি', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'বেল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'জাম্বুরা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'তেঁতুল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'কাজুবাদাম', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'কফি', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'চা', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'রাবার', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'তামাক', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'অড়হর', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'আঙুর', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'আপেল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'কাকরোল', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'কাঠ বাদাম', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'গাঁদা ফুল', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'গোলাপ', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'গ্লাডিওলাস', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'চন্দ্রমল্লিকা', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'চেরি', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'জলপাই', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'তুলা', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'দুরিয়ান', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'ধুনদুল', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'নাশপাতি', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'পেস্তা বাদাম', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'ফেলন', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'বার্লি', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'বেলি ফুল', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'মটর', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'রজনীগন্ধা', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'রেড়ি', group: 'মাঠ ফসল', season: ['kharif1'] },
-    { icon: '🌱', name: 'সুগার বিট', group: 'সবজি ও মসলা', season: ['rabi'] },
-    { icon: '🌱', name: 'আমড়া', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'এলাচ', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'ওলকচু', group: 'সবজি ও মসলা', season: ['kharif1','kharif2'] },
-    { icon: '🌱', name: 'কুসুমফুল', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'গোলমরিচ', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'জাম', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'জায়ফল', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'তারামরিচ', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'তিসি', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'দারুচিনি', group: 'মাঠ ফসল', season: ['all'] },
-    { icon: '🌱', name: 'পোস্ত বাদাম', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'রাজমা', group: 'মাঠ ফসল', season: ['rabi'] },
-    { icon: '🌱', name: 'লটকন', group: 'সবজি ও মসলা', season: ['all'] },
-    { icon: '🌱', name: 'লবঙ্গ', group: 'মাঠ ফসল', season: ['all'] },
+    { icon: '🌱', name: 'ধান', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'পাট', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'ভুট্টা', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'আলু', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'গম', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'সরিষা', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'পেঁয়াজ', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'বেগুন', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'মরিচ', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'মসুর', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'টমেটো', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'খেসারি', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'লাউ', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'রসুন', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'বাঁধাকপি', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'ফুলকপি', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'পটল', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'মুগ', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'শসা', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'ক্ষীরা', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'আখ', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'মিষ্টি কুমড়া', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'ঢেঁড়শ', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'লাল শাক', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'পালং শাক', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'তিল', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'চিনাবাদাম', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'শিম', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'কলা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'পেঁপে', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'আদা', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'হলুদ', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'করলা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'মূলা', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'ঝিঙা', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'চিচিঙ্গা', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'মাষকলাই', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'ধনিয়া', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'কচু', group: 'সবজি ও মসলা', season: 'kharif2' },
+    { icon: '🌱', name: 'বরবটি', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'চালকুমড়া', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'পেয়ারা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'আম', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'কাঁঠাল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'তরমুজ', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'বাঙ্গি', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'মিষ্টি আলু', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'সয়াবিন', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'গাজর', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'ড্রাগন ফল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'লেবু', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'মাল্টা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'সূর্যমুখী', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'বরই', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'ক্যাপসিকাম', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'ব্রকলি', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'কালোজিরা', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'পান ও সুপারি', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'লিচু', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'নারিকেল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'মেথি', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'মৌরি', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'কাউন', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'চীনা', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'বাজরা', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'জোয়ার', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'ধনেপাতা', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'পুদিনা পাতা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'সাজনা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'ডাঁটা শাক', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'কলমি শাক', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'পুঁই শাক', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'ডালিম', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'আনারস', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'স্ট্রবেরি', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'বেল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'কদবেল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'জাম্বুরা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'তেঁতুল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'কাজুবাদাম', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'কফি', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'চা', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'রাবার', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'তামাক', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'অড়হর', group: 'মাঠ ফসল', season: 'kharif2' },
+    { icon: '🌱', name: 'আঙুর', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'আপেল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'কাকরোল', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'কাঠ বাদাম', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'গাঁদা ফুল', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'গোলাপ', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'গ্লাডিওলাস', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'চন্দ্রমল্লিকা', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'চেরি', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'জলপাই', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'তুলা', group: 'মাঠ ফসল', season: 'kharif1' },
+    { icon: '🌱', name: 'দুরিয়ান', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'ধুনদুল', group: 'সবজি ও মসলা', season: 'kharif1' },
+    { icon: '🌱', name: 'নাশপাতি', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'পেস্তা বাদাম', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'ফেলন', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'বার্লি', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'বেলি ফুল', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'মটর', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'রজনীগন্ধা', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'রেড়ি', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'সুগার বিট', group: 'সবজি ও মসলা', season: 'rabi' },
+    { icon: '🌱', name: 'আমড়া', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'এলাচ', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'ওলকচু', group: 'সবজি ও মসলা', season: 'kharif2' },
+    { icon: '🌱', name: 'কুসুমফুল', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'গোলমরিচ', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'জাম', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'জায়ফল', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'তারামরিচ', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'তিসি', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'দারুচিনি', group: 'মাঠ ফসল', season: 'all' },
+    { icon: '🌱', name: 'পোস্ত বাদাম', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'মুখীকচু', group: 'সবজি ও মসলা', season: 'kharif2' },
+    { icon: '🌱', name: 'রাজমা', group: 'মাঠ ফসল', season: 'rabi' },
+    { icon: '🌱', name: 'লটকন', group: 'সবজি ও মসলা', season: 'all' },
+    { icon: '🌱', name: 'লবঙ্গ', group: 'মাঠ ফসল', season: 'all' },
   ];
+
+  // ================================================================
+  // 🇧🇩 বাংলাদেশের কৃষি মৌসুম অনুযায়ী বর্তমান মৌসুম বের করা:
+  // রবি (নভেম্বর-ফেব্রুয়ারি), খরিফ-১/পূর্বখরিফ (মার্চ-জুন), খরিফ-২/আমন মৌসুম (জুলাই-অক্টোবর)
+  // ================================================================
+  function getCurrentBDSeason() {
+    const month = new Date().getMonth(); // 0=জানুয়ারি
+    if (month === 10 || month === 11 || month === 0 || month === 1) return 'rabi';
+    if (month >= 2 && month <= 5) return 'kharif1';
+    return 'kharif2'; // month 6-9 (জুলাই-অক্টোবর)
+  }
+  const SEASON_LABEL = { rabi: '🍂 রবি মৌসুম', kharif1: '☀️ খরিফ-১ (পূর্বখরিফ) মৌসুম', kharif2: '🌧️ খরিফ-২ (আমন) মৌসুম' };
+  let showAllSeasonCrops = false; // "সব ফসল দেখুন" চাপলে true হবে, নাহলে বর্তমান মৌসুমের ফসলই দেখাবে
 
   let selectedCropName = null;
   let selectedCropGroup = null; // AI প্রম্পটে পাঠানোর জন্য — কৃষককে আলাদা করে জিজ্ঞেস করা হয় না
   // আগে এখানে "মাঠ ফসল" / "সবজি ও মসলা" আলাদা ট্যাব বেছে নিতে হতো — এখন একটাই তালিকা (ALL_CROPS),
   // অক্ষরজ্ঞান কম থাকা কৃষকের জন্য এক ধাপেই ছবি দেখে বেছে নেওয়া যায়
   let currentCropPickerList = ALL_CROPS;
-  let seeingAllCrops = false; // false = শুধু মৌসুমি ফসল দেখাচ্ছে, true = সব ফসল
-  let cropCycleTimer = null;
-  let cropCycleIndex = 0;
 
-  // ===== বাংলাদেশের কৃষি মৌসুম (রবি/খরিফ-১-আউশ/খরিফ-২-আমন) — বর্তমান মাস অনুযায়ী =====
-  function getCurrentBDSeason() {
-    const month = new Date().getMonth() + 1; // ১-১২
-    if (month === 11 || month === 12 || month <= 3) return 'rabi';       // নভেম্বর-মার্চ
-    if (month >= 4 && month <= 6) return 'kharif1';                       // এপ্রিল-জুন (আউশ)
-    return 'kharif2';                                                     // জুলাই-অক্টোবর (আমন)
-  }
-
+  // 🇧🇩 বর্তমান মৌসুমের ফসল বাছাই — 'all' সিজনের (বহুবর্ষজীবী গাছ/মসলা) ফসল সবসময় থাকবে
   function getSeasonalCrops() {
+    if (showAllSeasonCrops) return ALL_CROPS;
     const season = getCurrentBDSeason();
-    return ALL_CROPS.filter(c => c.season.includes('all') || c.season.includes(season));
+    return ALL_CROPS.filter(c => c.season === season || c.season === 'all');
   }
+
+  let cropCycleInterval = null;
+  let cropCycleIndex = 0;
 
   function showCropPicker() {
     currentCropPickerList = getSeasonalCrops();
-    seeingAllCrops = false;
     document.getElementById('cropPickerSearch').value = '';
     document.getElementById('detectCategoryStep').style.display = 'none';
     document.getElementById('cropPickerStep').style.display = 'block';
-    document.getElementById('cropPickerExpanded').style.display = 'none';
-    document.getElementById('cropPickerCollapsed').style.display = 'flex';
-    document.getElementById('collapsedSkipBtn').style.display = 'block';
     document.getElementById('selectedCropChip').style.display = 'none';
     document.getElementById('detectLandInputBox').style.display = 'none';
     document.getElementById('mainPhotoWrap').style.display = 'none';
     document.getElementById('camActionsWrap').style.display = 'none';
-    renderCropPickerGrid(currentCropPickerList);
-    startCropCycle();
+    startCropCollapsedView();
   }
 
-  // ছোট্ট বাক্সে মৌসুমি ফসলগুলো একটার পর একটা ব্লিংক করে (ফেড ইন/আউট) দেখানো
-  function startCropCycle() {
-    stopCropCycle();
-    const list = getSeasonalCrops();
-    if (!list.length) return;
+  // 📱 ছোট্ট একটা জায়গায় একটার পর একটা ফসল (বর্তমান মৌসুমের) cycle করে ব্লিংক করে দেখাবে —
+  // পুরো তালিকা না দেখিয়ে জায়গা বাঁচানো ও কৌতূহল তৈরি করার জন্য। ট্যাপ করলেই পুরো প্যানেল খুলে যাবে।
+  function startCropCollapsedView() {
+    document.getElementById('cropPickerCollapsed').style.display = 'flex';
+    document.getElementById('cropPickerExpandedWrap').style.display = 'none';
+    document.getElementById('cropPickerTitle').textContent = 'আপনার ফসল বেছে নিন';
+    document.getElementById('cropCollapsedSeasonLabel').textContent = showAllSeasonCrops ? '🌍 সব মৌসুমের ফসল' : SEASON_LABEL[getCurrentBDSeason()];
     cropCycleIndex = 0;
-    renderCropCycleFrame(list);
-    cropCycleTimer = setInterval(() => {
-      cropCycleIndex = (cropCycleIndex + 1) % list.length;
-      const circle = document.getElementById('cpcCircle');
-      const nameEl = document.getElementById('cpcName');
-      if (!circle || !nameEl) { stopCropCycle(); return; }
-      circle.classList.add('fading');
-      nameEl.classList.add('fading');
+    renderCropCycleFrame();
+    if (cropCycleInterval) clearInterval(cropCycleInterval);
+    cropCycleInterval = setInterval(() => {
+      const icon = document.getElementById('cropCycleIcon');
+      const label = document.getElementById('cropCycleLabel');
+      icon.style.opacity = '0';
+      label.style.opacity = '0';
       setTimeout(() => {
-        renderCropCycleFrame(list);
-        circle.classList.remove('fading');
-        nameEl.classList.remove('fading');
+        cropCycleIndex = (cropCycleIndex + 1) % currentCropPickerList.length;
+        renderCropCycleFrame();
+        icon.style.opacity = '1';
+        label.style.opacity = '1';
       }, 300);
-    }, 1800);
+    }, 1600);
   }
 
-  function renderCropCycleFrame(list) {
-    const c = list[cropCycleIndex];
-    if (!c) return;
-    const circle = document.getElementById('cpcCircle');
-    const nameEl = document.getElementById('cpcName');
-    if (!circle || !nameEl) return;
-    circle.innerHTML = CROP_IMAGE_MAP[c.name] ? `<img src="${CROP_IMAGE_MAP[c.name]}" alt="">` : c.icon;
-    nameEl.textContent = c.name;
+  function renderCropCycleFrame() {
+    if (currentCropPickerList.length === 0) return;
+    const c = currentCropPickerList[cropCycleIndex];
+    document.getElementById('cropCycleIcon').innerHTML = CROP_IMAGE_MAP[c.name] ? `<img src="${CROP_IMAGE_MAP[c.name]}" alt="">` : c.icon;
+    document.getElementById('cropCycleLabel').textContent = c.name;
   }
 
-  function stopCropCycle() {
-    if (cropCycleTimer) { clearInterval(cropCycleTimer); cropCycleTimer = null; }
-  }
-
-  // ছোট্ট বাক্সে চাপ দিলে সম্পূর্ণ তালিকা (মৌসুমি) খুলে যাবে, ব্লিংকিং বন্ধ হয়ে যাবে
+  // ছোট্ট cycling বক্সে ট্যাপ করলে সব ফসলের পূর্ণ প্যানেল খুলে যাবে, cycling বন্ধ হয়ে যাবে
   function expandCropPicker() {
-    stopCropCycle();
+    if (cropCycleInterval) { clearInterval(cropCycleInterval); cropCycleInterval = null; }
     document.getElementById('cropPickerCollapsed').style.display = 'none';
-    document.getElementById('collapsedSkipBtn').style.display = 'none';
-    document.getElementById('cropPickerExpanded').style.display = 'block';
-    document.getElementById('cropPickerSeeAllBtn').textContent = 'সব ফসল দেখুন (মৌসুম বাদে)';
+    document.getElementById('cropPickerExpandedWrap').style.display = 'block';
     renderCropPickerGrid(currentCropPickerList);
   }
 
-  // মৌসুমি তালিকায় ফসল না পেলে পুরো তালিকা (সব মৌসুম মিলিয়ে) দেখার সুযোগ
-  function toggleSeeAllCrops() {
-    seeingAllCrops = !seeingAllCrops;
-    currentCropPickerList = seeingAllCrops ? ALL_CROPS : getSeasonalCrops();
-    document.getElementById('cropPickerSeeAllBtn').textContent = seeingAllCrops
-      ? 'শুধু এই মৌসুমের ফসল দেখুন' : 'সব ফসল দেখুন (মৌসুম বাদে)';
+  // "সব ফসল দেখুন" — মৌসুম-ফিল্টার সাময়িকভাবে বন্ধ করে সবগুলো ফসল দেখাবে
+  function toggleShowAllSeasonCrops() {
+    showAllSeasonCrops = !showAllSeasonCrops;
+    currentCropPickerList = getSeasonalCrops();
+    document.getElementById('seasonToggleBtn').textContent = showAllSeasonCrops ? '🍂 শুধু এই মৌসুমের ফসল দেখান' : '🌍 সব মৌসুমের ফসল দেখুন';
     document.getElementById('cropPickerSearch').value = '';
     renderCropPickerGrid(currentCropPickerList);
   }
@@ -4525,14 +4699,14 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 
   function filterCropPicker() {
     const query = document.getElementById('cropPickerSearch').value.trim().toLowerCase();
-    const baseList = seeingAllCrops ? ALL_CROPS : getSeasonalCrops();
+    // সার্চ করলে মৌসুম-ফিল্টার ছাড়াই পুরো তালিকায় খোঁজা হবে, যাতে কৃষক নিজের ফসল খুঁজে না পেয়ে আটকে না যান
+    const baseList = query ? ALL_CROPS : currentCropPickerList;
     const filtered = query ? baseList.filter(c => c.name.toLowerCase().includes(query)) : baseList;
     renderCropPickerGrid(filtered);
   }
 
   // ফসল বেছে নিলে (বা "জানি না" চাপলে null আসবে) — পরের ধাপ (জমির পরিমাণ + ছবি) খুলে যাবে
   function pickCrop(cropName) {
-    stopCropCycle();
     selectedCropName = cropName;
     // ফসলটা কোন দলের (মাঠ ফসল/সবজি) সেটা বের করে AI প্রম্পটে পাঠানোর জন্য রাখা হচ্ছে
     const matched = cropName ? ALL_CROPS.find(c => c.name === cropName) : null;
@@ -4552,21 +4726,16 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     }
   }
 
-  // ফসল বদলাতে চাইলে আবার পিকারে ফিরে যাওয়া (সরাসরি সম্পূর্ণ তালিকায়, ব্লিংকিং ছাড়াই — যেহেতু ইচ্ছাকৃতভাবে বদলাতে চাইছে)
+  // ফসল বদলাতে চাইলে আবার পিকারে ফিরে যাওয়া (collapsed cycling ভিউ থেকেই আবার শুরু হবে)
   function reopenCropPicker() {
     document.getElementById('detectCategoryStep').style.display = 'none';
     document.getElementById('cropPickerStep').style.display = 'block';
-    document.getElementById('cropPickerCollapsed').style.display = 'none';
-    document.getElementById('collapsedSkipBtn').style.display = 'none';
-    document.getElementById('cropPickerExpanded').style.display = 'block';
     document.getElementById('selectedCropChip').style.display = 'none';
     document.getElementById('detectLandInputBox').style.display = 'none';
     document.getElementById('mainPhotoWrap').style.display = 'none';
     document.getElementById('camActionsWrap').style.display = 'none';
-    seeingAllCrops = false;
     currentCropPickerList = getSeasonalCrops();
-    document.getElementById('cropPickerSeeAllBtn').textContent = 'সব ফসল দেখুন (মৌসুম বাদে)';
-    renderCropPickerGrid(currentCropPickerList);
+    startCropCollapsedView();
   }
 
   let pendingPhotoSlot = null;
@@ -4594,44 +4763,31 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     input.click();
   }
 
-  // ================================================================
-  // 🗜️ ছবি কম্প্রেশন — ক্যামেরা/গ্যালারি থেকে আসা বড় ছবি (৩-৮ MB+) ছোট করে
-  // (canvas দিয়ে রিসাইজ + JPEG কম্প্রেস) সংরক্ষণের জায়গা ও আপলোডের সময় বাঁচানোর জন্য।
-  // maxDim = দৈর্ঘ্য/প্রস্থের মধ্যে বড়টা সর্বোচ্চ কত পিক্সেল হবে (অনুপাত অক্ষুণ্ণ থাকে)।
-  // ছবি না হলে (বা কম্প্রেস করতে সমস্যা হলে) মূল ছবিই ফেরত দেয়, যাতে আপলোড কখনো আটকে না যায়।
-  // ================================================================
-  function compressImageFile(file, maxDim, quality) {
+  // 🗜️ ছবি কম্প্রেসার — ক্যামেরার বড় ছবি (কয়েক MB) ছোট করে (সর্বোচ্চ ~1280px, quality 0.7)
+  // JPEG-এ রূপান্তর করে, যাতে ধীরগতির ইন্টারনেটেও দ্রুত আপলোড/বিশ্লেষণ হয়।
+  function compressImageDataUrl(dataUrl, maxDim, quality) {
     return new Promise((resolve) => {
-      if (!file || !file.type || !file.type.startsWith('image/')) {
-        const r = new FileReader();
-        r.onload = (e) => resolve(e.target.result);
-        r.onerror = () => resolve(null);
-        r.readAsDataURL(file);
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          let w = img.width, h = img.height;
-          if (w > maxDim || h > maxDim) {
-            if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
-            else { w = Math.round(w * maxDim / h); h = maxDim; }
+      const img = new Image();
+      img.onload = function() {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round(height * (maxDim / width));
+            width = maxDim;
+          } else {
+            width = Math.round(width * (maxDim / height));
+            height = maxDim;
           }
-          try {
-            const canvas = document.createElement('canvas');
-            canvas.width = w; canvas.height = h;
-            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-            resolve(canvas.toDataURL('image/jpeg', quality));
-          } catch (err) {
-            resolve(e.target.result); // ক্যানভাসে সমস্যা হলে মূল ছবিই ব্যবহার হবে
-          }
-        };
-        img.onerror = () => resolve(e.target.result);
-        img.src = e.target.result;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
       };
-      reader.onerror = () => resolve(null);
-      reader.readAsDataURL(file);
+      img.onerror = function() { resolve(dataUrl); }; // কম্প্রেস ব্যর্থ হলে মূল ছবিই ব্যবহার হবে
+      img.src = dataUrl;
     });
   }
 
@@ -4639,15 +4795,19 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     const file = input.files[0];
     if (!file) return;
 
-    // রোগ/পোকা শনাক্তকরণে লক্ষণ স্পষ্ট বোঝা জরুরি, তাই একটু বড় সাইজ + ভালো কোয়ালিটি রাখা হলো (১২৮০px, ৮০%)
-    compressImageFile(file, 1280, 0.8).then((dataUrl) => {
-      if (!dataUrl) return;
+    const reader = new FileReader();
+    reader.onload = async function(e) {
       const slot = document.getElementById('slot' + slotNum);
-      slot.innerHTML = '<img src="' + dataUrl + '">';
+      slot.innerHTML = '<div class="dps-icon-big">⏳</div><div class="dps-label-big">ছবি প্রস্তুত হচ্ছে...</div>';
+
+      const compressedDataUrl = await compressImageDataUrl(e.target.result, 1280, 0.7);
+
+      slot.innerHTML = '<img src="' + compressedDataUrl + '">';
       slot.classList.add('filled');
-      slotImages[slotNum] = { base64: dataUrl.split(',')[1], mimeType: 'image/jpeg' };
+      slotImages[slotNum] = { base64: compressedDataUrl.split(',')[1], mimeType: 'image/jpeg' };
       updateAnalyzeButtonState();
-    });
+    };
+    reader.readAsDataURL(file);
   }
 
   // আক্রান্ত স্থানের অন্তত ১টা কাছের ছবি (slot 2) না দিলে বিশ্লেষণ বাটন সক্রিয় হবে না — পুরো গাছের ছবি ঐচ্ছিক
@@ -5509,18 +5669,24 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       const userDoc = await db.collection('users').doc(user.uid).get();
       const userData = userDoc.data();
 
-      await db.collection('diagnosisLogs').add({
+      const logRef = await db.collection('diagnosisLogs').add({
         farmerId: user.uid,
         farmerName: userData.name,
         farmerPhone: userData.phone,
         district: userData.district || 'অজানা',
+        upazila: userData.upazila || null,
+        union: userData.union || null,
         diseaseName, cropType, category, confidence,
         createdAt: new Date().toISOString()
       });
+      lastDiagnosisLogId = logRef.id;
+      lastDiagnosisLogInfo = { diseaseName, cropType, district: userData.district, upazila: userData.upazila, union: userData.union };
     } catch (err) {
       // লগ ব্যর্থ হলেও কৃষকের ফলাফল দেখানো আটকাবে না
     }
   }
+  let lastDiagnosisLogId = null;
+  let lastDiagnosisLogInfo = null;
 
   function showResult(title, subtitle, description, isHealthy, confidence) {
     document.getElementById('resultDiseaseName').textContent = title;
@@ -5544,6 +5710,9 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       document.getElementById('suggestedMedCard').style.display = 'none';
       document.getElementById('medOrderBox').style.display = 'none';
     }
+    // সমস্যা পাওয়া গেলে (এবং নিশ্চিতির মাত্রা ঠিক থাকলে) ওষুধ প্রয়োগ লগ করার বাটন দেখানো —
+    // এই লগ থেকেই কৃষি অফিসার দেখতে পারবেন এলাকায় কোন ওষুধ কতটা কাজ করছে
+    document.getElementById('logMedicineBtn').style.display = (!isHealthy && !isLowConfidence) ? 'block' : 'none';
 
     document.getElementById('resultHdr').className = isHealthy ? 'result-hdr healthy' : 'result-hdr';
     document.getElementById('resultSection').style.display = 'block';
@@ -5898,6 +6067,75 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     'শেরপুর': { lat: 25.0204, lon: 90.0155 }
   };
 
+  // 🏙️ গিগ পোস্ট ও ডিমান্ড পোস্ট ফর্মের জেলা ড্রপডাউন পূরণ করা (districtCoords থেকেই ৬৪ জেলার তালিকা নেওয়া হচ্ছে)
+  function populateDistrictDropdowns() {
+    const districtNames = Object.keys(districtCoords).sort();
+    ['gigDistrict', 'demandDistrict'].forEach(id => {
+      const sel = document.getElementById(id);
+      if (!sel || sel.options.length > 1) return; // ইতিমধ্যে পূরণ থাকলে আবার করবে না
+      districtNames.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = d;
+        sel.appendChild(opt);
+      });
+    });
+  }
+  populateDistrictDropdowns();
+
+  // 📡 লাইভ মার্কেট কার্যকলাপ — জেলা অনুযায়ী সক্রিয় পাইকার ও চাহিদা পোস্টের কাউন্ট
+  function populateLiveMarketDistrictSelect() {
+    const sel = document.getElementById('liveMarketDistrictSelect');
+    if (!sel || sel.options.length > 1) return;
+    Object.keys(districtCoords).sort().forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      sel.appendChild(opt);
+    });
+    if (typeof currentMarketDistrict !== 'undefined' && districtCoords[currentMarketDistrict]) {
+      sel.value = currentMarketDistrict;
+    }
+  }
+
+  async function loadLiveMarketStats() {
+    const district = document.getElementById('liveMarketDistrictSelect').value;
+    document.getElementById('liveTraderCount').textContent = '...';
+    document.getElementById('liveDemandCount').textContent = '...';
+    document.getElementById('liveTopCrop').textContent = '...';
+
+    try {
+      const tradersSnap = await db.collection('users').where('role', '==', 'trader').get();
+      const now = Date.now();
+      let activeTraderCount = 0;
+      tradersSnap.forEach(doc => {
+        const d = doc.data();
+        if (district && d.district !== district) return;
+        if (d.lastActiveAt && (now - new Date(d.lastActiveAt).getTime()) < 30 * 60 * 1000) activeTraderCount++;
+      });
+      document.getElementById('liveTraderCount').textContent = activeTraderCount;
+
+      const demandsSnap = await db.collection('cropDemands').where('status', '==', 'active').get();
+      let demandCount = 0;
+      const cropCounts = {};
+      demandsSnap.forEach(doc => {
+        const d = doc.data();
+        if (district && d.district !== district) return;
+        demandCount++;
+        cropCounts[d.cropName] = (cropCounts[d.cropName] || 0) + 1;
+      });
+      document.getElementById('liveDemandCount').textContent = demandCount;
+
+      const topCropEntry = Object.entries(cropCounts).sort((a, b) => b[1] - a[1])[0];
+      document.getElementById('liveTopCrop').textContent = topCropEntry ? `${topCropEntry[0]} (${topCropEntry[1]})` : '—';
+    } catch (err) {
+      console.error('লাইভ মার্কেট স্ট্যাটাস লোড করতে সমস্যা:', err);
+      document.getElementById('liveTraderCount').textContent = '-';
+      document.getElementById('liveDemandCount').textContent = '-';
+      document.getElementById('liveTopCrop').textContent = '-';
+    }
+  }
+
   // এই function Firebase Cloud Function হিসেবে সার্ভারে চলবে (প্রতি ৩ ঘন্টায় automatic)
   // এখানে শুধু দেখানো হলো এটা কীভাবে কাজ করবে
   async function fetchAndCacheWeather(districtName) {
@@ -6154,7 +6392,11 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     document.getElementById('gigBrowseSection').style.display = tab === 'browse' ? 'block' : 'none';
     document.getElementById('gigDemandSection').style.display = tab === 'demand' ? 'block' : 'none';
     document.getElementById('gigMyPostsSection').style.display = tab === 'myposts' ? 'block' : 'none';
-    if (tab === 'browse') loadGigs();
+    if (tab === 'browse') {
+      loadGigs();
+      populateLiveMarketDistrictSelect();
+      loadLiveMarketStats();
+    }
     if (tab === 'demand') showDemandTab();
     if (tab === 'myposts') loadMyPosts();
   }
@@ -6203,12 +6445,12 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
   function handleGigPhoto(input) {
     const file = input.files[0];
     if (!file) return;
-    // পণ্যের ছবি — সাধারণ প্রোডাক্ট শট, বেশি বড় রেজোলিউশনের দরকার নেই (১০২৪px, ৭৫%)
-    compressImageFile(file, 1024, 0.75).then((dataUrl) => {
-      if (!dataUrl) return;
-      document.getElementById('photoUploadBox').innerHTML = '<img src="' + dataUrl + '">';
-      gigPhotoBase64 = dataUrl;
-    });
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('photoUploadBox').innerHTML = '<img src="' + e.target.result + '">';
+      gigPhotoBase64 = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   function handleGigVideo(input) {
@@ -6262,6 +6504,10 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     const qty = document.getElementById('gigQty').value.trim();
     const unit = document.getElementById('gigUnit').value;
     const price = document.getElementById('gigPrice').value.trim();
+    const grade = document.getElementById('gigGrade').value;
+    const packaging = document.getElementById('gigPackaging').value;
+    const size = document.getElementById('gigSize').value.trim();
+    const district = document.getElementById('gigDistrict').value;
     const area = document.getElementById('gigArea').value.trim();
     const phone1 = document.getElementById('gigPhone1').value.trim();
     const phone2 = document.getElementById('gigPhone2').value.trim();
@@ -6283,7 +6529,11 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       const batch = db.batch();
       batch.set(newGigRef, {
         category, cropName, qty, unit, price,
+        grade: grade || null,
+        packaging: packaging || null,
+        size: size || null,
         boosted: false,
+        district: district || null,
         area: area || userData.name,
         // 🔒 ফোন নম্বর এখন এখানে না — cropGigsContact/{gigId}-এ আলাদাভাবে সেভ হচ্ছে,
         // যাতে পে-পার-কন্টাক্ট ফিচার চালু থাকলে সত্যিকারের নিরাপত্তা-স্তরে গেট করা যায়
@@ -6308,6 +6558,9 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
 
       alert('✅ আপনার বিজ্ঞাপন সফলভাবে প্রকাশিত হয়েছে!');
 
+      // 🤝 স্মার্ট ম্যাচমেকিং — এই ফসলের জন্য কোনো পাইকার আগে থেকে চাহিদা পোস্ট করে রেখেছে কিনা দেখানো
+      checkMatchingDemand(cropName);
+
       // ফসল ট্র্যাকিং — বাজারদর পেজে personalization এর জন্য
       trackCropActivity(cropName);
 
@@ -6315,6 +6568,10 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       document.getElementById('gigCropName').value = '';
       document.getElementById('gigQty').value = '';
       document.getElementById('gigPrice').value = '';
+      document.getElementById('gigGrade').value = '';
+      document.getElementById('gigPackaging').value = '';
+      document.getElementById('gigSize').value = '';
+      document.getElementById('gigDistrict').value = '';
       document.getElementById('gigArea').value = '';
       document.getElementById('gigPhone1').value = '';
       document.getElementById('gigPhone2').value = '';
@@ -6327,6 +6584,42 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     } catch (err) {
       alert('সমস্যা হয়েছে: ' + err.message);
     }
+  }
+
+  // 🤝 স্মার্ট ম্যাচমেকিং — কোনো ব্যাকএন্ড/Cloud Function/push notification এখানে নেই,
+  // তাই "পাইকারদের কাছে অটো-অ্যালার্ট পাঠানো" সম্ভব না। এর বদলে যেটা করা যায়: কৃষক পোস্ট করার
+  // সাথে সাথেই আগে থেকে পোস্ট করা মিলে যাওয়া চাহিদাগুলো তাকে সরাসরি দেখিয়ে দেওয়া (in-app match)।
+  async function checkMatchingDemand(cropName) {
+    try {
+      const snapshot = await db.collection('cropDemands').where('status', '==', 'active').limit(50).get();
+      const matches = [];
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        if (d.cropName && (d.cropName.includes(cropName) || cropName.includes(d.cropName))) {
+          matches.push({ id: doc.id, ...d });
+        }
+      });
+      if (matches.length === 0) return;
+
+      const box = document.getElementById('matchmakingResultBox');
+      box.innerHTML = `
+        <div style="font-size:13px;font-weight:700;color:#1B5E20;margin-bottom:8px;">🤝 সুখবর! ${matches.length}জন পাইকার এই ফসলটা খুঁজছেন</div>
+        ${matches.slice(0, 5).map(m => `
+          <div style="background:#F1F8E9;border-radius:10px;padding:10px;margin-bottom:8px;">
+            <div style="font-size:13px;font-weight:700;color:#33691E;">${escapeHtml(m.cropName)} — ${escapeHtml(String(m.qty))} প্রয়োজন</div>
+            <div style="font-size:11px;color:#689F38;margin:2px 0 8px;">📍 ${escapeHtml(m.area)}${m.price ? ` • প্রস্তাবিত দাম ৳${escapeHtml(String(m.price))}` : ''}</div>
+            <a href="tel:${jsAttr(m.buyerPhone)}" style="display:inline-block;background:#2E7D32;color:white;text-decoration:none;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;">📞 এখনই কল করুন</a>
+          </div>
+        `).join('')}
+      `;
+      document.getElementById('matchmakingModal').classList.add('show');
+    } catch (err) {
+      console.error('ম্যাচমেকিং চেক করতে সমস্যা:', err);
+    }
+  }
+
+  function closeMatchmakingModal() {
+    document.getElementById('matchmakingModal').classList.remove('show');
   }
 
   // ================================================================
@@ -6403,8 +6696,6 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
         });
         allGigsData.sort((a, b) => a._distanceKm - b._distanceKm);
       }
-      // 🔥 বুস্ট/স্পন্সরড পোস্ট সবসময় সবার আগে দেখানো হয় (দূরত্ব যাই হোক না কেন)
-      allGigsData.sort((a, b) => (b.boosted === true ? 1 : 0) - (a.boosted === true ? 1 : 0));
 
       // বিক্রেতার আসল রেটিং আনা — কারণ রিভিউ আসলে farmer-এর প্রোফাইলে (avgRating) জমা হয়,
       // পোস্টের নিজের rating ফিল্ডে না (সেটা সবসময় ০ থাকে, তৈরির সময়ের leftover)
@@ -6413,15 +6704,19 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       await Promise.all(uniqueFarmerIds.map(async fid => {
         try {
           const fDoc = await db.collection('userPublic').doc(fid).get();
-          if (fDoc.exists) ratingLookup[fid] = { rating: fDoc.data().avgRating || 0, reviewCount: fDoc.data().reviewCount || 0 };
+          if (fDoc.exists) ratingLookup[fid] = { rating: fDoc.data().avgRating || 0, reviewCount: fDoc.data().reviewCount || 0, verified: fDoc.data().verifiedBadge === true };
         } catch (e) {}
       }));
       allGigsData.forEach(g => {
         if (ratingLookup[g.farmerId]) {
           g.rating = ratingLookup[g.farmerId].rating;
           g.reviewCount = ratingLookup[g.farmerId].reviewCount;
+          g.sellerVerified = ratingLookup[g.farmerId].verified;
         }
       });
+
+      // 🔥 বুস্টেড/স্পন্সরড পোস্ট সবসময় সবার আগে দেখানো হবে (Amazon-স্টাইল sponsored listing)
+      allGigsData.sort((a, b) => (b.boosted === true ? 1 : 0) - (a.boosted === true ? 1 : 0));
 
       renderGigGrid(allGigsData);
     } catch (err) {
@@ -6439,13 +6734,13 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
         <div class="gig-card${g.boosted ? ' gig-card-boosted' : ''}" onclick="openGigDetail('${g.id}')">
           <div class="gig-card-media">
             ${g.photo ? `<img src="${escapeHtml(g.photo)}">` : getGigIcon(g.cropName)}
-            ${g.boosted ? '<div class="gig-sponsored-badge">🔥 স্পন্সরড</div>' : ''}
             ${g.voiceNote ? '<div class="gig-voice-badge">🔊 ভয়েস</div>' : ''}
+            ${g.boosted ? '<div class="gig-sponsored-badge">🔥 স্পন্সরড</div>' : ''}
           </div>
           <div class="gig-card-body">
             <div class="gig-card-crop">${getGigIcon(g.cropName)} ${escapeHtml(g.cropName)}</div>
             <div class="gig-card-farmer">📍 ${escapeHtml(g.area)}${(g._distanceKm && g._distanceKm < 9999) ? ` · ${g._distanceKm < 1 ? '১ কিমি-এর কম' : Math.round(g._distanceKm) + ' কিমি দূরে'}` : ''}</div>
-            <div class="gig-card-rating">${g.reviewCount > 0 ? '⭐'.repeat(Math.round(g.rating)) + ' (' + g.reviewCount + ')' : '🆕 নতুন'}</div>
+            <div class="gig-card-rating">${g.reviewCount > 0 ? '⭐'.repeat(Math.round(g.rating)) + ' (' + g.reviewCount + ')' : '🆕 নতুন'}${g.sellerVerified ? ' <span class="verified-tick-badge" style="font-size:9px;padding:1px 5px;">✅</span>' : ''}</div>
             <div class="gig-card-price">৳ ${g.price}/${g.unit || 'মণ'}</div>
             <div class="gig-card-qty">${g.qty} ${g.unit || 'মণ'} উপলব্ধ</div>
           </div>
@@ -6471,9 +6766,68 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
   // ================================================================
   let myPostsData = [];
   let receiptTargetPost = null;
+
+  async function loadMyPosts() {
+    const grid = document.getElementById('myPostsGrid');
+    grid.innerHTML = '<div class="coming-soon">লোড হচ্ছে...</div>';
+    loadVerifyBadgeCard();
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      const snapshot = await db.collection('cropGigs').where('farmerId', '==', user.uid).orderBy('createdAt', 'desc').get();
+      myPostsData = [];
+      snapshot.forEach(doc => myPostsData.push({ id: doc.id, ...doc.data() }));
+
+      if (myPostsData.length === 0) {
+        grid.innerHTML = '<div class="coming-soon">এখনো কোনো বিজ্ঞাপন দেননি</div>';
+        return;
+      }
+
+      grid.innerHTML = myPostsData.map(p => {
+        const isLivestock = p.category === 'পশু';
+        const isSold = p.status === 'sold';
+        return `
+        <div class="my-post-card">
+          <div class="my-post-top">
+            <div class="my-post-photo">${p.photo ? `<img src="${p.photo}">` : '📦'}</div>
+            <div class="my-post-info">
+              <div class="my-post-name">${escapeHtml(p.cropName)}</div>
+              <div class="my-post-sub">${p.qty} ${escapeHtml(p.unit)} • ৳${p.price}</div>
+              <div class="my-post-status ${isSold ? 'sold' : 'active'}">${isSold ? '✅ বিক্রি হয়ে গেছে' : '🟢 সক্রিয়'}</div>
+            </div>
+          </div>
+          ${!isSold ? `
+          <div class="my-post-actions">
+            ${isLivestock
+              ? `<button class="my-post-btn receipt" onclick="openReceiptForm('${p.id}')">🧾 বিক্রি হয়েছে — রশিদ বানান</button>`
+              : `<button class="my-post-btn sold-simple" onclick="markPostSoldSimple('${p.id}')">✅ বিক্রি হয়ে গেছে</button>`
+            }
+            <button class="my-post-btn delete" onclick="deleteMyPost('${p.id}')">🗑️</button>
+          </div>
+          ${featureFlags.boostFeatureEnabled ? (
+            p.boosted
+              ? `<div class="my-post-boosted-tag">🔥 এই পোস্টটি বর্তমানে স্পন্সরড হিসেবে দেখানো হচ্ছে</div>`
+              : `<button class="my-post-boost-btn" onclick="requestBoost('${p.id}', '${escapeHtml(p.cropName)}')">🔥 পোস্টটি বুস্ট করুন (৳${boostFeeAmount})</button>`
+          ) : ''}
+          ${featureFlags.assuredDealEnabled ? `
+            <button class="my-post-boost-btn" style="background:linear-gradient(135deg,#1565C0,#0D47A1);" onclick="requestAssuredDeal('${p.id}', '${escapeHtml(p.cropName)}')">🤝 নিশ্চিত ডিল সার্ভিস চান?</button>
+          ` : ''}
+          ` : (isLivestock ? `<div class="my-post-actions"><button class="my-post-btn receipt" onclick="viewExistingReceipt('${p.id}')">🧾 রশিদ আবার দেখুন</button></div>` : '')}
+        </div>`;
+      }).join('');
+    } catch (err) {
+      grid.innerHTML = '<div class="coming-soon">লোড করা যায়নি</div>';
+      console.error(err);
+    }
+  }
+
+  // ================================================================
+  // ===== ✅ ভেরিফাইড ব্যাজ (NID/ট্রেড লাইসেন্স) =====
+  // ================================================================
   let verifyDocBase64 = null;
 
-  // ===== ✅ ভেরিফাইড ব্যাজ (NID/ট্রেড লাইসেন্স) =====
   async function loadVerifyBadgeCard() {
     const box = document.getElementById('verifyBadgeCard');
     if (!box) return;
@@ -6535,13 +6889,13 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     input.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
-      // NID/ট্রেড লাইসেন্সের লেখা স্পষ্ট পড়া যেতে হবে, তাই একটু বড় সাইজ রাখা হলো (১৬০০px, ৮৫%)
-      compressImageFile(file, 1600, 0.85).then((dataUrl) => {
-        if (!dataUrl) return;
-        verifyDocBase64 = dataUrl;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        verifyDocBase64 = ev.target.result;
         document.getElementById('verifyDocPreview').innerHTML =
-          `<img src="${dataUrl}" style="width:100%;border-radius:10px;max-height:200px;object-fit:contain;background:#F5F5F5;">`;
-      });
+          `<img src="${ev.target.result}" style="width:100%;border-radius:10px;max-height:200px;object-fit:contain;background:#F5F5F5;">`;
+      };
+      reader.readAsDataURL(file);
     });
   });
 
@@ -6553,12 +6907,12 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       return;
     }
     try {
-      const userDocSnap = await db.collection('users').doc(user.uid).get();
-      const userData = userDocSnap.data();
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      const ud = userDoc.exists ? userDoc.data() : {};
       await db.collection('verificationRequests').add({
         userId: user.uid,
-        userName: (userData && userData.name) || '',
-        userPhone: (userData && userData.phone) || '',
+        userName: ud.name || '',
+        userPhone: ud.phone || '',
         docPhoto: verifyDocBase64,
         status: 'pending',
         createdAt: new Date().toISOString()
@@ -6571,80 +6925,11 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     }
   }
 
-  async function loadMyPosts() {
-    const grid = document.getElementById('myPostsGrid');
-    grid.innerHTML = '<div class="coming-soon">লোড হচ্ছে...</div>';
-    loadVerifyBadgeCard();
-
-    const user = auth.currentUser;
-    if (!user) return;
-
-    try {
-      const snapshot = await db.collection('cropGigs').where('farmerId', '==', user.uid).orderBy('createdAt', 'desc').get();
-      myPostsData = [];
-      snapshot.forEach(doc => myPostsData.push({ id: doc.id, ...doc.data() }));
-
-      if (myPostsData.length === 0) {
-        grid.innerHTML = '<div class="coming-soon">এখনো কোনো বিজ্ঞাপন দেননি</div>';
-        return;
-      }
-
-      grid.innerHTML = myPostsData.map(p => {
-        const isLivestock = p.category === 'পশু';
-        const isSold = p.status === 'sold';
-        return `
-        <div class="my-post-card">
-          <div class="my-post-top">
-            <div class="my-post-photo">${p.photo ? `<img src="${p.photo}">` : '📦'}</div>
-            <div class="my-post-info">
-              <div class="my-post-name">${escapeHtml(p.cropName)}</div>
-              <div class="my-post-sub">${p.qty} ${escapeHtml(p.unit)} • ৳${p.price}</div>
-              <div class="my-post-status ${isSold ? 'sold' : 'active'}">${isSold ? '✅ বিক্রি হয়ে গেছে' : '🟢 সক্রিয়'}</div>
-            </div>
-          </div>
-          ${!isSold ? `
-          <div class="my-post-actions">
-            ${isLivestock
-              ? `<button class="my-post-btn receipt" onclick="openReceiptForm('${p.id}')">🧾 বিক্রি হয়েছে — রশিদ বানান</button>`
-              : `<button class="my-post-btn sold-simple" onclick="markPostSoldSimple('${p.id}')">✅ বিক্রি হয়ে গেছে</button>`
-            }
-            <button class="my-post-btn delete" onclick="deleteMyPost('${p.id}')">🗑️</button>
-          </div>
-          ${featureFlags.boostFeatureEnabled ? (
-            p.boosted
-              ? `<div class="my-post-boosted-tag">🔥 এই পোস্টটি বর্তমানে স্পন্সরড হিসেবে দেখানো হচ্ছে</div>`
-              : `<button class="my-post-boost-btn" onclick="requestBoost('${p.id}', '${escapeHtml(p.cropName)}')">🔥 পোস্টটি বুস্ট করুন (৳${boostFeeAmount})</button>`
-          ) : ''}
-          ${featureFlags.assuredDealEnabled ? `
-            <button class="my-post-boost-btn" style="background:linear-gradient(135deg,#1565C0,#0D47A1);" onclick="requestAssuredDeal('${p.id}', '${escapeHtml(p.cropName)}')">🤝 নিশ্চিত ডিল সার্ভিস চান?</button>
-          ` : ''}
-          ` : (isLivestock ? `<div class="my-post-actions"><button class="my-post-btn receipt" onclick="viewExistingReceipt('${p.id}')">🧾 রশিদ আবার দেখুন</button></div>` : '')}
-        </div>`;
-      }).join('');
-    } catch (err) {
-      grid.innerHTML = '<div class="coming-soon">লোড করা যায়নি</div>';
-      console.error(err);
-    }
-  }
-
   // পশু ছাড়া বাকি ক্যাটাগরির জন্য সাধারণ "বিক্রি হয়ে গেছে" — রশিদ ছাড়া, শুধু স্ট্যাটাস বদলানো
   async function markPostSoldSimple(gigId) {
     if (!confirm('এই বিজ্ঞাপনটা "বিক্রি হয়ে গেছে" হিসেবে চিহ্নিত করবেন? এরপর এটা আর তালিকায় দেখাবে না।')) return;
     try {
       await db.collection('cropGigs').doc(gigId).update({ status: 'sold', soldAt: new Date().toISOString() });
-      loadMyPosts();
-    } catch (err) {
-      alert('সমস্যা হয়েছে: ' + err.message);
-    }
-  }
-
-  async function deleteMyPost(gigId) {
-    if (!confirm('বিজ্ঞাপনটা মুছে ফেলতে চান?')) return;
-    try {
-      const batch = db.batch();
-      batch.delete(db.collection('cropGigs').doc(gigId));
-      batch.delete(db.collection('cropGigsContact').doc(gigId));
-      await batch.commit();
       loadMyPosts();
     } catch (err) {
       alert('সমস্যা হয়েছে: ' + err.message);
@@ -6672,12 +6957,12 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     if (!confirm('আমাদের টিম সরাসরি ক্রেতা-বিক্রেতা মিলিয়ে দিয়ে নিরাপদে ডিল করাতে সাহায্য করবে। এখনই রিকোয়েস্ট পাঠাতে চান?')) return;
     try {
       const userDoc = await db.collection('users').doc(user.uid).get();
-      const userData = userDoc.exists ? userDoc.data() : {};
+      const ud = userDoc.exists ? userDoc.data() : {};
       await db.collection('assuredDealRequests').add({
         gigId, cropName,
         requesterId: user.uid,
-        requesterName: userData.name || '',
-        requesterPhone: userData.phone || '',
+        requesterName: ud.name || '',
+        requesterPhone: ud.phone || '',
         status: 'pending',
         createdAt: new Date().toISOString()
       });
@@ -6688,6 +6973,19 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       window.open('https://wa.me/8801621286503?text=' + text, '_blank');
     } catch (err) {
       alert('রিকোয়েস্ট পাঠাতে সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  async function deleteMyPost(gigId) {
+    if (!confirm('বিজ্ঞাপনটা মুছে ফেলতে চান?')) return;
+    try {
+      const batch = db.batch();
+      batch.delete(db.collection('cropGigs').doc(gigId));
+      batch.delete(db.collection('cropGigsContact').doc(gigId));
+      await batch.commit();
+      loadMyPosts();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
     }
   }
 
@@ -6865,6 +7163,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     document.getElementById('gigDetailPrice').textContent = '৳ ' + g.price + '/' + (g.unit || 'মণ');
     document.getElementById('gigDetailQty').textContent = g.qty + ' ' + (g.unit || 'মণ');
     document.getElementById('gigSellerName').textContent = g.farmerName;
+    document.getElementById('gigSellerVerifyBadge').style.display = g.sellerVerified ? 'inline-flex' : 'none';
     document.getElementById('gigSellerLoc').textContent = '📍 ' + g.area;
     document.getElementById('gigSellerRating').textContent = g.reviewCount > 0
       ? '⭐'.repeat(Math.round(g.rating)) + ' (' + g.reviewCount + 'টি রিভিউ)'
@@ -6888,6 +7187,21 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     document.getElementById('gigCallBtn2').style.display = 'none';
     document.getElementById('gigWhatsappBtn').style.display = 'none';
     loadGigContactInfo(gigId);
+
+    const specRow = document.getElementById('gigDetailSpecRow');
+    const specTags = [];
+    if (g.grade) specTags.push('গ্রেড: ' + g.grade);
+    if (g.size) specTags.push('সাইজ: ' + g.size);
+    if (g.packaging) specTags.push('প্যাকেজিং: ' + g.packaging);
+    if (specTags.length) {
+      specRow.style.display = 'flex';
+      specRow.innerHTML = specTags.map(t =>
+        '<div style="background:#EDE7F6;color:#4527A0;padding:5px 10px;border-radius:10px;font-size:11px;font-weight:700;">' + escapeHtml(t) + '</div>'
+      ).join('');
+    } else {
+      specRow.style.display = 'none';
+      specRow.innerHTML = '';
+    }
 
     loadGigSellerReviews(g.farmerId);
     document.getElementById('gigDetailPage').style.display = 'block';
@@ -6938,12 +7252,10 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     gigAudioPlayer.play();
   }
 
-  // ================================================================
   // 💳 পে-পার-কন্টাক্ট (সত্যিকারের সিকিউর) — ফোন নম্বর এখন cropGigsContact/{gigId}-এ
   // আলাদা রাখা হয়, যেটার পড়ার অনুমতি সরাসরি Firestore rules নিয়ন্ত্রণ করে (ফিচার বন্ধ /
   // subscription থাকলে / আগে আনলক করা থাকলে / নিজের পোস্ট হলে — তবেই পড়া যাবে)। ক্লায়েন্ট
   // কোড কোনোভাবে এই গেট বাইপাস করতে পারবে না।
-  // ================================================================
   async function loadGigContactInfo(gigId) {
     const lockedBox = document.getElementById('gigContactLocked');
     const contactRow = document.getElementById('gigContactRow');
@@ -7002,15 +7314,19 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
   function callSeller(num) {
     const btn = document.getElementById(num === 1 ? 'gigCallBtn1' : 'gigCallBtn2');
     const phone = btn.getAttribute('data-phone');
+    if (!phone) return;
     window.location.href = 'tel:' + phone;
   }
 
   function openSellerWhatsapp() {
     const btn = document.getElementById('gigWhatsappBtn');
-    const phone = btn.getAttribute('data-phone');
+    let phone = btn.getAttribute('data-phone') || '';
     if (!phone) return false;
-    const waPhone = phone.replace(/^0/, '880');
-    window.open('https://wa.me/' + waPhone, '_blank');
+    phone = phone.replace(/\D/g, '');
+    if (phone.startsWith('0')) phone = '88' + phone; // বাংলাদেশ কোড
+    const cropName = currentOpenGig ? currentOpenGig.cropName : '';
+    const text = encodeURIComponent('আসসালামু আলাইকুম, আপনার "' + cropName + '" বিজ্ঞাপনটি নিয়ে কথা বলতে চাই।');
+    window.open('https://wa.me/' + phone + '?text=' + text, '_blank');
     return false;
   }
 
@@ -7045,6 +7361,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     const cropName = document.getElementById('demandCropName').value.trim();
     const qty = document.getElementById('demandQty').value.trim();
     const price = document.getElementById('demandPrice').value.trim();
+    const district = document.getElementById('demandDistrict').value;
     const area = document.getElementById('demandArea').value.trim();
     const note = document.getElementById('demandNote').value.trim();
 
@@ -7062,7 +7379,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       const location = await getCurrentLocationSilent();
 
       await db.collection('cropDemands').add({
-        cropName, qty, price: price || null, area, note: note || null,
+        cropName, qty, price: price || null, district: district || null, area, note: note || null,
         buyerId: user.uid,
         buyerName: userData.name,
         buyerPhone: userData.phone,
@@ -7078,6 +7395,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       document.getElementById('demandCropName').value = '';
       document.getElementById('demandQty').value = '';
       document.getElementById('demandPrice').value = '';
+      document.getElementById('demandDistrict').value = '';
       document.getElementById('demandArea').value = '';
       document.getElementById('demandNote').value = '';
       loadDemandPosts();
@@ -7447,9 +7765,9 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
   //    ৳১০,০০০-৫০,০০০ → ৭%
   //    ৳৫০,০০০+ → ১০%
   //
-  // ২. ডিজিটাল কৃষি অ্যামবাসাডর প্রোগ্রাম — কৃষি কর্মকর্তার Point/Token (যদি অ্যামবাসাডর কোড দিয়ে কৃষক এসেছিল):
-  //    এটা real-time দেওয়া হয় না — এককালীন (one-time) স্বীকৃতি-বোনাস মডেল, "রেফারেল কমিশন" না।
-  //    প্রতিটা কেনাকাটা শুধু "officerAmbassadorActivity" তে raw record হিসেবে জমা হয়।
+  // ২. কৃষি কর্মকর্তা Point/Token সিস্টেম (যদি referral code দিয়ে কৃষক এসেছিল):
+  //    এটা real-time দেওয়া হয় না — এককালীন (one-time) referral bonus মডেল।
+  //    প্রতিটা কেনাকাটা শুধু "officerReferralActivity" তে raw record হিসেবে জমা হয়।
   //    মৌসুম শেষে (৩ মাস পর) Admin Panel থেকে ম্যানুয়ালি প্রতিটা কর্মকর্তার
   //    আনা কৃষকদের প্রকৃত সক্রিয়তা যাচাই করে Point চূড়ান্ত ও প্রদান করা হয়।
   //    কর্মকর্তা exact calculation formula জানবেন না (fraud protection — "black box" পদ্ধতি)।
@@ -7606,7 +7924,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
         // শুধু raw activity তথ্য জমা রাখা — মৌসুম শেষে Admin এখান থেকে
         // প্রতিটা কর্মকর্তার আনা কৃষকদের প্রকৃত সক্রিয়তা যাচাই করে
         // ম্যানুয়ালি Point চূড়ান্ত করবে
-        await db.collection('officerAmbassadorActivity').add({
+        await db.collection('officerReferralActivity').add({
           officerId: farmerData.referredByOfficerId,
           officerName: farmerData.referredByOfficerName || null,
           farmerId: verifiedCouponData.farmerId,
@@ -8591,274 +8909,6 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
   // ===== গাড়ি খুঁজুন (কৃষক/পাইকারের জন্য — Online থাকা গাড়ির তালিকা) =====
   // ================================================================
   // ================================================================
-  // ===== শ্রমিক/লেবার প্যানেল (drivers/truck-finder এর একই প্যাটার্নে) =====
-  // ================================================================
-  let laborIsOnline = false;
-
-  async function showLaborPanel() {
-    if (isFeatureBlocked('laborFinderEnabled', 'লেবার/শ্রমিক ফিচার')) return;
-    hideAllPages();
-    document.getElementById('laborPage').style.display = 'block';
-
-    const user = auth.currentUser;
-    if (!user) return;
-
-    try {
-      const doc = await db.collection('laborers').doc(user.uid).get();
-      if (doc.exists) {
-        const d = doc.data();
-        laborIsOnline = d.isAvailable || false;
-        updateLaborAvailabilityUI();
-        if (d.profession) document.getElementById('laborProfessionInput').value = d.profession;
-        if (d.rate) document.getElementById('laborRateInput').value = d.rate;
-      } else {
-        laborIsOnline = false;
-        updateLaborAvailabilityUI();
-      }
-    } catch (err) { /* নতুন হলে ডকুমেন্ট নাও থাকতে পারে, সমস্যা নেই */ }
-    loadLaborBoostStatus();
-  }
-
-  // 🚀 বুস্ট/স্পন্সর — গাড়িওয়ালার বুস্টের মতোই: রিকোয়েস্ট পাঠানোর পর অ্যাডমিন টাকা রিসিভ করে
-  // (বিকাশ/নগদ/WhatsApp-এ ম্যানুয়ালি) অ্যাডমিন প্যানেল থেকে বুস্ট চালু করে দেবেন — নির্দিষ্ট সময়ের
-  // (৭ দিন) জন্য সেই প্রোফাইলটা তালিকায় সবার উপরে দেখাবে।
-  async function requestLaborBoost() {
-    const user = auth.currentUser;
-    if (!user) { alert('লগইন করুন!'); return; }
-    try {
-      await db.collection('laborers').doc(user.uid).set({
-        boostRequested: true,
-        boostRequestedAt: new Date().toISOString()
-      }, { merge: true });
-      const text = encodeURIComponent('আসসালামু আলাইকুম, আমি আমার লেবার প্রোফাইলটি বুস্ট/স্পন্সর করতে চাই। বুস্ট ফি কীভাবে দেব জানাবেন।');
-      if (confirm('✅ বুস্ট রিকোয়েস্ট পাঠানো হয়েছে! ফি কীভাবে দেবেন তা জানতে এখনই আমাদের টিমের সাথে WhatsApp-এ যোগাযোগ করবেন?')) {
-        window.open('https://wa.me/8801621286503?text=' + text, '_blank');
-      }
-      loadLaborBoostStatus();
-    } catch (err) {
-      alert('সমস্যা হয়েছে: ' + err.message);
-    }
-  }
-
-  async function loadLaborBoostStatus() {
-    const user = auth.currentUser;
-    const statusEl = document.getElementById('laborBoostStatus');
-    const btn = document.getElementById('laborBoostBtn');
-    if (!user || !statusEl || !btn) return;
-    try {
-      const doc = await db.collection('laborers').doc(user.uid).get();
-      const d = doc.exists ? doc.data() : {};
-      const isActive = d.isBoosted && d.boostExpiresAt && new Date(d.boostExpiresAt) > new Date();
-      if (isActive) {
-        statusEl.textContent = '🚀 বুস্ট চালু আছে — মেয়াদ শেষ: ' + new Date(d.boostExpiresAt).toLocaleDateString('bn-BD');
-        btn.style.display = 'none';
-      } else if (d.boostRequested) {
-        statusEl.textContent = '⏳ বুস্ট রিকোয়েস্ট পাঠানো হয়েছে, এডমিনের অনুমোদনের অপেক্ষায়';
-        btn.style.display = 'none';
-      } else {
-        statusEl.textContent = 'বুস্ট চালু নেই — বুস্ট করলে আপনার প্রোফাইল তালিকার সবার উপরে দেখাবে';
-        btn.style.display = 'block';
-      }
-    } catch (err) { /* সমস্যা হলে চুপচাপ থাকা ভালো, বাকি প্যানেল যেন কাজ করে */ }
-  }
-
-  function updateLaborAvailabilityUI() {
-    const statusText = document.getElementById('laborAvailabilityStatusText');
-    const toggleBtn = document.getElementById('laborAvailabilityToggleBtn');
-
-    if (laborIsOnline) {
-      statusText.textContent = '🟢 এখন Online আছেন';
-      statusText.className = 'availability-status online';
-      toggleBtn.textContent = '🔴 Offline হন';
-      toggleBtn.className = 'availability-toggle-btn go-offline';
-    } else {
-      statusText.textContent = '🔴 এখন Offline আছেন';
-      statusText.className = 'availability-status offline';
-      toggleBtn.textContent = '🟢 Online হন (অবস্থান শেয়ার করুন)';
-      toggleBtn.className = 'availability-toggle-btn go-online';
-    }
-  }
-
-  async function toggleLaborAvailability() {
-    const user = auth.currentUser;
-    if (!user) { alert('লগইন করুন!'); return; }
-
-    if (laborIsOnline) {
-      try {
-        await db.collection('laborers').doc(user.uid).set({ isAvailable: false }, { merge: true });
-        laborIsOnline = false;
-        updateLaborAvailabilityUI();
-        document.getElementById('laborLocationStatus').textContent = '';
-      } catch (err) {
-        alert('সমস্যা হয়েছে: ' + err.message);
-      }
-      return;
-    }
-
-    if (!navigator.geolocation) {
-      alert('আপনার ফোনে GPS সুবিধা নেই।');
-      return;
-    }
-
-    const statusEl = document.getElementById('laborLocationStatus');
-    statusEl.textContent = '⏳ আপনার অবস্থান খোঁজা হচ্ছে...';
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const userDoc = await db.collection('users').doc(user.uid).get();
-          const userData = userDoc.data();
-          const userPublicDoc = await db.collection('userPublic').doc(user.uid).get();
-          const userPublicData = userPublicDoc.exists ? userPublicDoc.data() : {};
-
-          await db.collection('laborers').doc(user.uid).set({
-            laborId: user.uid,
-            name: userData.name,
-            phone: userData.phone,
-            profession: document.getElementById('laborProfessionInput').value,
-            rate: document.getElementById('laborRateInput').value.trim() || 'আলোচনা সাপেক্ষ',
-            isAvailable: true,
-            currentLocation: { lat: position.coords.latitude, lon: position.coords.longitude },
-            avgRating: userPublicData.avgRating || 0,
-            reviewCount: userPublicData.reviewCount || 0,
-            lastUpdated: new Date().toISOString()
-          }, { merge: true });
-
-          laborIsOnline = true;
-          updateLaborAvailabilityUI();
-          statusEl.textContent = '✅ আপনার অবস্থান শেয়ার করা হয়েছে';
-        } catch (err) {
-          statusEl.textContent = '';
-          alert('সমস্যা হয়েছে: ' + err.message);
-        }
-      },
-      () => {
-        statusEl.textContent = '';
-        alert('অবস্থান পাওয়া যায়নি। GPS চালু করুন।');
-      }
-    );
-  }
-
-  async function saveLaborInfo() {
-    const user = auth.currentUser;
-    if (!user) { alert('লগইন করুন!'); return; }
-
-    try {
-      await db.collection('laborers').doc(user.uid).set({
-        profession: document.getElementById('laborProfessionInput').value,
-        rate: document.getElementById('laborRateInput').value.trim() || 'আলোচনা সাপেক্ষ'
-      }, { merge: true });
-
-      alert('✅ তথ্য সেভ হয়েছে!');
-    } catch (err) {
-      alert('সমস্যা হয়েছে: ' + err.message);
-    }
-  }
-
-  // ================================================================
-
-  // ===== লেবার খুঁজুন (কৃষক/রিটেলার/পাইকার/গাড়িওয়ালা/শ্রমিক — সবার জন্য) =====
-  // ================================================================
-  async function showLaborFinderPage() {
-    if (isFeatureBlocked('laborFinderEnabled', 'লেবার/শ্রমিক ফিচার')) return;
-    hideAllPages();
-    document.getElementById('laborFinderPage').style.display = 'block';
-    await loadOnlineLaborers();
-  }
-
-  async function loadOnlineLaborers() {
-    const list = document.getElementById('laborList');
-    list.innerHTML = '<div class="coming-soon">লোড হচ্ছে...</div>';
-
-    try {
-      const snapshot = await db.collection('laborers').where('isAvailable', '==', true).get();
-
-      if (snapshot.empty) {
-        list.innerHTML = '<div class="coming-soon">এই মুহূর্তে কোনো শ্রমিক Online নেই। একটু পরে আবার চেষ্টা করুন।</div>';
-        return;
-      }
-
-      let laborers = [];
-      snapshot.forEach(doc => laborers.push(doc.data()));
-
-      const professionFilter = document.getElementById('laborProfessionFilter').value;
-      if (professionFilter && professionFilter !== 'all') {
-        laborers = laborers.filter(l => l.profession === professionFilter);
-      }
-
-      if (laborers.length === 0) {
-        list.innerHTML = '<div class="coming-soon">এই ধরনের কাজে এই মুহূর্তে কেউ Online নেই।</div>';
-        return;
-      }
-
-      if (navigator.geolocation) {
-        list.innerHTML = '<div class="coming-soon">আপনার কাছের শ্রমিক খোঁজা হচ্ছে...</div>';
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const myLat = position.coords.latitude, myLon = position.coords.longitude;
-            laborers.forEach(l => {
-              if (l.currentLocation) {
-                l.distanceKm = calculateDistanceKm(myLat, myLon, l.currentLocation.lat, l.currentLocation.lon);
-              } else {
-                l.distanceKm = null;
-              }
-            });
-            laborers.sort((a, b) => (a.distanceKm ?? 9999) - (b.distanceKm ?? 9999));
-            // 🚀 বুস্ট/স্পন্সর করা প্রোফাইল সবসময় সবার আগে (দূরত্ব যাই হোক না কেন)
-            laborers.sort((a, b) => (isBoostActive(b) ? 1 : 0) - (isBoostActive(a) ? 1 : 0));
-            renderLaborList(laborers);
-          },
-          () => {
-            laborers.sort((a, b) => (isBoostActive(b) ? 1 : 0) - (isBoostActive(a) ? 1 : 0));
-            renderLaborList(laborers);
-          }
-        );
-      } else {
-        laborers.sort((a, b) => (isBoostActive(b) ? 1 : 0) - (isBoostActive(a) ? 1 : 0));
-        renderLaborList(laborers);
-      }
-    } catch (err) {
-      list.innerHTML = '<div class="coming-soon">তালিকা লোড করা যায়নি</div>';
-    }
-  }
-
-  // বুস্ট আসলেই এখনো সচল কিনা (isBoosted ঠিক আছে এবং মেয়াদ শেষ হয়নি) — গাড়িওয়ালা ও লেবার দুটোতেই ব্যবহৃত
-  function isBoostActive(d) {
-    return !!(d.isBoosted && d.boostExpiresAt && new Date(d.boostExpiresAt) > new Date());
-  }
-
-  function renderLaborList(laborers) {
-    const list = document.getElementById('laborList');
-    let html = '';
-    laborers.forEach(l => {
-      const whatsappPhone = '88' + l.phone;
-      const boosted = isBoostActive(l);
-      html += `
-        <div class="truck-card${boosted ? ' gig-card-boosted' : ''}">
-          <div class="truck-card-top">
-            <div>
-              <div class="truck-vehicle">👷 ${escapeHtml(l.profession)} ${boosted ? '<span class="my-post-boosted-tag">🔥 স্পন্সরড</span>' : ''}</div>
-              <div class="truck-driver-name">${escapeHtml(l.name)}${l.distanceKm !== null && l.distanceKm !== undefined ? ' • 📍 ' + l.distanceKm.toFixed(1) + ' কিমি দূরে' : ''}</div>
-            </div>
-            <span class="truck-online-badge">🟢 Online</span>
-          </div>
-          <div class="truck-meta-row">
-            ${l.rate ? `<span>💰 ${escapeHtml(l.rate)}</span>` : ''}
-            <span class="truck-rating">${l.reviewCount > 0 ? '⭐'.repeat(Math.round(l.avgRating)) + ' (' + l.reviewCount + ')' : '🆕 নতুন'}</span>
-          </div>
-          <div class="truck-meta-row" style="margin-top:-4px;">
-            <span>${getTimeAgoText(l.lastUpdated)}</span>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:8px;">
-            <button class="truck-call-btn" style="margin-top:0;" onclick="window.location.href='tel:${jsAttr(l.phone)}'">📞 কল করুন</button>
-            <a href="https://wa.me/${whatsappPhone}" target="_blank" class="truck-call-btn" style="margin-top:0;background:#25D366;text-decoration:none;display:flex;align-items:center;justify-content:center;">💬 WhatsApp</a>
-          </div>
-        </div>`;
-    });
-    list.innerHTML = html;
-  }
-
-
   // ===== কৃষি কর্মকর্তার নিজস্ব প্যানেল =====
   // ================================================================
   // ================================================================
@@ -9086,7 +9136,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
       const userDoc = await db.collection('users').doc(user.uid).get();
       const userData = userDoc.data();
 
-      document.getElementById('officerCodeDisplay').textContent = userData.officerAmbassadorCode || 'কোড পাওয়া যায়নি';
+      document.getElementById('officerCodeDisplay').textContent = userData.officerReferralCode || 'কোড পাওয়া যায়নি';
       document.getElementById('officerTotalTokens').textContent = userData.totalTokens || 0;
 
       // এই কর্মকর্তার referral code দিয়ে যত কৃষক যোগ দিয়েছেন তাদের বের করা
@@ -9152,7 +9202,36 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     if (isFeatureBlocked('truckFinderEnabled', 'গাড়ি খুঁজুন/পরিবহন')) return;
     hideAllPages();
     document.getElementById('truckFinderPage').style.display = 'block';
+    populateDistrictSelects();
+    currentTruckFilter = 'all';
+    currentDistrictFilter = '';
+    currentMinCapacityTons = 0;
+    document.getElementById('truckDistrictFilter').value = '';
+    document.getElementById('truckCapacityFilter').value = '0';
+    document.querySelectorAll('.truck-filter-chip').forEach(b => b.classList.remove('active'));
+    document.getElementById('truckFilterAll').classList.add('active');
     await loadOnlineTrucks();
+  }
+
+  // সব ভাড়ায়-পাওয়া গাড়ির তালিকা (ফিল্টার ছাড়া) — চিপ/ফিল্টার পাল্টালে পুনরায় সার্ভার থেকে না এনে এখান থেকেই ফিল্টার হয়
+  let allOnlineTrucks = [];
+  let currentTruckFilter = 'all'; // 'all' | 'cargo' | 'passenger'
+  let currentDistrictFilter = '';
+  let currentMinCapacityTons = 0;
+
+  // চিপ বাটনে চাপ দিলে ধরন অনুযায়ী তালিকা ফিল্টার করা (পণ্য পরিবহন বনাম যাত্রী/ব্যক্তিগত ভ্রমণ)
+  function filterTruckList(type, btnEl) {
+    currentTruckFilter = type;
+    document.querySelectorAll('.truck-filter-chip').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderTruckList(allOnlineTrucks);
+  }
+
+  // জেলা ও ধারণক্ষমতা ফিল্টার (ড্রপডাউন পাল্টালে)
+  function applyTruckExtraFilters() {
+    currentDistrictFilter = document.getElementById('truckDistrictFilter').value;
+    currentMinCapacityTons = parseFloat(document.getElementById('truckCapacityFilter').value) || 0;
+    renderTruckList(allOnlineTrucks);
   }
 
   // দুটো GPS পয়েন্টের মধ্যে দূরত্ব (কিমি) বের করার সহজ পদ্ধতি — কোনো paid API লাগে না
@@ -9177,6 +9256,22 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     return '🕐 অনেকক্ষণ আগে সক্রিয় ছিলেন ⚠️';
   }
 
+  // 🧮 পরিবহন খরচ ক্যালকুলেটর — শুধু আনুমানিক হিসাব, ফায়ারস্টোরে কিছু সেভ হয় না
+  function calculateTransportCost() {
+    const distance = Number(document.getElementById('transportDistanceInput').value);
+    const ratePerKm = Number(document.getElementById('transportVehicleSelect').value);
+    const resultBox = document.getElementById('transportCostResult');
+    if (!distance || distance <= 0) {
+      alert('দয়া করে দূরত্ব (কিমি) লিখুন!');
+      return;
+    }
+    // ছোট দূরত্বে ন্যূনতম একটা বেস ভাড়া থাকে, তাই একেবারে রৈখিক না রেখে একটা ছোট বেস যোগ করা হলো
+    const baseFare = ratePerKm * 8;
+    const estimatedCost = Math.round(baseFare + (distance * ratePerKm));
+    document.getElementById('transportCostAmount').textContent = '৳ ' + estimatedCost.toLocaleString('en-IN');
+    resultBox.style.display = 'block';
+  }
+
   async function loadOnlineTrucks() {
     const list = document.getElementById('truckList');
     list.innerHTML = '<div class="coming-soon">লোড হচ্ছে...</div>';
@@ -9191,6 +9286,10 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
 
       let trucks = [];
       snapshot.forEach(doc => trucks.push(doc.data()));
+      // মেয়াদ পার হওয়া বুস্ট আর গণনায় ধরা হয় না
+      const nowTime = new Date();
+      trucks.forEach(t => { t.effectiveBoosted = !!(t.isBoosted && t.boostExpiresAt && new Date(t.boostExpiresAt) > nowTime); });
+      allOnlineTrucks = trucks;
 
       // ব্যবহারকারীর নিজের GPS অবস্থান নিয়ে দূরত্ব অনুযায়ী সাজানো (কাছেরটা আগে)
       if (navigator.geolocation) {
@@ -9205,19 +9304,18 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
                 t.distanceKm = null;
               }
             });
-            trucks.sort((a, b) => (a.distanceKm ?? 9999) - (b.distanceKm ?? 9999));
-            // 🚀 বুস্ট/স্পন্সর করা প্রোফাইল সবসময় সবার আগে (দূরত্ব যাই হোক না কেন)
-            trucks.sort((a, b) => (isBoostActive(b) ? 1 : 0) - (isBoostActive(a) ? 1 : 0));
+            trucks.sort((a, b) => (b.effectiveBoosted ? 1 : 0) - (a.effectiveBoosted ? 1 : 0) || (a.distanceKm ?? 9999) - (b.distanceKm ?? 9999));
+            allOnlineTrucks = trucks;
             renderTruckList(trucks);
           },
           () => {
-            // GPS অনুমতি না দিলেও তালিকা দেখানো, শুধু দূরত্ব ছাড়া
-            trucks.sort((a, b) => (isBoostActive(b) ? 1 : 0) - (isBoostActive(a) ? 1 : 0));
+            // GPS অনুমতি না দিলেও তালিকা দেখানো (বুস্ট করা গাড়ি আগে), শুধু দূরত্ব ছাড়া
+            trucks.sort((a, b) => (b.effectiveBoosted ? 1 : 0) - (a.effectiveBoosted ? 1 : 0));
             renderTruckList(trucks);
           }
         );
       } else {
-        trucks.sort((a, b) => (isBoostActive(b) ? 1 : 0) - (isBoostActive(a) ? 1 : 0));
+        trucks.sort((a, b) => (b.effectiveBoosted ? 1 : 0) - (a.effectiveBoosted ? 1 : 0));
         renderTruckList(trucks);
       }
     } catch (err) {
@@ -9225,31 +9323,337 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     }
   }
 
+  // ব্যক্তিগত/যাত্রী পরিবহনের জন্য উপযোগী গাড়ির ধরন — এগুলো দিয়ে কার্ড আইকন ও ফিল্টার ঠিক করা হয়
+  const passengerVehicleTypes = ['প্রাইভেট কার', 'সিএনজি/অটোরিকশা', 'মোটরসাইকেল'];
+
   function renderTruckList(trucks) {
     const list = document.getElementById('truckList');
+
+    // চিপ অনুযায়ী ফিল্টার: cargo মানে শুধু পণ্য পরিবহনের গাড়ি, passenger মানে যারা যাত্রী/ব্যক্তিগত ভ্রমণেও রাজি (গাড়ির ধরন যাই হোক না কেন)
+    let filtered = trucks;
+    if (currentTruckFilter === 'cargo') {
+      // মোটরসাইকেল ছাড়া বাকি সব ধরনের গাড়িই পণ্য পরিবহনের জন্য দেখানো হয় (প্রাইভেট কার/সিএনজি ছোটখাটো জিনিসও নিতে পারে)
+      filtered = trucks.filter(d => d.vehicleType !== 'মোটরসাইকেল');
+    } else if (currentTruckFilter === 'passenger') {
+      filtered = trucks.filter(d => d.acceptsPassengers === true || passengerVehicleTypes.includes(d.vehicleType));
+    }
+
+    // জেলা ফিল্টার (গাড়িওয়ালার গন্তব্য জেলা বা পছন্দের রুটের সাথে মিলিয়ে)
+    if (currentDistrictFilter) {
+      filtered = filtered.filter(d =>
+        d.destDistrict === currentDistrictFilter ||
+        (d.preferredRoute && d.preferredRoute.includes(currentDistrictFilter))
+      );
+    }
+
+    // ন্যূনতম ধারণক্ষমতা (টন) ফিল্টার — যাদের capacityTons দেওয়া নেই তারা এই ফিল্টারে বাদ পড়বে
+    if (currentMinCapacityTons > 0) {
+      filtered = filtered.filter(d => (d.capacityTons || 0) >= currentMinCapacityTons);
+    }
+
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="coming-soon">এই মুহূর্তে এই ধরনের কোনো গাড়ি Online নেই। ফিল্টার পাল্টে আবার চেষ্টা করুন।</div>';
+      return;
+    }
+
     let html = '';
-    trucks.forEach(d => {
+    filtered.forEach(d => {
       // WhatsApp এর জন্য ফোন নম্বর ফরম্যাট করা (বাংলাদেশ কোড +88 যোগ করা)
       const whatsappPhone = '88' + d.phone;
-      const boosted = isBoostActive(d);
+      const icon = passengerVehicleTypes.includes(d.vehicleType) ? '🚗' : '🚚';
+      const passengerBadge = d.acceptsPassengers ? '<span class="truck-passenger-badge">🧍 যাত্রী নেওয়া হয়</span>' : '';
+      const boostBadge = d.effectiveBoosted ? '<span class="boost-badge">🚀 বুস্ট করা</span>' : '';
+      const tripalBadge = d.hasTripal ? '<span class="truck-passenger-badge" style="background:#E8F5E9;color:#2E7D32;">🛡️ ত্রিপল আছে</span>' : '';
+      const openBodyBadge = d.openBody ? '<span class="truck-passenger-badge" style="background:#FFF8E1;color:#F57F17;">📦 খোলা বডি</span>' : '';
       html += `
-        <div class="truck-card${boosted ? ' gig-card-boosted' : ''}">
+        <div class="truck-card${d.effectiveBoosted ? ' boosted' : ''}">
           <div class="truck-card-top">
             <div>
-              <div class="truck-vehicle">🚚 ${escapeHtml(d.vehicleType)} (${escapeHtml(d.capacity)}) ${boosted ? '<span class="my-post-boosted-tag">🔥 স্পন্সরড</span>' : ''}</div>
+              <div class="truck-vehicle">${icon} ${escapeHtml(d.vehicleType)} (${escapeHtml(d.capacity)})${passengerBadge}${tripalBadge}${openBodyBadge}${boostBadge}</div>
               <div class="truck-driver-name">${escapeHtml(d.name)}${d.distanceKm !== null && d.distanceKm !== undefined ? ' • 📍 ' + d.distanceKm.toFixed(1) + ' কিমি দূরে' : ''}</div>
             </div>
             <span class="truck-online-badge">🟢 Online</span>
           </div>
           <div class="truck-meta-row">
+            ${d.destDistrict ? `<span>📍 গন্তব্য: ${escapeHtml(d.destDistrict)}</span>` : ''}
             ${d.preferredRoute ? `<span>🛣️ ${escapeHtml(d.preferredRoute)}</span>` : ''}
-            <span class="truck-rating">${d.reviewCount > 0 ? '⭐'.repeat(Math.round(d.avgRating)) + ' (' + d.reviewCount + ')' : '🆕 নতুন'}</span>
+            <span class="truck-rating" onclick="openDriverRatingPrompt('${jsAttr(d.driverId)}', '${jsAttr(d.name)}')" style="cursor:pointer;text-decoration:underline;">${d.reviewCount > 0 ? '⭐'.repeat(Math.round(d.avgRating)) + ' (' + d.reviewCount + ')' : '🆕 নতুন — রেটিং দিন'}</span>
           </div>
           <div class="truck-meta-row" style="margin-top:-4px;">
             <span>${getTimeAgoText(d.lastUpdated)}</span>
           </div>
           <div style="display:flex;gap:8px;margin-top:8px;">
             <button class="truck-call-btn" style="margin-top:0;" onclick="window.location.href='tel:${jsAttr(d.phone)}'">📞 কল করুন</button>
+            <a href="https://wa.me/${whatsappPhone}" target="_blank" class="truck-call-btn" style="margin-top:0;background:#25D366;text-decoration:none;display:flex;align-items:center;justify-content:center;">💬 WhatsApp</a>
+          </div>
+        </div>`;
+    });
+    list.innerHTML = html;
+  }
+
+  // ⭐ যাত্রা শেষে গাড়িওয়ালাকে রেটিং দেওয়া — বিদ্যমান রিভিউ সিস্টেমই reuse করা হচ্ছে (userPublic/{uid} এ গড় রেটিং জমা হয়, পরের বার Online হলে drivers ডকুমেন্টে কপি হয়ে যায়)
+  function openDriverRatingPrompt(driverId, driverName) {
+    if (!driverId) { alert('এই গাড়িওয়ালার তথ্য পাওয়া যায়নি।'); return; }
+    const user = auth.currentUser;
+    if (!user) { alert('রেটিং দিতে লগইন করুন!'); return; }
+    if (user.uid === driverId) { alert('নিজেকে রেটিং দেওয়া যাবে না।'); return; }
+    openReviewPrompt(driverId, driverName, 'truckRide');
+  }
+
+  // ================================================================
+  // ===== শ্রমিক/লেবার প্যানেল (drivers/truck-finder এর একই প্যাটার্নে) =====
+  // ================================================================
+  let laborIsOnline = false;
+
+  async function showLaborPanel() {
+    if (isFeatureBlocked('laborFinderEnabled', 'লেবার/শ্রমিক ফিচার')) return;
+    hideAllPages();
+    document.getElementById('laborPage').style.display = 'block';
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      const doc = await db.collection('laborers').doc(user.uid).get();
+      if (doc.exists) {
+        const d = doc.data();
+        laborIsOnline = d.isAvailable || false;
+        updateLaborAvailabilityUI();
+        if (d.profession) document.getElementById('laborProfessionInput').value = d.profession;
+        if (d.rate) document.getElementById('laborRateInput').value = d.rate;
+      } else {
+        laborIsOnline = false;
+        updateLaborAvailabilityUI();
+      }
+    } catch (err) { /* নতুন হলে ডকুমেন্ট নাও থাকতে পারে, সমস্যা নেই */ }
+
+    loadLaborBoostStatus();
+  }
+
+  // 🚀 শ্রমিক/লেবার প্রোফাইল বুস্ট — গাড়িওয়ালার বুস্ট সিস্টেমের একই প্যাটার্ন: এখন সম্পূর্ণ ফ্রি,
+  // শুধু রিকোয়েস্ট পাঠানো হয়, Admin Panel থেকে ম্যানুয়ালি অনুমোদন করে ৭ দিনের জন্য চালু করা হয়
+  async function requestLaborBoost() {
+    const user = auth.currentUser;
+    if (!user) { alert('লগইন করুন!'); return; }
+    try {
+      await db.collection('laborers').doc(user.uid).set({
+        boostRequested: true,
+        boostRequestedAt: new Date().toISOString()
+      }, { merge: true });
+      alert('✅ বুস্ট রিকোয়েস্ট পাঠানো হয়েছে! এডমিন শীঘ্রই আপনার প্রোফাইল তালিকার সবার উপরে দেখাবেন। (বর্তমানে সম্পূর্ণ ফ্রি)');
+      loadLaborBoostStatus();
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  async function loadLaborBoostStatus() {
+    const user = auth.currentUser;
+    const statusEl = document.getElementById('laborBoostStatus');
+    const btn = document.getElementById('laborBoostBtn');
+    if (!user || !statusEl || !btn) return;
+    try {
+      const doc = await db.collection('laborers').doc(user.uid).get();
+      const d = doc.exists ? doc.data() : {};
+      const isActive = d.isBoosted && d.boostExpiresAt && new Date(d.boostExpiresAt) > new Date();
+      if (isActive) {
+        statusEl.textContent = '🚀 বুস্ট চালু আছে — মেয়াদ শেষ: ' + new Date(d.boostExpiresAt).toLocaleDateString('bn-BD');
+        btn.style.display = 'none';
+      } else if (d.boostRequested) {
+        statusEl.textContent = '⏳ বুস্ট রিকোয়েস্ট পাঠানো হয়েছে, এডমিনের অনুমোদনের অপেক্ষায়';
+        btn.style.display = 'none';
+      } else {
+        statusEl.textContent = 'বুস্ট চালু নেই — বুস্ট করলে আপনার প্রোফাইল তালিকার সবার উপরে দেখাবে';
+        btn.style.display = 'block';
+      }
+    } catch (err) { /* সমস্যা হলে চুপচাপ থাকা ভালো */ }
+  }
+
+  function updateLaborAvailabilityUI() {
+    const statusText = document.getElementById('laborAvailabilityStatusText');
+    const toggleBtn = document.getElementById('laborAvailabilityToggleBtn');
+
+    if (laborIsOnline) {
+      statusText.textContent = '🟢 এখন Online আছেন';
+      statusText.className = 'availability-status online';
+      toggleBtn.textContent = '🔴 Offline হন';
+      toggleBtn.className = 'availability-toggle-btn go-offline';
+    } else {
+      statusText.textContent = '🔴 এখন Offline আছেন';
+      statusText.className = 'availability-status offline';
+      toggleBtn.textContent = '🟢 Online হন (অবস্থান শেয়ার করুন)';
+      toggleBtn.className = 'availability-toggle-btn go-online';
+    }
+  }
+
+  async function toggleLaborAvailability() {
+    const user = auth.currentUser;
+    if (!user) { alert('লগইন করুন!'); return; }
+
+    if (laborIsOnline) {
+      try {
+        await db.collection('laborers').doc(user.uid).set({ isAvailable: false }, { merge: true });
+        laborIsOnline = false;
+        updateLaborAvailabilityUI();
+        document.getElementById('laborLocationStatus').textContent = '';
+      } catch (err) {
+        alert('সমস্যা হয়েছে: ' + err.message);
+      }
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      alert('আপনার ফোনে GPS সুবিধা নেই।');
+      return;
+    }
+
+    const statusEl = document.getElementById('laborLocationStatus');
+    statusEl.textContent = '⏳ আপনার অবস্থান খোঁজা হচ্ছে...';
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const userDoc = await db.collection('users').doc(user.uid).get();
+          const userData = userDoc.data();
+          const userPublicDoc = await db.collection('userPublic').doc(user.uid).get();
+          const userPublicData = userPublicDoc.exists ? userPublicDoc.data() : {};
+
+          await db.collection('laborers').doc(user.uid).set({
+            laborId: user.uid,
+            name: userData.name,
+            phone: userData.phone,
+            profession: document.getElementById('laborProfessionInput').value,
+            rate: document.getElementById('laborRateInput').value.trim() || 'আলোচনা সাপেক্ষ',
+            isAvailable: true,
+            currentLocation: { lat: position.coords.latitude, lon: position.coords.longitude },
+            avgRating: userPublicData.avgRating || 0,
+            reviewCount: userPublicData.reviewCount || 0,
+            lastUpdated: new Date().toISOString()
+          }, { merge: true });
+
+          laborIsOnline = true;
+          updateLaborAvailabilityUI();
+          statusEl.textContent = '✅ আপনার অবস্থান শেয়ার করা হয়েছে';
+        } catch (err) {
+          statusEl.textContent = '';
+          alert('সমস্যা হয়েছে: ' + err.message);
+        }
+      },
+      () => {
+        statusEl.textContent = '';
+        alert('অবস্থান পাওয়া যায়নি। GPS চালু করুন।');
+      }
+    );
+  }
+
+  async function saveLaborInfo() {
+    const user = auth.currentUser;
+    if (!user) { alert('লগইন করুন!'); return; }
+
+    try {
+      await db.collection('laborers').doc(user.uid).set({
+        profession: document.getElementById('laborProfessionInput').value,
+        rate: document.getElementById('laborRateInput').value.trim() || 'আলোচনা সাপেক্ষ'
+      }, { merge: true });
+
+      alert('✅ তথ্য সেভ হয়েছে!');
+    } catch (err) {
+      alert('সমস্যা হয়েছে: ' + err.message);
+    }
+  }
+
+  // ================================================================
+  // ===== লেবার খুঁজুন (কৃষক/রিটেলার/পাইকার/গাড়িওয়ালা/শ্রমিক — সবার জন্য) =====
+  // ================================================================
+  async function showLaborFinderPage() {
+    if (isFeatureBlocked('laborFinderEnabled', 'লেবার/শ্রমিক ফিচার')) return;
+    hideAllPages();
+    document.getElementById('laborFinderPage').style.display = 'block';
+    await loadOnlineLaborers();
+  }
+
+  async function loadOnlineLaborers() {
+    const list = document.getElementById('laborList');
+    list.innerHTML = '<div class="coming-soon">লোড হচ্ছে...</div>';
+
+    try {
+      const snapshot = await db.collection('laborers').where('isAvailable', '==', true).get();
+
+      if (snapshot.empty) {
+        list.innerHTML = '<div class="coming-soon">এই মুহূর্তে কোনো শ্রমিক Online নেই। একটু পরে আবার চেষ্টা করুন।</div>';
+        return;
+      }
+
+      let laborers = [];
+      snapshot.forEach(doc => laborers.push(doc.data()));
+      // মেয়াদ পার হওয়া বুস্ট আর গণনায় ধরা হয় না
+      const nowTime = new Date();
+      laborers.forEach(l => { l.effectiveBoosted = !!(l.isBoosted && l.boostExpiresAt && new Date(l.boostExpiresAt) > nowTime); });
+
+      const professionFilter = document.getElementById('laborProfessionFilter').value;
+      if (professionFilter && professionFilter !== 'all') {
+        laborers = laborers.filter(l => l.profession === professionFilter);
+      }
+
+      if (laborers.length === 0) {
+        list.innerHTML = '<div class="coming-soon">এই ধরনের কাজে এই মুহূর্তে কেউ Online নেই।</div>';
+        return;
+      }
+
+      if (navigator.geolocation) {
+        list.innerHTML = '<div class="coming-soon">আপনার কাছের শ্রমিক খোঁজা হচ্ছে...</div>';
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const myLat = position.coords.latitude, myLon = position.coords.longitude;
+            laborers.forEach(l => {
+              if (l.currentLocation) {
+                l.distanceKm = calculateDistanceKm(myLat, myLon, l.currentLocation.lat, l.currentLocation.lon);
+              } else {
+                l.distanceKm = null;
+              }
+            });
+            // 🔥 বুস্টেড প্রোফাইল সবসময় সবার আগে, তারপর দূরত্ব অনুযায়ী
+            laborers.sort((a, b) => (b.effectiveBoosted ? 1 : 0) - (a.effectiveBoosted ? 1 : 0) || (a.distanceKm ?? 9999) - (b.distanceKm ?? 9999));
+            renderLaborList(laborers);
+          },
+          () => {
+            laborers.sort((a, b) => (b.effectiveBoosted ? 1 : 0) - (a.effectiveBoosted ? 1 : 0));
+            renderLaborList(laborers);
+          }
+        );
+      } else {
+        laborers.sort((a, b) => (b.effectiveBoosted ? 1 : 0) - (a.effectiveBoosted ? 1 : 0));
+        renderLaborList(laborers);
+      }
+    } catch (err) {
+      list.innerHTML = '<div class="coming-soon">তালিকা লোড করা যায়নি</div>';
+    }
+  }
+
+  function renderLaborList(laborers) {
+    const list = document.getElementById('laborList');
+    let html = '';
+    laborers.forEach(l => {
+      const whatsappPhone = '88' + l.phone;
+      const boostBadge = l.effectiveBoosted ? '<span class="boost-badge">🚀 বুস্ট করা</span>' : '';
+      html += `
+        <div class="truck-card${l.effectiveBoosted ? ' boosted' : ''}">
+          <div class="truck-card-top">
+            <div>
+              <div class="truck-vehicle">👷 ${escapeHtml(l.profession)}${boostBadge}</div>
+              <div class="truck-driver-name">${escapeHtml(l.name)}${l.distanceKm !== null && l.distanceKm !== undefined ? ' • 📍 ' + l.distanceKm.toFixed(1) + ' কিমি দূরে' : ''}</div>
+            </div>
+            <span class="truck-online-badge">🟢 Online</span>
+          </div>
+          <div class="truck-meta-row">
+            ${l.rate ? `<span>💰 ${escapeHtml(l.rate)}</span>` : ''}
+            <span class="truck-rating">${l.reviewCount > 0 ? '⭐'.repeat(Math.round(l.avgRating)) + ' (' + l.reviewCount + ')' : '🆕 নতুন'}</span>
+          </div>
+          <div class="truck-meta-row" style="margin-top:-4px;">
+            <span>${getTimeAgoText(l.lastUpdated)}</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <button class="truck-call-btn" style="margin-top:0;" onclick="window.location.href='tel:${jsAttr(l.phone)}'">📞 কল করুন</button>
             <a href="https://wa.me/${whatsappPhone}" target="_blank" class="truck-call-btn" style="margin-top:0;background:#25D366;text-decoration:none;display:flex;align-items:center;justify-content:center;">💬 WhatsApp</a>
           </div>
         </div>`;
@@ -9276,12 +9680,12 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
   function handleCompanyPhoto(input) {
     const file = input.files[0];
     if (!file) return;
-    // প্রোডাক্টের ছবি — বেশি বড় রেজোলিউশনের দরকার নেই (১০২৪px, ৭৫%)
-    compressImageFile(file, 1024, 0.75).then((dataUrl) => {
-      if (!dataUrl) return;
-      document.getElementById('cpPhotoZone').innerHTML = '<img src="' + dataUrl + '">';
-      companyPhotoBase64 = dataUrl;
-    });
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('cpPhotoZone').innerHTML = '<img src="' + e.target.result + '">';
+      companyPhotoBase64 = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   function toggleOfferPriceField() {
@@ -9507,7 +9911,6 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     document.getElementById('poViewModal').classList.add('show');
   }
 
-  // ===== বিক্রয় বিশ্লেষণ — নিজের companyOrders থেকে প্রোডাক্ট/এলাকা/দোকানদার ভিত্তিক হিসাব =====
   // ===== নতুন প্রোডাক্ট পারফরম্যান্স ট্র্যাকার — গত ৩০ দিনে যোগ করা প্রোডাক্টের অর্ডার/রিপিট-রেট =====
   async function loadNewProductPerformance() {
     const el = document.getElementById('anNewProducts');
@@ -9649,6 +10052,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
     }
   }
 
+  // ===== বিক্রয় বিশ্লেষণ — নিজের companyOrders থেকে প্রোডাক্ট/এলাকা/দোকানদার ভিত্তিক হিসাব =====
   async function loadCompanyAnalytics() {
     const user = auth.currentUser;
     if (!user) return;
@@ -9793,6 +10197,7 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
         document.getElementById('userName').textContent = 'স্বাগতম, ' + d.name + ' 👋';
         document.getElementById('userRole').textContent = roleNames[d.role] || d.role;
         document.getElementById('dynamicBrandName').textContent = roleBrandNames[d.role] || 'কৃষক বন্ধু';
+        updateUserAreaDisplay(d.district, d.upazila, d.union);
         renderRoleBasedMenu(d.role); // রোল অনুযায়ী হোমপেজের মেনু বদলানো
 
         // ===== SMS পুনঃসংযোগ (Re-engagement) সিস্টেমের জন্য =====
@@ -9802,6 +10207,9 @@ ${outputFormat.replace('{{QUANTITY_INSTRUCTION}}', '(জমির পরিম�
         db.collection('users').doc(user.uid).set({
           lastActiveAt: new Date().toISOString()
         }, { merge: true });
+
+        // 🔔 লগইনের পর পুশ নোটিফিকেশনের অনুমতি চাওয়া (VAPID key সেট না থাকলে নিজে থেকেই স্কিপ হবে)
+        initPushNotifications();
       }
       document.getElementById('loginPage').style.display='none';
       document.getElementById('homePage').style.display='block';

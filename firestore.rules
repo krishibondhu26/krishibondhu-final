@@ -35,6 +35,12 @@ service cloud.firestore {
       return isSignedIn() &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'retailer';
     }
+    // কৃষি কর্মকর্তা কিনা — ব্লক-ভিত্তিক লাইভ প্রাদুর্ভাব মনিটরিং/ওষুধ ট্র্যাকিং/নোটিশ
+    // ফিচারগুলোতে officer-only read/write অনুমতি দেওয়ার জন্য দরকার
+    function isOfficer() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'officer';
+    }
     // অ্যাডমিন প্যানেলের "ফিচার বন্ধ/চালু" টগল আগে শুধু অ্যাপের UI-তে কাজ করতো —
     // টেকনিক্যাল কেউ সরাসরি Firestore-এ রিকোয়েস্ট পাঠালে rules সেটা আটকাতো না।
     // এখন rules নিজেই এই সেটিং চেক করে, তাই "বন্ধ" মানে সত্যিই সম্পূর্ণ বন্ধ।
@@ -80,7 +86,7 @@ service cloud.firestore {
     }
 
     // ============================================================
-    // users — সব ইউজারের প্রোফাইল (কৃষক, রিটেইলার, কোম্পানি, ড্রাইভার, অফিসার)
+    // users — সব ইউজারের প্রোফাইল (কৃষক, রিটেইলার, কোম্পানি, ড্রাইভার, অফিসার, লেবার)
     // ============================================================
     match /users/{userId} {
       // ⚠️⚠️ সবচেয়ে গুরুত্বপূর্ণ ফিক্স: আগে এখানে "সাইন-ইন করা যেকেউ" (isSignedIn())
@@ -92,7 +98,10 @@ service cloud.firestore {
       // (অ্যাপ কোড চেক করে নিশ্চিত হওয়া হয়েছে যে অন্য কারো নাম/ফোন এখান থেকে সরাসরি
       // পড়া হয় না — অর্ডার/কুপন/লেনদেনে যেই নাম-ফোন দেখানো হয় সেটা তৈরির সময়ই আলাদাভাবে
       // ওই ডকুমেন্টে কপি করে রাখা থাকে, তাই এই রেস্ট্রিকশনে অ্যাপ ভাঙবে না।)
-      allow read: if isOwnerUser(userId) || isAdmin();
+      allow read: if isOwnerUser(userId) || isAdmin() ||
+        // কৃষি কর্মকর্তা নিজের রেফারেলে আনা কৃষকদের তালিকা (এলাকার কৃষক তালিকা/লাইভ মনিটরিং
+        // ড্যাশবোর্ড) এবং র‍্যাঙ্কিং হিসাবের জন্য অন্য অফিসারদের প্রোফাইল পড়তে পারবেন।
+        (isOfficer() && (resource.data.role == 'officer' || resource.data.referredByOfficerId == request.auth.uid));
       // নিজের একাউন্ট নিজেই বানাবে (সাইনআপের সময়)
       allow create: if isOwnerUser(userId);
       // নিজের ডেটা নিজে বদলাতে পারবে, owner সব বদলাতে পারবে।
@@ -106,7 +115,18 @@ service cloud.firestore {
         isOwnerUser(userId) &&
         request.resource.data.get('totalCommissionEarned', 0) == resource.data.get('totalCommissionEarned', 0) &&
         request.resource.data.get('totalReferralEarned', 0) == resource.data.get('totalReferralEarned', 0) &&
-        request.resource.data.get('totalTokens', 0) == resource.data.get('totalTokens', 0)
+        request.resource.data.get('totalTokens', 0) == resource.data.get('totalTokens', 0) &&
+        // 🔒 পে-পার-কন্টাক্ট (নিচে cropGigsContact দেখুন): 'contactUnlimited' (সাবস্ক্রিপশন)
+        // নিজে সেট করা যাবে না — শুধু admin। 'unlockedGigIds' শুধু বাড়তে পারবে (কখনো কমতে না,
+        // নইলে একটা বাদ দিয়ে নতুন যোগ করে সীমা ফাঁকি দেওয়া সম্ভব হতো), আর সাবস্ক্রিপশন না থাকলে
+        // মোট আনলকড গিগের সংখ্যা admin-নির্ধারিত ফ্রি লিমিটের বেশি হতে পারবে না।
+        request.resource.data.get('contactUnlimited', false) == resource.data.get('contactUnlimited', false) &&
+        request.resource.data.get('unlockedGigIds', []).hasAll(resource.data.get('unlockedGigIds', [])) &&
+        (
+          resource.data.get('contactUnlimited', false) == true ||
+          request.resource.data.get('unlockedGigIds', []).size() <=
+            get(/databases/$(database)/documents/appConfig/features).data.get('contactFreeLimit', 5)
+        )
       );
       allow delete: if isOwnerAdmin();
 
@@ -131,11 +151,19 @@ service cloud.firestore {
       // রিভিউ দেয় সে-ই এই ডকুমেন্টে লেখে (নিজের না বলে isOwnerUser দিয়ে আটকানো যায় না)।
       // তবে অন্তত মান দুটো বাস্তবসম্মত সীমার মধ্যে থাকতে বাধ্য করা হলো, যাতে কেউ ইচ্ছাকৃতভাবে
       // অস্বাভাবিক (যেমন ঋণাত্মক বা লাখো) সংখ্যা বসিয়ে কারো রেটিং নষ্ট করতে না পারে।
+      // 🛡️ 'verifiedBadge' (NID/ট্রেড লাইসেন্স ভেরিফাই ব্যাজ) শুধু admin বদলাতে পারবে —
+      // নইলে যে কেউ নিজেকে নিজে "ভেরিফাইড" বানিয়ে ফেলার সুযোগ থাকবে, যা পুরো ট্রাস্ট সিস্টেমটাই
+      // অকার্যকর করে দেবে।
       allow write: if isSignedIn() &&
         request.resource.data.avgRating is number &&
         request.resource.data.avgRating >= 0 && request.resource.data.avgRating <= 5 &&
         request.resource.data.reviewCount is number &&
-        request.resource.data.reviewCount >= 0;
+        request.resource.data.reviewCount >= 0 &&
+        (
+          isOwnerAdmin() ||
+          request.resource.data.get('verifiedBadge', false) ==
+            (resource == null ? false : resource.data.get('verifiedBadge', false))
+        );
     }
 
     // ============================================================
@@ -262,12 +290,62 @@ service cloud.firestore {
     }
 
     // ============================================================
+    // verificationRequests — কৃষক/পাইকারের NID/ট্রেড লাইসেন্স ভেরিফিকেশন রিকোয়েস্ট
+    // ইউজার নিজে রিকোয়েস্ট বানাতে পারবে (pending অবস্থায়), শুধু admin অনুমোদন/বাতিল করতে পারবে।
+    // ============================================================
+    match /verificationRequests/{reqId} {
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.status == 'pending';
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isOwnerAdmin());
+      allow update, delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // assuredDealRequests — "নিশ্চিত ডিল/ভিআইপি ব্রোকারেজ" রিকোয়েস্ট। ইউজার নিজে
+    // pending অবস্থায় রিকোয়েস্ট বানাতে পারবে, শুধু admin স্ট্যাটাস/কমিশন নোট আপডেট করতে পারবে।
+    // ============================================================
+    match /assuredDealRequests/{reqId} {
+      allow create: if isSignedIn() &&
+        request.resource.data.requesterId == request.auth.uid &&
+        request.resource.data.status == 'pending';
+      allow read: if isSignedIn() && (resource.data.requesterId == request.auth.uid || isOwnerAdmin());
+      allow update, delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // cropGigsContact — বিজ্ঞাপনের ফোন নম্বর (পে-পার-কন্টাক্ট ফিচারের জন্য cropGigs থেকে
+    // আলাদা করা হয়েছে, যাতে সত্যিকারের সিকিউর পে-ওয়াল সম্ভব হয়। cropGigs ডকুমেন্ট সবার
+    // জন্য পাবলিকলি রিডেবল, তাই ফোন নম্বর সেখানে রাখলে "লিমিট" কখনোই আসল নিরাপত্তা হতো না।
+    // পড়ার অনুমতি চারভাবে মেলে: (১) মালিক/admin, (২) ফিচার বন্ধ থাকলে সবাই ফ্রি,
+    // (৩) ব্যবহারকারীর subscription (contactUnlimited) থাকলে, (৪) এই নির্দিষ্ট গিগটা
+    // আগে থেকেই unlockedGigIds-এ থাকলে (একবার আনলক করলে বারবার ফ্রি দেখা যাবে)।
+    // ============================================================
+    match /cropGigsContact/{gigId} {
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+      allow read: if isOwnerAdmin() ||
+        (isSignedIn() && resource.data.farmerId == request.auth.uid) ||
+        get(/databases/$(database)/documents/appConfig/features).data.get('payPerContactEnabled', false) != true ||
+        (isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('contactUnlimited', false) == true) ||
+        (isSignedIn() && gigId in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('unlockedGigIds', []));
+      allow update, delete: if isOwnerAdmin() || (isSignedIn() && resource.data.farmerId == request.auth.uid);
+    }
+
+    // ============================================================
     // cropGigs — কৃষকের ফসল বিক্রির পোস্ট
     // ============================================================
     match /cropGigs/{gigId} {
       allow read: if true;
-      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
-      allow update, delete: if isSignedIn() && (resource.data.farmerId == request.auth.uid || isOwnerAdmin());
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid
+        && request.resource.data.get('boosted', false) != true; // 🔥 নতুন পোস্ট নিজে থেকে boosted=true দিয়ে তৈরি করা যাবে না
+      // ⚠️ 'boosted' (স্পন্সরড) ফ্ল্যাগ শুধু owner/admin বদলাতে পারবে — মালিক নিজের পোস্ট
+      // আপডেট করার সময় (দাম/স্ট্যাটাস ইত্যাদি) এই ফিল্ড আগের মতোই থাকতে হবে, নইলে ফ্রিতে
+      // নিজেকে স্পন্সরড বানিয়ে ফেলার সুযোগ থাকবে।
+      allow update: if isOwnerAdmin() || (
+        isSignedIn() && resource.data.farmerId == request.auth.uid &&
+        request.resource.data.get('boosted', false) == resource.data.get('boosted', false)
+      );
+      allow delete: if isSignedIn() && (resource.data.farmerId == request.auth.uid || isOwnerAdmin());
     }
 
     // ============================================================
@@ -346,15 +424,87 @@ service cloud.firestore {
       // পড়তে পারতেন না। এখন ঠিক করা হলো।
       allow read: if isSignedIn() && (resource.data.referrerId == request.auth.uid || isOwnerAdmin());
       // commission-এর অংক owner-নির্ধারিত রেফারেল হারের বেশি লেখা যাবে না,
-      // আর নিজেকে নিজে refer করার এন্ট্রিও আটকানো থাকলো।
-      allow create: if isSignedIn()
+      // আর নিজেকে নিজে refer করার এন্ট্রিও আটকানো থাকলো। এই auto-write path শুধু
+      // real কুপন-বিক্রি-ভিত্তিক রেফারেল কমিশনের জন্য (baseAmount = আসল saleAmount,
+      // যাচাইযোগ্য কুপন কোডের সাথে যুক্ত — বাল্ক-ফেক করা কঠিন)।
+      // ⚠️ "রিটেলার-টু-রিটেলার রেফারেল বোনাস" (নিবন্ধন-ভিত্তিক, ফিক্সড) এখন আর client
+      // থেকে সরাসরি লেখা যায় না — ভুয়া/বাল্ক রিটেলার অ্যাকাউন্ট বানিয়ে বোনাস ফার্মিং
+      // ঠেকাতে এটা এখন শুধু referralActivity raw-log হিসেবে জমা হয়, Admin (owner/মার্কেটিং)
+      // ম্যানুয়ালি রিভিউ করে এখানে (referralEarnings) চূড়ান্ত এন্ট্রি লেখেন।
+      allow create: if (isSignedIn()
         && isFeatureEnabled('referralEnabled')
         && request.resource.data.referrerId is string && request.resource.data.referrerId != request.resource.data.fromUserId
         && request.resource.data.baseAmount is number && request.resource.data.baseAmount > 0
         && request.resource.data.commission is number
         && request.resource.data.commission >= 0
-        && request.resource.data.commission <= (request.resource.data.baseAmount * referralRateFraction()) + 2;
+        && request.resource.data.commission <= (request.resource.data.baseAmount * referralRateFraction()) + 2)
+        || isMarketingAdmin();
       allow update, delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // referralActivity — "রিটেলার-টু-রিটেলার রেফারেল বোনাস" raw log: শুধু ঘটনা জমা হয়,
+    // আসল টাকার অংক client কখনো লেখে না — Admin ম্যানুয়ালি রিভিউ করে referralEarnings-এ
+    // চূড়ান্ত এন্ট্রি লেখেন।
+    // ============================================================
+    match /referralActivity/{docId} {
+      allow read: if isSignedIn() && (resource.data.referrerId == request.auth.uid || isMarketingAdmin());
+      // ⚠️ এটা শুধুই raw activity log, কোনো টাকার সরাসরি ঝুঁকি নেই — কিন্তু কেউ যেন আগে
+      // থেকেই "approved" অবস্থায় বা কমিশন বসিয়ে ভুয়া এন্ট্রি তৈরি করতে না পারে, সেটা বন্ধ করা হলো।
+      allow create: if isSignedIn()
+        && isFeatureEnabled('referralEnabled')
+        && request.resource.data.commission == 0
+        && request.resource.data.reviewStatus == 'pending';
+      allow update, delete: if isMarketingAdmin();
+    }
+
+    // ============================================================
+    // returnRequests — রিটেলার বন্ধু B2B: অবিক্রীত/মেয়াদোত্তীর্ণ প্রোডাক্ট রিটার্ন রিকোয়েস্ট
+    // ============================================================
+    match /returnRequests/{reqId} {
+      allow read: if isSignedIn() && (
+        resource.data.retailerId == request.auth.uid ||
+        resource.data.companyId == request.auth.uid ||
+        (resource.data.companyId == 'admin' && isOpsAdmin()) ||
+        isOwnerAdmin()
+      );
+      // ⚠️ শুধু নিজের রিটেলার আইডি দিয়েই রিটার্ন রিকোয়েস্ট বানানো যাবে, অন্য কারো নামে না।
+      allow create: if isSignedIn() && request.resource.data.retailerId == request.auth.uid;
+      // ⚠️ শুধু সংশ্লিষ্ট কোম্পানি (বা admin কোম্পানি হলে ops-admin) রিকোয়েস্টের status বদলাতে পারবে (সমাধান হয়েছে চিহ্নিত করা)।
+      allow update: if isSignedIn() && (
+        resource.data.companyId == request.auth.uid ||
+        (resource.data.companyId == 'admin' && isOpsAdmin()) ||
+        isOwnerAdmin()
+      );
+    }
+
+    // ============================================================
+    // notifications — B2B অর্ডার স্ট্যাটাস আপডেট ইত্যাদির জন্য ইন-অ্যাপ নোটিফিকেশন
+    // (এখনো কোনো FCM/push infra নেই, তাই Firestore-ভিত্তিক ইন-অ্যাপ অ্যালার্ট)
+    // ============================================================
+    match /notifications/{docId} {
+      // ⚠️ শুধু নিজের নোটিফিকেশন পড়া/আপডেট (read=true করা) যাবে, অন্য কারো ইনবক্স না।
+      allow read, update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      // ⚠️ কোম্পানি/admin অন্য কারো (রিটেলার/কৃষক) জন্য নোটিফিকেশন লেখে — তাই userId ==
+      // caller-এর uid হওয়ার শর্ত নেই। কোনো টাকার ঝুঁকি নেই (শুধু টেক্সট মেসেজ), তাই
+      // ন্যূনতম শেপ-চেক যথেষ্ট।
+      allow create: if isSignedIn()
+        && request.resource.data.userId is string
+        && request.resource.data.title is string
+        && request.resource.data.body is string
+        && request.resource.data.read == false;
+      allow delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // categoryMarketStats — সব কোম্পানির সম্মিলিত (anonymized) ক্যাটাগরি-ভিত্তিক মার্কেট
+    // টোটাল। কোনো একক কোম্পানির ডেটা এখানে আলাদাভাবে থাকে না — শুধু সম্মিলিত যোগফল,
+    // তাই multi-tenant isolation বজায় থাকে। শুধু Admin (owner/marketing) রিক্যালকুলেট
+    // করে লিখতে পারবেন; যেকোনো সাইন-ইন করা কোম্পানি নিজের শেয়ার % হিসাব করার জন্য পড়তে পারবে।
+    // ============================================================
+    match /categoryMarketStats/{category} {
+      allow read: if isSignedIn();
+      allow write: if isMarketingAdmin();
     }
 
     // ============================================================
@@ -402,21 +552,130 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // ============================================================
+    // drivers — ট্রাক/গাড়ির লাইভ স্ট্যাটাস, বুস্ট ও সাবস্ক্রিপশন
+    // ============================================================
     match /drivers/{driverId} {
-      allow read: if true; // কৃষক গাড়ি খুঁজতে দেখবে
-      allow write: if isOwnerUser(driverId) || isOwnerAdmin();
+      allow read: if true; // কৃষক/সাধারণ মানুষ গাড়ি খুঁজতে দেখবে
+
+      // নতুন গাড়িওয়ালা প্রোফাইল তৈরি — বুস্ট/সাবস্ক্রিপশন ফিল্ড নিজে থেকে "সত্যি" বসিয়ে শুরু করা যাবে না
+      allow create: if isOwnerUser(driverId) &&
+        request.resource.data.get('isBoosted', false) == false &&
+        !('boostExpiresAt' in request.resource.data) &&
+        !('subscriptionPaidUntil' in request.resource.data);
+
+      // ⚠️ বুস্ট (isBoosted/boostExpiresAt) ও সাবস্ক্রিপশন (subscriptionPaidUntil) — এই তিনটা
+      // ফিল্ড শুধু Admin Panel থেকেই বদলানো যাবে (bKash/Nagad ম্যানুয়াল যাচাইয়ের পর)। গাড়িওয়ালা
+      // নিজে এগুলো লিখতে পারলে "রিকোয়েস্ট পাঠান, admin অনুমোদন করেন" পুরো মডেলটাই অর্থহীন হয়ে
+      // যেত — ব্রাউজার কনসোল থেকে নিজেকে বুস্ট/সাবস্ক্রাইবড করে ফেলা যেত। trialStartedAt একবার
+      // সেট হয়ে গেলে গাড়িওয়ালা নিজে আর বদলাতে পারবে না (নাহলে বারবার রিসেট করে চিরকাল ফ্রি
+      // ট্রায়ালে থাকা যেত)। avgRating/reviewCount বাউন্ড করা থাকলো (userPublic-এর মতোই — গাড়িওয়ালা
+      // নিজের go-online কলে userPublic থেকে কপি করে লেখে, তাই পুরোপুরি জালিয়াতি-প্রুফ না হলেও
+      // অন্তত বাস্তবসম্মত সীমার মধ্যে বাধ্য করা হলো)।
+      allow update: if isOwnerAdmin() || isOpsAdmin() || (
+        isOwnerUser(driverId) &&
+        request.resource.data.get('isBoosted', false) == resource.data.get('isBoosted', false) &&
+        request.resource.data.get('boostExpiresAt', null) == resource.data.get('boostExpiresAt', null) &&
+        request.resource.data.get('subscriptionPaidUntil', null) == resource.data.get('subscriptionPaidUntil', null) &&
+        (resource.data.get('trialStartedAt', null) == null ||
+         request.resource.data.get('trialStartedAt', null) == resource.data.get('trialStartedAt', null)) &&
+        (!('avgRating' in request.resource.data) ||
+         (request.resource.data.avgRating is number && request.resource.data.avgRating >= 0 && request.resource.data.avgRating <= 5)) &&
+        (!('reviewCount' in request.resource.data) ||
+         (request.resource.data.reviewCount is number && request.resource.data.reviewCount >= 0))
+      );
+
+      allow delete: if isOwnerAdmin();
     }
 
     // ============================================================
-    // diagnosisLogs — রোগ শনাক্তকরণের লগ (প্রাদুর্ভাব ট্র্যাকিং, শুধু admin বিশ্লেষণ করবে)
+    // transportDemands — কৃষক/পাইকার/সাধারণ মানুষের পরিবহন-চাহিদা পোস্ট (গাড়িওয়ালারা দেখেন)
+    // ============================================================
+    match /transportDemands/{demandId} {
+      allow read: if true; // গাড়িওয়ালারা দেখবেন
+
+      // পোস্টকারী caller-এর নিজের uid দিয়েই পোস্ট করতে হবে, আর বুস্ট/স্ট্যাটাস নিজে থেকে
+      // "সত্যি" বসিয়ে শুরু করা যাবে না (তৈরির সময় সবসময় active + un-boosted)
+      allow create: if isSignedIn() &&
+        request.resource.data.posterId == request.auth.uid &&
+        request.resource.data.get('isBoosted', false) == false &&
+        request.resource.data.get('boostRequested', false) == false &&
+        request.resource.data.get('status', 'active') == 'active';
+
+      // ⚠️ বুস্ট (isBoosted/boostExpiresAt) শুধু admin অনুমোদন করলেই বদলাবে — গাড়িওয়ালার
+      // বুস্ট রিকোয়েস্টের মতোই, পোস্টকারী নিজে সরাসরি বুস্টেড করে ফেলতে পারবে না। পোস্টকারী
+      // নিজে শুধু বুস্ট রিকোয়েস্ট পাঠাতে (boostRequested/boostRequestedAt) ও নিজের পোস্ট বন্ধ
+      // করতে (status: active → closed) পারবেন, posterId কখনো বদলাতে পারবেন না।
+      allow update: if isOwnerAdmin() || isOpsAdmin() || (
+        isSignedIn() && resource.data.posterId == request.auth.uid &&
+        request.resource.data.get('isBoosted', false) == resource.data.get('isBoosted', false) &&
+        request.resource.data.get('boostExpiresAt', null) == resource.data.get('boostExpiresAt', null) &&
+        request.resource.data.posterId == resource.data.posterId &&
+        request.resource.data.get('status', 'active') in ['active', 'closed']
+      );
+
+      allow delete: if isOwnerAdmin() || (isSignedIn() && resource.data.posterId == request.auth.uid);
+    }
+
+    // laborers — "লেবার লাগবে" ফিচার (drivers/truck-finder এর একই প্যাটার্নে)
+    match /laborers/{laborId} {
+      allow read: if true; // যে কেউ কাছের শ্রমিক খুঁজতে দেখবে
+
+      // নতুন প্রোফাইল তৈরি — বুস্ট ফিল্ড নিজে থেকে "সত্যি" বসিয়ে শুরু করা যাবে না
+      allow create: if isOwnerUser(laborId) &&
+        request.resource.data.get('isBoosted', false) == false &&
+        !('boostExpiresAt' in request.resource.data);
+
+      // ⚠️ বুস্ট (isBoosted/boostExpiresAt) শুধু Admin Panel থেকেই বদলানো যাবে (drivers/cropGigs
+      // বুস্টের একই নিরাপত্তা-নীতি) — নইলে যে কেউ ব্রাউজার কনসোল থেকে নিজেকে বুস্টেড করে ফেলতে পারতো।
+      allow update: if isOwnerAdmin() || isOpsAdmin() || (
+        isOwnerUser(laborId) &&
+        request.resource.data.get('isBoosted', false) == resource.data.get('isBoosted', false) &&
+        request.resource.data.get('boostExpiresAt', null) == resource.data.get('boostExpiresAt', null)
+      );
+
+      allow delete: if isOwnerAdmin();
+    }
+
+    // ============================================================
+    // diagnosisLogs — রোগ শনাক্তকরণের লগ (প্রাদুর্ভাব ট্র্যাকিং)
     // ============================================================
     match /diagnosisLogs/{logId} {
-      allow read: if isOwnerAdmin();
-      // ⚠️ কোনো পয়েন্ট/আয় এর সাথে যুক্ত না (শুধু admin-এর outbreak-ট্র্যাকিং অ্যানালিটিক্স),
+      // ⚠️ আগে শুধু owner-admin ও কৃষি কর্মকর্তা পড়তে পারতেন। কিন্তু রিটেলারের হোমপেজের
+      // "⚡ লাইভ অ্যালার্ট" ব্যানার এবং কোম্পানির "🌾 এআই ফিল্ড অ্যালার্ট" — দুটোই সরাসরি এই
+      // কালেকশন থেকে পড়ে (জেলাভিত্তিক রোগের প্যাটার্ন)। ডেটাটা ব্যক্তিগত আর্থিক তথ্য না
+      // (শুধু রোগের নাম/জেলা/ফসলের ধরন), তাই সাইন-ইন করা যেকোনো ইউজারকে পড়তে দেওয়া নিরাপদ।
+      allow read: if isSignedIn();
+      // ⚠️ কোনো পয়েন্ট/আয় এর সাথে যুক্ত না (শুধু admin/officer-এর outbreak-ট্র্যাকিং অ্যানালিটিক্স),
       // তাই টাকার ঝুঁকি নেই। তবু অন্য ফিচারের মতোই সামঞ্জস্যের জন্য farmerId caller-এর
       // নিজের uid-এর সাথে মিলতেই হবে — যাতে কেউ অন্যের নামে ভুয়া রোগের রিপোর্ট বসিয়ে
       // এলাকার outbreak পরিসংখ্যান নষ্ট করতে না পারে।
       allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ============================================================
+    // treatmentLogs — কৃষক কোন ওষুধ প্রয়োগ করেছেন এবং তার ফলাফল (কমেছে/বেড়েছে/অপরিবর্তিত)
+    // — ব্লক-ভিত্তিক ওষুধ কার্যকারিতা ট্র্যাকিং এর জন্য। কোনো টাকা/পয়েন্টের সাথে যুক্ত না।
+    // ============================================================
+    match /treatmentLogs/{logId} {
+      allow read: if isOwnerAdmin() || isOfficer() || (isSignedIn() && resource.data.farmerId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.farmerId == request.auth.uid;
+      // শুধু নিজের লগের "outcome" (ফলাফল) পরে আপডেট করতে পারবে কৃষক নিজে — অন্য কোনো ফিল্ড বা অন্যের লগ না
+      allow update: if isSignedIn() && resource.data.farmerId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['outcome', 'outcomeReportedAt']);
+      allow delete: if false;
+    }
+
+    // ============================================================
+    // officerNotices — কৃষি কর্মকর্তার সরকারি নোটিশ/প্রণোদনা ব্রডকাস্ট
+    // ============================================================
+    match /officerNotices/{noticeId} {
+      // যে কোনো সাইন-ইন করা ব্যবহারকারী পড়তে পারবে (কৃষকের হোমপেজে ব্যানার দেখানোর জন্য দরকার),
+      // কিন্তু শুধু কৃষি কর্মকর্তারাই নোটিশ তৈরি করতে পারবেন, নিজের নামেই।
+      allow read: if isSignedIn();
+      allow create: if isOfficer() && request.resource.data.officerId == request.auth.uid;
+      allow update, delete: if isOwnerAdmin();
     }
 
     // ============================================================
